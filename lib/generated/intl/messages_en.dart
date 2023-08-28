@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "canceld": MessageLookupByLibrary.simpleMessage("canceld"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don`t have account"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),

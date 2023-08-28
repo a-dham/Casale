@@ -39,9 +39,7 @@ class Invoice {
                     child: Column(
                       children: [
                         Align(
-                          alignment: currnetlocal == 'ar'
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
+                          alignment: Alignment.centerRight,
                           child: Text(
                             S.current.invoice,
                             style: const TextStyle(

@@ -17,6 +17,7 @@ class Sections extends StatelessWidget {
               height: 100,
               width: 90,
               decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
@@ -27,7 +28,9 @@ class Sections extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/soda.png'),
+                  Image.asset(
+                    'assets/images/soda.png',
+                  ),
                   const SizedBox(
                     height: 10,
                   ),

@@ -18,14 +18,14 @@ class Login extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: screenHeight * 0.09,
+            height: screenHeight * 0.1,
           ),
           SvgPicture.asset(
             'assets/images/logo.svg',
-            width: 100,
+            height: screenHeight * 0.1,
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: screenHeight * 0.04,
           ),
           Expanded(
             child: Padding(
@@ -44,8 +44,8 @@ class Login extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextFormField(
                     labelText: S.current.username,
@@ -53,8 +53,8 @@ class Login extends StatelessWidget {
                     obscureText: false,
                     keyboardType: TextInputType.text,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextFormField(
                     labelText: S.current.password,
@@ -62,8 +62,8 @@ class Login extends StatelessWidget {
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
                   ),
-                  const SizedBox(
-                    height: 8,
+                  SizedBox(
+                    height: screenHeight * 0.01,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -73,8 +73,8 @@ class Login extends StatelessWidget {
                           fontSize: 15, color: AppColors.orangeColor),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextButton(
                     childWidget: Text(

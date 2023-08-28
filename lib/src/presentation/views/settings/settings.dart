@@ -15,6 +15,7 @@ class Settings extends StatelessWidget {
         // productsCubit.getProductData();
         // Locale locale = Localizations.localeOf(context);
         // print('sssssssssssss ${locale}');
+
         return SafeArea(
           child: Scaffold(
               body: Column(

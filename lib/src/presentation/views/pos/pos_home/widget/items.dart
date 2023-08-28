@@ -7,13 +7,13 @@ class Items extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Expanded(
       child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 1.35,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: width >= 600 ? 3 : 2,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 7,
           ),
           itemCount: 10,
           scrollDirection: Axis.vertical,
@@ -46,6 +46,7 @@ class Items extends StatelessWidget {
                         height: 85,
                       ),
                     ),
+                    const Spacer(),
                     const Text(
                       style: TextStyle(
                           color: Color(0xff12141E),
@@ -61,6 +62,7 @@ class Items extends StatelessWidget {
                       ),
                       '\n 10 SAR',
                     ),
+                    const Spacer(),
                   ],
                 ),
               ),

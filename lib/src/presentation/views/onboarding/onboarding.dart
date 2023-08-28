@@ -36,6 +36,8 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    // final double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -49,14 +51,14 @@ class _OnBoardingState extends State<OnBoarding> {
               'assets/images/logo.png',
               width: 50,
             ),
-            const SizedBox(
-              height: 60,
+            SizedBox(
+              height: screenHeight * 0.10,
             ),
             //page view start
             Container(
               alignment: Alignment.center,
               width: 400,
-              height: 350,
+              height: screenHeight * 0.4,
               child: PageView(
                 onPageChanged: (page) {
                   _currentPage = page;
@@ -158,9 +160,9 @@ class _OnBoardingState extends State<OnBoarding> {
                 ),
               ],
             ),
-            startButton(),
-            const SizedBox(
-              height: 20,
+            startButton(screenHeight),
+            SizedBox(
+              height: screenHeight * 0.02,
             ),
           ],
         ),
@@ -168,14 +170,14 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 
-  startButton() {
+  startButton(screenHeight) {
     if (_controller.hasClients && _controller.page == 2) {
       return CustomeTextButton(
           childWidget: Text(
             S.current.start,
             style: const TextStyle(
               color: AppColors.orangeColor,
-              fontSize: 17,
+              fontSize: 16,
               fontFamily: 'Cairo',
               fontWeight: FontWeight.bold,
             ),
@@ -185,7 +187,7 @@ class _OnBoardingState extends State<OnBoarding> {
           isBorder: BorderStyle.none,
           backgroundColor: AppColors.whiteColor,
           elevation: 8,
-          minimumSize: const Size(160, 50),
+          minimumSize: Size(150, screenHeight * 0.06),
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
                 context, Routes.login, (route) => false);

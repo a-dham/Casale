@@ -370,6 +370,16 @@ class S {
     );
   }
 
+  /// `Customer`
+  String get cusotmer {
+    return Intl.message(
+      'Customer',
+      name: 'cusotmer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sections`
   String get sections {
     return Intl.message(
