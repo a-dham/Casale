@@ -38,7 +38,7 @@ class PosTablet extends StatelessWidget {
                   const SearchSeactions(),
                   Sections(),
                   const ItemsHeader(),
-                  Items(),
+                  const Items(),
                 ],
               ),
             ),

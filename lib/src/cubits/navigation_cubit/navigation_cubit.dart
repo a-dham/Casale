@@ -17,7 +17,7 @@ class NavigationCubit extends Cubit<NavigationState> {
   }
 
   List<Widget> bottomNavigationscreens = [
-    POSHome(),
+    const POSHome(),
     const Orders(),
     const Settings(),
   ];

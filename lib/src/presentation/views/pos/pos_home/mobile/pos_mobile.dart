@@ -97,7 +97,7 @@ class PosMobile extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Items(),
+            const Items(),
             const SizedBox(
               height: 10,
             ),

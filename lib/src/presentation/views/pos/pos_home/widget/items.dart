@@ -2,12 +2,8 @@ import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Items extends StatelessWidget {
-  Items({super.key});
-  List items = [
-    ['a', 'b', 'c'],
-    ['3', '2', '1'],
-    ['y', 'y', 'x'],
-  ];
+  const Items({super.key});
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
