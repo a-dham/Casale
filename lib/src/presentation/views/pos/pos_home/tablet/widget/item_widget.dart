@@ -1,3 +1,5 @@
+import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/config/routes/app_router.dart';
 import 'package:flutter/material.dart';
 
 class ItemWidget extends StatelessWidget {
@@ -16,26 +18,35 @@ class ItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("سودا"),
+              const Text(
+                "سودا",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
               Row(
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: const Text('ملاحظة'),
+                    child: Text(S.current.note),
                   ),
-                  const Text(
-                    'X1',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed(Routes.extra),
+                    child: const Text(
+                      'X1',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     width: 20,
                   ),
-                  const Text(
-                    '10 ر.س',
-                    style: TextStyle(
+                  Text(
+                    '10 ${S.current.saudiaCurrency}',
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),

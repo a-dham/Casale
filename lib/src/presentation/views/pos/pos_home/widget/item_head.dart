@@ -5,12 +5,29 @@ class ItemsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Text('Coffe Menu'),
-        Spacer(),
-        Text('12 Items'),
-      ],
+    return const Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 10,
+      ),
+      child: Row(
+        children: [
+          Text(
+            'قائمة القهوة',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          Spacer(),
+          Text(
+            '12  صنف',
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

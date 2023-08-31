@@ -1,8 +1,11 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
+import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_widget.dart';
+import 'package:casale/src/presentation/views/pos/pos_login/pos_login.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class ItemsInvoice extends StatelessWidget {
@@ -10,21 +13,37 @@ class ItemsInvoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         SizedBox(
-          height: 180,
+          height: screenHeight * 0.5,
           child: ListView.builder(
               itemCount: 20,
               itemBuilder: (context, lenght) {
                 return const ItemWidget();
               }),
         ),
+        SizedBox(
+          height: screenHeight * 0.01,
+        ),
         Row(
           children: [
-            Text(S.current.price),
+            Text(
+              S.current.price,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
             const Spacer(),
-            const Text(' 30 ر.س'),
+            Text(
+              ' 30 ${S.current.saudiaCurrency}',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
           ],
         ),
         const SizedBox(
@@ -32,9 +51,21 @@ class ItemsInvoice extends StatelessWidget {
         ),
         Row(
           children: [
-            Text(S.current.afterTax),
+            Text(
+              S.current.afterTax,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
             const Spacer(),
-            const Text(' 80 ر.س'),
+            Text(
+              ' 80 ${S.current.saudiaCurrency}',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
           ],
         ),
         const Text(
@@ -47,14 +78,26 @@ class ItemsInvoice extends StatelessWidget {
         ),
         Row(
           children: [
-            Text(S.current.total),
+            Text(
+              S.current.total,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
             const Spacer(),
-            const Text(' 50 ر.س'),
+            Text(
+              ' 50 ${S.current.saudiaCurrency} ',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
           ],
         ),
         CustomeTextButton(
           childWidget: Text(
-            S.current.payment,
+            S.current.invoice,
             style: const TextStyle(
               color: AppColors.whiteColor,
               fontSize: 16,
@@ -66,10 +109,20 @@ class ItemsInvoice extends StatelessWidget {
           isBorder: BorderStyle.none,
           backgroundColor: AppColors.orangeColor,
           elevation: 1,
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.payment);
+          onPressed: () async {
+            // Navigator.pushNamed(context, Routes.payment);
+            Response<dynamic>? response = await DioHelper.postData(
+                url:
+                    'https://dev.orgswebteam.com//?flr=casale/manage/branches&rtype=getorders&bid=1&ot=sinv&sysac=Y3hjaG16amJiNm16NzQyeno3NDhtejc0Zm44M3NiNjdmbjgzcm4zNGZuNjJwYTYy&fmtd=manage@views1&keepfmtd=full',
+                data: {},
+                queryParameters: {});
+            print(response!.statusCode);
+            print(response);
           },
-          minimumSize: const Size(200, 20),
+          minimumSize: Size(
+            200,
+            screenHeight * 0.06,
+          ),
           borderRaduis: BorderRadius.circular(10),
         ),
       ],

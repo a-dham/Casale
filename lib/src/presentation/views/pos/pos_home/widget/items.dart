@@ -1,10 +1,13 @@
-import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Items extends StatelessWidget {
-  const Items({super.key});
-
+  Items({super.key});
+  List items = [
+    ['a', 'b', 'c'],
+    ['3', '2', '1'],
+    ['y', 'y', 'x'],
+  ];
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -12,59 +15,56 @@ class Items extends StatelessWidget {
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: width >= 600 ? 3 : 2,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 7,
+            mainAxisSpacing: 10,
+            mainAxisExtent: 150,
           ),
           itemCount: 10,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, lenght) {
-            return GestureDetector(
-              onTap: () {},
-              onLongPress: () => Navigator.of(context).pushNamed(Routes.extra),
-              child: Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 2,
-                      color: AppColors.lightGreyColor,
-                    )),
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 2,
-                            color: AppColors.lightGreyColor,
-                          )),
-                      child: Image.asset(
-                        'assets/images/item.png',
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        height: 85,
-                      ),
-                    ),
-                    const Spacer(),
-                    const Text(
-                      style: TextStyle(
-                          color: Color(0xff12141E),
-                          fontSize: 14,
-                          overflow: TextOverflow.ellipsis),
-                      'spresso cafee',
-                    ),
-                    const Text(
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10,
-                      ),
-                      '\n 10 SAR',
-                    ),
-                    const Spacer(),
-                  ],
+            return Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  width: 2,
+                  color: AppColors.lightGreyColor,
                 ),
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 2,
+                          color: AppColors.lightGreyColor,
+                        )),
+                    child: Image.asset(
+                      'assets/images/item.png',
+                      fit: BoxFit.fill,
+                      width: double.infinity,
+                      height: 85,
+                    ),
+                  ),
+                  const Spacer(),
+                  const Text(
+                    style: TextStyle(
+                        color: Color(0xff12141E),
+                        fontSize: 14,
+                        overflow: TextOverflow.ellipsis),
+                    'spresso cafee',
+                  ),
+                  const Text(
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                    '\n 10 SAR',
+                  ),
+                  const Spacer(),
+                ],
               ),
             );
           }),

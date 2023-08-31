@@ -14,6 +14,7 @@ class PosMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Locale currnetLocal = Localizations.localeOf(context);
+    // ignore: avoid_print
     print(currnetLocal);
     return Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -86,18 +87,18 @@ class PosMobile extends StatelessWidget {
 
           // ],
         ),
-        body: const Column(
+        body: Column(
           children: [
-            SearchSeactions(),
-            SizedBox(
+            const SearchSeactions(),
+            const SizedBox(
               height: 10,
             ),
             Sections(),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Items(),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           ],

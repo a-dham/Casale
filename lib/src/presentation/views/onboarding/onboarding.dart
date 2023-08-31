@@ -1,5 +1,6 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
+import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -189,8 +190,12 @@ class _OnBoardingState extends State<OnBoarding> {
           elevation: 8,
           minimumSize: Size(150, screenHeight * 0.06),
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Routes.login, (route) => false);
+            CacheHelper.saveData(key: 'onboarding', value: true).then((value) {
+              if (value!) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Routes.login, (route) => false);
+              }
+            });
           });
     } else {
       return const SizedBox();

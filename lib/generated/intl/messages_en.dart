@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "afterTax": MessageLookupByLibrary.simpleMessage("After Tax"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "canceld": MessageLookupByLibrary.simpleMessage("canceld"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
@@ -43,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("language"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "note": MessageLookupByLibrary.simpleMessage("Note"),
         "orders": MessageLookupByLibrary.simpleMessage("orders"),
         "owner": MessageLookupByLibrary.simpleMessage("Owner"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
@@ -50,8 +52,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "pin": MessageLookupByLibrary.simpleMessage("PIN"),
         "pos": MessageLookupByLibrary.simpleMessage("POS"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
+        "print": MessageLookupByLibrary.simpleMessage("Print"),
         "printers": MessageLookupByLibrary.simpleMessage("printers"),
+        "printingAlert": MessageLookupByLibrary.simpleMessage(
+            "Would you like to Print this?"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "saudiaCurrency": MessageLookupByLibrary.simpleMessage("SAR"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "sections": MessageLookupByLibrary.simpleMessage("Sections"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),

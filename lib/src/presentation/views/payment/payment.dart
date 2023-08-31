@@ -1,3 +1,4 @@
+import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
@@ -104,20 +105,24 @@ class Payment extends StatelessWidget {
   Future<void> _showMyDialog(context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Payed Done'),
-          content: const Text('Would you like to Print this?'),
+          content: Text(S.current.printingAlert),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(
+                S.current.cancel,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Print'),
+              child: Text(S.current.print),
               onPressed: () {
                 Navigator.of(context).pushNamed(Routes.print);
               },

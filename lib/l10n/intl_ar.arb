@@ -33,5 +33,10 @@
     "owner":"المالك",
     "sections":"الأقسام",
     "cusomter":"عميل",
-    "home":"الرئيسية"
+    "saudiaCurrency":"رس",
+    "cancel":"إلغاء",
+    "print":"طباعة",
+    "printingAlert":"هل تريد الطباعة ؟",
+    "home":"الرئيسية",
+    "note":"ملاحظة"
 }

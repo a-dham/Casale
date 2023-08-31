@@ -390,11 +390,61 @@ class S {
     );
   }
 
+  /// `SAR`
+  String get saudiaCurrency {
+    return Intl.message(
+      'SAR',
+      name: 'saudiaCurrency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print`
+  String get print {
+    return Intl.message(
+      'Print',
+      name: 'print',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to Print this?`
+  String get printingAlert {
+    return Intl.message(
+      'Would you like to Print this?',
+      name: 'printingAlert',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get home {
     return Intl.message(
       'Home',
       name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note`
+  String get note {
+    return Intl.message(
+      'Note',
+      name: 'note',
       desc: '',
       args: [],
     );
