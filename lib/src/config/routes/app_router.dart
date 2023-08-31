@@ -52,11 +52,11 @@ class AppRouter {
         );
       case Routes.posLogin:
         return MaterialPageRoute(
-          builder: (_) => PosLogin(),
+          builder: (_) => const PosLogin(),
         );
       case Routes.posHome:
         return MaterialPageRoute(
-          builder: (_) => POSHome(),
+          builder: (_) => const POSHome(),
         );
       case Routes.extra:
         return MaterialPageRoute(

@@ -1,11 +1,8 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
-import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_widget.dart';
-import 'package:casale/src/presentation/views/pos/pos_login/pos_login.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class ItemsInvoice extends StatelessWidget {
@@ -110,14 +107,7 @@ class ItemsInvoice extends StatelessWidget {
           backgroundColor: AppColors.orangeColor,
           elevation: 1,
           onPressed: () async {
-            // Navigator.pushNamed(context, Routes.payment);
-            Response<dynamic>? response = await DioHelper.postData(
-                url:
-                    'https://dev.orgswebteam.com//?flr=casale/manage/branches&rtype=getorders&bid=1&ot=sinv&sysac=Y3hjaG16amJiNm16NzQyeno3NDhtejc0Zm44M3NiNjdmbjgzcm4zNGZuNjJwYTYy&fmtd=manage@views1&keepfmtd=full',
-                data: {},
-                queryParameters: {});
-            print(response!.statusCode);
-            print(response);
+            Navigator.pushNamed(context, Routes.payment);
           },
           minimumSize: Size(
             200,

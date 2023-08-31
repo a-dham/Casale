@@ -1,6 +1,5 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
-import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/presentation/views/auth/widgets/footer.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
@@ -11,25 +10,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
-  Dio dio = Dio();
-  var sessId = CacheHelper.getData(key: 'sessid');
-
-  void getData(var sessid) async {
-    var response = await dio.post(
-        'https://dev.orgswebteam.com//?flr=casale/manage/branches&rtype=getorders&bid=5&ot=pcnote&sysac=em5jY3h6Z3ZiMXZ6NzQ1bno3NDdhejc0cGE4M3BhNjd0bTgzZW0zNHp6NjJwYTYy&fmtd=manage@views1&keepfmtd=full',
-        options: Options(headers: {
-          'set-cookie': sessid,
-        }));
-    print('-----------------------');
-    print(response.statusCode);
-    print(response.statusMessage);
-    print(response);
-  }
-
+  final Dio dio = Dio();
   @override
   Widget build(BuildContext context) {
-    print(sessId);
-    getData(sessId);
     final double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,

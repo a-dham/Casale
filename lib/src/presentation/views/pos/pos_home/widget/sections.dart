@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Sections extends StatelessWidget {
   Sections({super.key});
-  List sections = ['section1', 'section2', 'section3'];
+  final List sections = ['section1', 'section2', 'section3'];
 
   @override
   Widget build(BuildContext context) {
