@@ -15,7 +15,7 @@ import 'package:casale/src/utils/constant/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
-  static const String splash = '/';
+  static const String splash = '/splash';
   static const String onboarding = '/onBoarding';
   static const String login = '/login';
   static const String signup = '/sign_up';
@@ -43,7 +43,7 @@ class AppRouter {
         );
       case Routes.login:
         return MaterialPageRoute(
-          builder: (_) => const Login(),
+          builder: (_) => Login(),
         );
 
       case Routes.signup:
@@ -52,11 +52,11 @@ class AppRouter {
         );
       case Routes.posLogin:
         return MaterialPageRoute(
-          builder: (_) => const PosLogin(),
+          builder: (_) => PosLogin(),
         );
       case Routes.posHome:
         return MaterialPageRoute(
-          builder: (_) => const POSHome(),
+          builder: (_) => POSHome(),
         );
       case Routes.extra:
         return MaterialPageRoute(

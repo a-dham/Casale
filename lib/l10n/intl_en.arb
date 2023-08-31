@@ -31,6 +31,14 @@
     "language":"language",
     "settings":"Settings",
     "owner":"Owner",
+    "cusotmer":"Customer",
     "sections":"Sections",
-    "home":"Home"
+    "saudiaCurrency":"SAR",
+    "cancel":"Cancel",
+    "print":"Print",
+    "printingAlert":"Would you like to Print this?",
+    "home":"Home",
+    "note":"Note"
+
 }
+

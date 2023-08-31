@@ -18,7 +18,7 @@ class BottomNavigation extends StatelessWidget {
             unselectedItemColor: AppColors.greyColor,
             selectedItemColor: AppColors.orangeColor,
             selectedLabelStyle: const TextStyle(
-              fontSize: 15,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               fontFamily: 'Cairo',
             ),

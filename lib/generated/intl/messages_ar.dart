@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "active": MessageLookupByLibrary.simpleMessage("النشطة"),
         "afterTax": MessageLookupByLibrary.simpleMessage("بعد الضريبة"),
         "all": MessageLookupByLibrary.simpleMessage("الجميع"),
+        "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "canceld": MessageLookupByLibrary.simpleMessage("الملغاة"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد الباسورد"),
@@ -42,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("اللغات"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
+        "note": MessageLookupByLibrary.simpleMessage("ملاحظة"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "owner": MessageLookupByLibrary.simpleMessage("المالك"),
         "password": MessageLookupByLibrary.simpleMessage("الرقم السري"),
@@ -49,8 +51,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "pin": MessageLookupByLibrary.simpleMessage("رمز الدخول السريع"),
         "pos": MessageLookupByLibrary.simpleMessage("نقطة البيع"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
+        "print": MessageLookupByLibrary.simpleMessage("طباعة"),
         "printers": MessageLookupByLibrary.simpleMessage("الطابعات"),
+        "printingAlert":
+            MessageLookupByLibrary.simpleMessage("هل تريد الطباعة ؟"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "saudiaCurrency": MessageLookupByLibrary.simpleMessage("رس"),
         "search": MessageLookupByLibrary.simpleMessage("البحث"),
         "sections": MessageLookupByLibrary.simpleMessage("الأقسام"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادت"),

@@ -20,14 +20,14 @@ class Signup extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
-            height: screenHeight * 0.09,
+            height: screenHeight * 0.1,
           ),
           SvgPicture.asset(
             'assets/images/logo.svg',
-            width: 100,
+            height: screenHeight * 0.1,
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: screenHeight * 0.04,
           ),
           Expanded(
             child: Padding(
@@ -46,8 +46,8 @@ class Signup extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextFormField(
                     labelText: S.current.email,
@@ -55,8 +55,8 @@ class Signup extends StatelessWidget {
                     obscureText: false,
                     keyboardType: TextInputType.emailAddress,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextFormField(
                     labelText: S.current.username,
@@ -64,8 +64,8 @@ class Signup extends StatelessWidget {
                     obscureText: true,
                     keyboardType: TextInputType.text,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextFormField(
                     labelText: S.current.password,
@@ -73,8 +73,8 @@ class Signup extends StatelessWidget {
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextFormField(
                     labelText: S.current.confirmPassword,
@@ -82,8 +82,8 @@ class Signup extends StatelessWidget {
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   CustomeTextButton(
                     childWidget: Text(
@@ -103,11 +103,8 @@ class Signup extends StatelessWidget {
                     },
                     minimumSize: const Size(double.infinity, 45),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                   const Spacer(),
                   Footer(
@@ -115,8 +112,8 @@ class Signup extends StatelessWidget {
                     buttonText: S.current.login,
                     text: S.current.haveAccount,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: screenHeight * 0.02,
                   ),
                 ],
               ),

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
@@ -39,9 +41,7 @@ class Invoice {
                     child: Column(
                       children: [
                         Align(
-                          alignment: currnetlocal == 'ar'
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
+                          alignment: Alignment.centerRight,
                           child: Text(
                             S.current.invoice,
                             style: const TextStyle(
