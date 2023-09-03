@@ -54,6 +54,10 @@ class Signup extends StatelessWidget {
                     suffixIcon: const Icon(Icons.email),
                     obscureText: false,
                     keyboardType: TextInputType.emailAddress,
+                    textEditingController: null,
+                    validator: (value) {
+                      return null;
+                    },
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -63,6 +67,10 @@ class Signup extends StatelessWidget {
                     suffixIcon: const Icon(Icons.person),
                     obscureText: true,
                     keyboardType: TextInputType.text,
+                    textEditingController: null,
+                    validator: (value) {
+                      return null;
+                    },
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -72,6 +80,10 @@ class Signup extends StatelessWidget {
                     suffixIcon: const Icon(Icons.key_outlined),
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
+                    textEditingController: null,
+                    validator: (value) {
+                      return null;
+                    },
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -81,6 +93,10 @@ class Signup extends StatelessWidget {
                     suffixIcon: const Icon(Icons.key_outlined),
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
+                    textEditingController: null,
+                    validator: (value) {
+                      return null;
+                    },
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,

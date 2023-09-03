@@ -449,6 +449,16 @@ class S {
       args: [],
     );
   }
+
+  /// ` It Can't Be Empty`
+  String get notNull {
+    return Intl.message(
+      ' It Can`t Be Empty',
+      name: 'notNull',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

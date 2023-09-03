@@ -51,6 +51,10 @@ class SearchSeactions extends StatelessWidget {
               suffixIcon: const Icon(Icons.search),
               obscureText: false,
               keyboardType: TextInputType.text,
+              textEditingController: null,
+              validator: (value) {
+                return null;
+              },
             ),
           ),
         ],

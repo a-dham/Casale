@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("language"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),
         "note": MessageLookupByLibrary.simpleMessage("Note"),
         "orders": MessageLookupByLibrary.simpleMessage("orders"),
         "owner": MessageLookupByLibrary.simpleMessage("Owner"),

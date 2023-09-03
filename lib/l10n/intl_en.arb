@@ -38,7 +38,8 @@
     "print":"Print",
     "printingAlert":"Would you like to Print this?",
     "home":"Home",
-    "note":"Note"
+    "note":"Note",
+    "notNull":" It Can`t Be Empty"
 
 }
 

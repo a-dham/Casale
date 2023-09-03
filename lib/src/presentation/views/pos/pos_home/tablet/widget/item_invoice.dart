@@ -1,5 +1,4 @@
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_widget.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
@@ -107,7 +106,7 @@ class ItemsInvoice extends StatelessWidget {
           backgroundColor: AppColors.orangeColor,
           elevation: 1,
           onPressed: () async {
-            Navigator.pushNamed(context, Routes.payment);
+            // Navigator.pushNamed(context, Routes.payment);
           },
           minimumSize: Size(
             200,

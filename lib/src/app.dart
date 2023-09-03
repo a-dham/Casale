@@ -1,4 +1,5 @@
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/cubits/auth/auth_cubit.dart';
 import 'package:casale/src/cubits/product_cubit/products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   });
 
   final SettingsController settingsController;
-  final String initpage;
+  final String? initpage;
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (context) => NavigationCubit(),
             ),
+            BlocProvider(create: (context) => AuthCubit()),
           ],
           child: MaterialApp(
             restorationScopeId: 'app',
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
             // home: Home(),
 
             onGenerateRoute: AppRouter(settingsController).onGenerateRoute,
-            initialRoute: initpage,
+            initialRoute: initpage ?? Routes.splash,
           ),
         );
       },

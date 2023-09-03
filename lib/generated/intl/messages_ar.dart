@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("اللغات"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
+        "notNull": MessageLookupByLibrary.simpleMessage("لا يمكن أن يكون فارغ"),
         "note": MessageLookupByLibrary.simpleMessage("ملاحظة"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "owner": MessageLookupByLibrary.simpleMessage("المالك"),
