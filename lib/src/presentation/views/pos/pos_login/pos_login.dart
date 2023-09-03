@@ -53,6 +53,10 @@ class PosLogin extends StatelessWidget {
                     suffixIcon: const Icon(Icons.key_outlined),
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
+                    textEditingController: null,
+                    validator: (value) {
+                      return null;
+                    },
                   ),
                   const SizedBox(
                     height: 8,

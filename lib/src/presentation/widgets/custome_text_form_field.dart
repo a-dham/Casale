@@ -8,16 +8,25 @@ class CustomeTextFormField extends StatelessWidget {
     required this.suffixIcon,
     required this.obscureText,
     required this.keyboardType,
+    @required this.textEditingController,
+    @required this.validator,
   });
   final String labelText;
   final Widget suffixIcon;
   final bool obscureText;
   final TextInputType keyboardType;
+  final TextEditingController? textEditingController;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 45,
       child: TextFormField(
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        validator: validator,
+        controller: textEditingController,
         keyboardType: keyboardType,
         cursorColor: AppColors.orangeColor,
         obscureText: obscureText,
