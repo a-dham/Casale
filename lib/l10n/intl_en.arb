@@ -39,7 +39,11 @@
     "printingAlert":"Would you like to Print this?",
     "home":"Home",
     "note":"Note",
-    "notNull":" It Can`t Be Empty"
+    "notNull":" It Can`t Be Empty",
+    "add":"Add",
+    "customer":"Customer",
+    "phone":"phone",
+    "name":"name"
 
 }
 

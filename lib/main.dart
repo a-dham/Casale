@@ -19,7 +19,7 @@ void main() async {
   if (onboarding != null) {
     if (sysAcc != null) {
       print('tokennnnn $sysAcc');
-      initPage = Routes.posHome;
+      initPage = Routes.bottomNavigation;
     } else {
       initPage = Routes.login;
     }

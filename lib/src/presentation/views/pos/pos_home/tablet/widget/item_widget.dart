@@ -3,8 +3,15 @@ import 'package:casale/src/config/routes/app_router.dart';
 import 'package:flutter/material.dart';
 
 class ItemWidget extends StatelessWidget {
-  const ItemWidget({super.key});
-
+  ItemWidget({
+    super.key,
+    required this.itemName,
+    required this.itemPrice,
+    required this.quantity,
+  });
+  final String itemName;
+  final String itemPrice;
+  final int quantity;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,9 +25,9 @@ class ItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "سودا",
-                style: TextStyle(
+              Text(
+                itemName,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -33,9 +40,9 @@ class ItemWidget extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () => Navigator.of(context).pushNamed(Routes.extra),
-                    child: const Text(
-                      'X1',
-                      style: TextStyle(
+                    child: Text(
+                      'X $quantity',
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -45,7 +52,7 @@ class ItemWidget extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    '10 ${S.current.saudiaCurrency}',
+                    '$itemPrice ${S.current.saudiaCurrency}',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

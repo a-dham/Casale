@@ -6,7 +6,7 @@ part 'products_state.dart';
 class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit() : super(ProductsInitial());
   static ProductsCubit get(context) => BlocProvider.of(context);
-  ProductsModel? productsModel;
+  // ProductsModel? productsModel;
   // getProductData() async {
   //   //  loading items
   //   emit(ProductsLoading());

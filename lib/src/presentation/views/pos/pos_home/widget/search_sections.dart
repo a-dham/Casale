@@ -11,40 +11,32 @@ class SearchSeactions extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: const EdgeInsets.only(
-        left: 30,
-        right: 10,
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 10,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Azozy Cafee',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
+          const SizedBox(
+            width: 80,
+            child: Text(
+              'Azozy Cafee',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                S.current.sections,
-                style: const TextStyle(
-                  color: AppColors.greyColor,
-                  fontSize: 12,
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(
             width: 20,
           ),
-          SizedBox(
-            width: screenWidth >= 600 ? screenWidth * 0.40 : screenWidth * 0.60,
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: screenWidth >= 600
+                  ? (screenWidth * 0.40) - 80
+                  : (screenWidth * 0.60) - 80,
+            ),
             height: 30,
             child: CustomeTextFormField(
               labelText: S.current.search,

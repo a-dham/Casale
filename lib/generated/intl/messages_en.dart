@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account_title": MessageLookupByLibrary.simpleMessage("Manager"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
+        "add": MessageLookupByLibrary.simpleMessage("Add"),
         "afterTax": MessageLookupByLibrary.simpleMessage("After Tax"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -31,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
+        "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don`t have account"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -43,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Invoices Settings"),
         "language": MessageLookupByLibrary.simpleMessage("language"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "name": MessageLookupByLibrary.simpleMessage("name"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),
         "note": MessageLookupByLibrary.simpleMessage("Note"),
@@ -50,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "owner": MessageLookupByLibrary.simpleMessage("Owner"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "payment": MessageLookupByLibrary.simpleMessage("Payment"),
+        "phone": MessageLookupByLibrary.simpleMessage("phone"),
         "pin": MessageLookupByLibrary.simpleMessage("PIN"),
         "pos": MessageLookupByLibrary.simpleMessage("POS"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
