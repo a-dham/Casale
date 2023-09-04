@@ -1,5 +1,7 @@
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Items extends StatelessWidget {
   const Items({super.key});
@@ -7,63 +9,74 @@ class Items extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Expanded(
-      child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: width >= 600 ? 3 : 2,
-            mainAxisSpacing: 10,
-            mainAxisExtent: 150,
-          ),
-          itemCount: 10,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, lenght) {
-            return Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  width: 2,
-                  color: AppColors.lightGreyColor,
-                ),
+    PosCubit posCubit = PosCubit.get(context);
+    return BlocBuilder<PosCubit, PosState>(
+      builder: (context, state) {
+        return Expanded(
+          child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: width >= 600 ? 3 : 2,
+                mainAxisSpacing: 10,
+                mainAxisExtent: 150,
               ),
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  Container(
+              itemCount: posCubit.items.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                final item = posCubit.items[index];
+                return GestureDetector(
+                  onTap: () {
+                    posCubit.addItemTocart(item);
+                  },
+                  child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          width: 2,
-                          color: AppColors.lightGreyColor,
-                        )),
-                    child: Image.asset(
-                      'assets/images/item.png',
-                      fit: BoxFit.fill,
-                      width: double.infinity,
-                      height: 85,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        width: 2,
+                        color: AppColors.lightGreyColor,
+                      ),
+                    ),
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                width: 2,
+                                color: AppColors.lightGreyColor,
+                              )),
+                          child: Image.asset(
+                            'assets/images/item.png',
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            height: 85,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          style: const TextStyle(
+                              color: Color(0xff12141E),
+                              fontSize: 14,
+                              overflow: TextOverflow.ellipsis),
+                          item.title,
+                        ),
+                        Text(
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
+                          item.price.toString(),
+                        ),
+                        const Spacer(),
+                      ],
                     ),
                   ),
-                  const Spacer(),
-                  const Text(
-                    style: TextStyle(
-                        color: Color(0xff12141E),
-                        fontSize: 14,
-                        overflow: TextOverflow.ellipsis),
-                    'spresso cafee',
-                  ),
-                  const Text(
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                    ),
-                    '\n 10 SAR',
-                  ),
-                  const Spacer(),
-                ],
-              ),
-            );
-          }),
+                );
+              }),
+        );
+      },
     );
   }
 }

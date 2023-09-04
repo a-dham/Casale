@@ -24,15 +24,17 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account_title": MessageLookupByLibrary.simpleMessage("المدير"),
         "active": MessageLookupByLibrary.simpleMessage("النشطة"),
+        "add": MessageLookupByLibrary.simpleMessage("إضافة"),
         "afterTax": MessageLookupByLibrary.simpleMessage("بعد الضريبة"),
         "all": MessageLookupByLibrary.simpleMessage("الجميع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "canceld": MessageLookupByLibrary.simpleMessage("الملغاة"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد الباسورد"),
+        "customer": MessageLookupByLibrary.simpleMessage("عميل"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
-        "email": MessageLookupByLibrary.simpleMessage("إيميل"),
+        "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "forget_password":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة السر؟"),
         "haveAccount": MessageLookupByLibrary.simpleMessage("لديك حساب؟"),
@@ -42,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إعدادت الفواتير"),
         "language": MessageLookupByLibrary.simpleMessage("اللغات"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "name": MessageLookupByLibrary.simpleMessage("الإسم"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "notNull": MessageLookupByLibrary.simpleMessage("لا يمكن أن يكون فارغ"),
         "note": MessageLookupByLibrary.simpleMessage("ملاحظة"),
@@ -49,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "owner": MessageLookupByLibrary.simpleMessage("المالك"),
         "password": MessageLookupByLibrary.simpleMessage("الرقم السري"),
         "payment": MessageLookupByLibrary.simpleMessage("المدفوع"),
+        "phone": MessageLookupByLibrary.simpleMessage("رقم الجوال"),
         "pin": MessageLookupByLibrary.simpleMessage("رمز الدخول السريع"),
         "pos": MessageLookupByLibrary.simpleMessage("نقطة البيع"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),

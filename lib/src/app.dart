@@ -1,5 +1,6 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/auth/auth_cubit.dart';
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/cubits/product_cubit/products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,13 +26,10 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider<ProductsCubit>(
-              create: (context) => ProductsCubit(),
-            ),
-            BlocProvider(
-              create: (context) => NavigationCubit(),
-            ),
+            BlocProvider<ProductsCubit>(create: (context) => ProductsCubit()),
+            BlocProvider(create: (context) => NavigationCubit()),
             BlocProvider(create: (context) => AuthCubit()),
+            BlocProvider(create: (context) => PosCubit()),
           ],
           child: MaterialApp(
             restorationScopeId: 'app',
