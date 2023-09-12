@@ -18,6 +18,7 @@
     "invoice":"Invoice",
     "price":"Price",
     "afterTax":"After Tax",
+    "tax":"Tax",
     "total":"Total",
     "payment":"Payment",
     "orders":"orders",
@@ -43,7 +44,10 @@
     "add":"Add",
     "customer":"Customer",
     "phone":"phone",
-    "name":"name"
+    "recentCustomers":"Recent Customers",
+    "name":"name",
+    "addCustomerToTicket":"Add Customer To Ticket"
+
 
 }
 

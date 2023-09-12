@@ -240,6 +240,16 @@ class S {
     );
   }
 
+  /// `Tax`
+  String get tax {
+    return Intl.message(
+      'Tax',
+      name: 'tax',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total`
   String get total {
     return Intl.message(
@@ -490,11 +500,31 @@ class S {
     );
   }
 
+  /// `Recent Customers`
+  String get recentCustomers {
+    return Intl.message(
+      'Recent Customers',
+      name: 'recentCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `name`
   String get name {
     return Intl.message(
       'name',
       name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Customer To Ticket`
+  String get addCustomerToTicket {
+    return Intl.message(
+      'Add Customer To Ticket',
+      name: 'addCustomerToTicket',
       desc: '',
       args: [],
     );

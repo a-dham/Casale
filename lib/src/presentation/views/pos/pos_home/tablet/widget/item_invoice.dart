@@ -2,9 +2,13 @@
 
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/data/datasources/end_points.dart';
+import 'package:casale/src/data/datasources/local/cashe_helper.dart';
+import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_widget.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +23,8 @@ class ItemsInvoice extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            SizedBox(
-              height: screenHeight * 0.35,
+            Container(
+              constraints: BoxConstraints(maxHeight: screenHeight - 460),
               child: ListView.builder(
                   itemCount: posCubit.cart.length,
                   itemBuilder: (context, index) {
@@ -41,6 +45,8 @@ class ItemsInvoice extends StatelessWidget {
                         quantity: itemCart.quantity,
                         itemName: itemCart.title,
                         itemPrice: itemTotalprice.toString(),
+                        posCubit: posCubit,
+                        itemIndex: itemCart,
                       ),
                     );
                   }),
@@ -60,7 +66,7 @@ class ItemsInvoice extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    ' 30 ${S.current.saudiaCurrency}',
+                    '${posCubit.totalPrice} ${S.current.saudiaCurrency}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -77,7 +83,7 @@ class ItemsInvoice extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      S.current.afterTax,
+                      S.current.tax,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -85,7 +91,7 @@ class ItemsInvoice extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      ' 80 ${S.current.saudiaCurrency}',
+                      ' ${posCubit.totalPrice} ${S.current.saudiaCurrency}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -112,7 +118,7 @@ class ItemsInvoice extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      ' 50 ${S.current.saudiaCurrency} ',
+                      '${posCubit.totalPrice}  ${S.current.saudiaCurrency}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -135,18 +141,16 @@ class ItemsInvoice extends StatelessWidget {
                   backgroundColor: AppColors.orangeColor,
                   elevation: 1,
                   onPressed: () async {
-                    posCubit.clearCart();
-                    // CacheHelper.removeData(key: 'sysacc');
+                    // posCubit.clearCart();
+                    // posCubit.invoiceTotal();
+                    // CacheHelper.removeData(key: 'sysac');
                     // Navigator.pushNamed(context, Routes.payment);
-                    // var sysacc = await CacheHelper.getData(key: 'sysacc');
-                    // var response = await DioHelper.getData(
-                    //     url: EndPoints.baseUrl,
-                    //     queryParameters: {
-                    //       'flr': 'casale/manage/items/views',
-                    //       'sysac': sysacc,
-                    //       'fresult': 'json'
-                    //     });
-                    // print(response?.data);
+
+                    posCubit.getOrgData();
+                    // posCubit.addCustomer(
+                    //     firstName: 'bcvbcvbcv',
+                    //     lastName: 'cvbcvb',
+                    //     phoneNumber: '345345345');
                   },
                   minimumSize: Size(
                     200,

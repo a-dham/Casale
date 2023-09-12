@@ -1,4 +1,5 @@
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/product_cubit/products_cubit.dart';
 import 'package:casale/src/presentation/views/settings/widgets/list_widget.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
@@ -104,7 +105,9 @@ class Settings extends StatelessWidget {
                       height: 10,
                     ),
                     ListWidget(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).pushNamed(Routes.settingview);
+                      },
                       title: S.current.themes,
                       iconData: Icons.dark_mode_rounded,
                     ),

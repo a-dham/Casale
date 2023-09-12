@@ -1,17 +1,26 @@
+// ignore_for_file: avoid_print
+
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/domain/models/products_model.dart';
+import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ItemWidget extends StatelessWidget {
-  ItemWidget({
+  const ItemWidget({
     super.key,
     required this.itemName,
     required this.itemPrice,
     required this.quantity,
+    required this.posCubit,
+    required this.itemIndex,
   });
   final String itemName;
   final String itemPrice;
   final int quantity;
+  final PosCubit posCubit;
+  final ItemsModel itemIndex;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -35,11 +44,14 @@ class ItemWidget extends StatelessWidget {
               Row(
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(Routes.extra);
+                    },
                     child: Text(S.current.note),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.of(context).pushNamed(Routes.extra),
+                    onTap: () =>
+                        showQuantityDialog(context, posCubit, itemIndex),
                     child: Text(
                       'X $quantity',
                       style: const TextStyle(
@@ -63,5 +75,52 @@ class ItemWidget extends StatelessWidget {
             ],
           )
         ]);
+  }
+
+  showQuantityDialog(context, PosCubit posCubit, ItemsModel item) {
+    showDialog(
+        context: context,
+        barrierColor: AppColors.orangeColor.withOpacity(0.08),
+        builder: (builder) {
+          return AlertDialog(
+              content: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  posCubit.addItemTocart(item);
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: AppColors.orangeColor,
+                  size: 33,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                constraints: const BoxConstraints(maxWidth: 100),
+                child: TextField(
+                  cursorColor: AppColors.orangeColor,
+                  keyboardType: TextInputType.number,
+                  onSubmitted: (value) {
+                    // item.quantity = value as int;
+                    // print('qqq==${item.quantity}');
+                    print(value);
+                  },
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {
+                  posCubit.decresQuantityFromCart(item);
+                },
+                icon: const Icon(
+                  Icons.minimize,
+                  color: AppColors.orangeColor,
+                  size: 33,
+                ),
+              ),
+            ],
+          ));
+        });
   }
 }

@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_title": MessageLookupByLibrary.simpleMessage("Manager"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addCustomerToTicket":
+            MessageLookupByLibrary.simpleMessage("Add Customer To Ticket"),
         "afterTax": MessageLookupByLibrary.simpleMessage("After Tax"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -62,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "printingAlert": MessageLookupByLibrary.simpleMessage(
             "Would you like to Print this?"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "recentCustomers":
+            MessageLookupByLibrary.simpleMessage("Recent Customers"),
         "saudiaCurrency": MessageLookupByLibrary.simpleMessage("SAR"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "sections": MessageLookupByLibrary.simpleMessage("Sections"),
@@ -69,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signup": MessageLookupByLibrary.simpleMessage("SignUp"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "start": MessageLookupByLibrary.simpleMessage("Start"),
+        "tax": MessageLookupByLibrary.simpleMessage("Tax"),
         "themes": MessageLookupByLibrary.simpleMessage("themes"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "username": MessageLookupByLibrary.simpleMessage("UserName")

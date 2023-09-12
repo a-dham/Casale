@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_title": MessageLookupByLibrary.simpleMessage("المدير"),
         "active": MessageLookupByLibrary.simpleMessage("النشطة"),
         "add": MessageLookupByLibrary.simpleMessage("إضافة"),
+        "addCustomerToTicket":
+            MessageLookupByLibrary.simpleMessage("إضافة عميل للفاتورة"),
         "afterTax": MessageLookupByLibrary.simpleMessage("بعد الضريبة"),
         "all": MessageLookupByLibrary.simpleMessage("الجميع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
@@ -61,6 +63,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "printingAlert":
             MessageLookupByLibrary.simpleMessage("هل تريد الطباعة ؟"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "recentCustomers":
+            MessageLookupByLibrary.simpleMessage("العملاء الحالين"),
         "saudiaCurrency": MessageLookupByLibrary.simpleMessage("رس"),
         "search": MessageLookupByLibrary.simpleMessage("البحث"),
         "sections": MessageLookupByLibrary.simpleMessage("الأقسام"),
@@ -68,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signup": MessageLookupByLibrary.simpleMessage("تسجيل جديد"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
         "start": MessageLookupByLibrary.simpleMessage("لننطلق"),
+        "tax": MessageLookupByLibrary.simpleMessage("الضريبة"),
         "themes": MessageLookupByLibrary.simpleMessage("السيمات"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "username": MessageLookupByLibrary.simpleMessage("إسم المستخدم")

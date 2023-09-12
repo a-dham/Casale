@@ -23,7 +23,7 @@ class PosTablet extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: screenWidth - 450,
+              width: screenWidth - 400,
               padding: const EdgeInsets.symmetric(
                 horizontal: 25,
                 vertical: 10,
@@ -44,13 +44,16 @@ class PosTablet extends StatelessWidget {
               ),
             ),
             Container(
-              width: 450,
+              constraints: const BoxConstraints(
+                maxWidth: 400,
+                minWidth: 150,
+              ),
               color: AppColors.whiteColor,
               padding: const EdgeInsets.symmetric(
                 horizontal: 25,
                 vertical: 10,
               ),
-              child: const SingleChildScrollView(child: InvoiceBody()),
+              child: const InvoiceBody(),
             ),
           ],
         ),
