@@ -18,6 +18,7 @@
     "invoice":"الفاتورة",
     "price":"السعر",
     "afterTax":"بعد الضريبة",
+    "tax":"الضريبة",
     "total":"الإجمالي",
     "payment":"المدفوع",
     "orders":"الطلبات",
@@ -43,5 +44,7 @@
     "add":"إضافة",
     "customer":"عميل",
     "phone":"رقم الجوال",
-    "name":"الإسم"
+    "recentCustomers":"العملاء الحالين",
+    "name":"الإسم",
+    "addCustomerToTicket":"إضافة عميل للفاتورة"
 }

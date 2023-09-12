@@ -15,7 +15,7 @@ class Items extends StatelessWidget {
         return Expanded(
           child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: width >= 600 ? 3 : 2,
+                crossAxisCount: width >= 600 ? 4 : 2,
                 mainAxisSpacing: 10,
                 mainAxisExtent: 150,
               ),
@@ -39,19 +39,11 @@ class Items extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                width: 2,
-                                color: AppColors.lightGreyColor,
-                              )),
-                          child: Image.asset(
-                            'assets/images/item.png',
-                            fit: BoxFit.fill,
-                            width: double.infinity,
-                            height: 85,
-                          ),
+                        Image.asset(
+                          'assets/images/item.png',
+                          fit: BoxFit.scaleDown,
+                          width: double.infinity,
+                          height: 85,
                         ),
                         const Spacer(),
                         Text(

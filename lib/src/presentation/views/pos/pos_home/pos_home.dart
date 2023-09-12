@@ -11,7 +11,7 @@ class POSHome extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     String data = Responive().isMobile(width);
     if (data == 'tablet') {
-      return PosTablet();
+      return const PosTablet();
     } else {
       return const PosMobile();
     }

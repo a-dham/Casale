@@ -3,7 +3,9 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/auth/auth_cubit.dart';
+import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
+import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/presentation/views/auth/widgets/footer.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
@@ -23,20 +25,20 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    return BlocBuilder<AuthCubit, AuthState>(
-      builder: (context, state) {
+    bool isloading = false;
+    AuthCubit authCubit = AuthCubit.get(context);
+
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
         if (state is AuthStateSuccess) {
           print('state success');
-          CacheHelper.saveData(key: 'sysacc', value: state.loginModel.data)
-              .then(
-            (value) => Navigator.pushNamedAndRemoveUntil(
-                context, Routes.posHome, (route) => false),
-          );
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.posHome, (route) => false);
         } else if (state is AuthStateLoading) {
-          const CircularProgressIndicator();
+          isloading = !isloading;
         }
-
-        AuthCubit authcubit = AuthCubit.get(context);
+      },
+      builder: (context, state) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: Form(
@@ -117,29 +119,34 @@ class Login extends StatelessWidget {
                         SizedBox(
                           height: screenHeight * 0.02,
                         ),
-                        CustomeTextButton(
-                          childWidget: Text(
-                            S.current.login,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: AppColors.whiteColor,
-                            ),
-                          ),
-                          borderRaduis: BorderRadius.circular(15),
-                          borderwidth: 0,
-                          isBorder: BorderStyle.none,
-                          backgroundColor: AppColors.orangeColor,
-                          elevation: 0,
-                          onPressed: () async {
-                            if (formkey.currentState!.validate()) {
-                              authcubit.login(
-                                userNameController.text.toString(),
-                                passwordController.text.toString(),
-                              );
-                            }
-                          },
-                          minimumSize: Size(screenWidth * 0.4, 45),
-                        ),
+                        isloading
+                            ? const CircularProgressIndicator(
+                                color: AppColors.orangeColor,
+                                semanticsValue: 'ows',
+                              )
+                            : CustomeTextButton(
+                                childWidget: Text(
+                                  S.current.login,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
+                                borderRaduis: BorderRadius.circular(15),
+                                borderwidth: 0,
+                                isBorder: BorderStyle.none,
+                                backgroundColor: AppColors.orangeColor,
+                                elevation: 0,
+                                onPressed: () async {
+                                  if (formkey.currentState!.validate()) {
+                                    authCubit.login(
+                                      userNameController.text.toString(),
+                                      passwordController.text.toString(),
+                                    );
+                                  }
+                                },
+                                minimumSize: Size(screenWidth * 0.4, 45),
+                              ),
                         const SizedBox(
                           height: 20,
                         ),

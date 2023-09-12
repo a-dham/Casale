@@ -8,6 +8,7 @@ import 'package:casale/src/presentation/views/payment/widget/print.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/pos_home.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/extra.dart';
 import 'package:casale/src/presentation/views/pos/pos_login/pos_login.dart';
+import 'package:casale/src/presentation/views/settings/settings.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_controller.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_view.dart';
 import 'package:casale/src/presentation/views/splash/splash.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String posHome = '/posHome';
   static const String payment = '/payment';
   static const String setting = '/settings';
+  static const String settingview = '/settingsView';
 }
 
 class AppRouter {
@@ -78,9 +80,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const Print(),
         );
-      case Routes.setting:
+      case Routes.settingview:
         return MaterialPageRoute(
             builder: (_) => SettingsView(controller: settingsController));
+      case Routes.setting:
+        return MaterialPageRoute(builder: (_) => const Settings());
       default:
         return unDefinedRoute();
     }

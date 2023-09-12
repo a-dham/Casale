@@ -1,4 +1,3 @@
-import 'package:casale/src/domain/models/products_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'products_state.dart';

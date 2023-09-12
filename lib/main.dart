@@ -13,12 +13,13 @@ void main() async {
   await DioHelper.init();
   await CacheHelper.init();
   String? initPage;
-  var sysAcc = CacheHelper.getData(key: 'sysacc');
+  var sysac = CacheHelper.getData(key: 'sysac');
+  // CacheHelper.removeData(key: 'sysac');'
   bool? onboarding = CacheHelper.getData(key: 'onboarding');
 
   if (onboarding != null) {
-    if (sysAcc != null) {
-      print('tokennnnn $sysAcc');
+    if (sysac != null) {
+      print('sysac $sysac');
       initPage = Routes.bottomNavigation;
     } else {
       initPage = Routes.login;
@@ -29,7 +30,7 @@ void main() async {
 
   print(initPage);
   print(onboarding);
-  print(sysAcc);
+  print(sysac);
 
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();

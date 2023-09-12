@@ -1,18 +1,25 @@
 class LoginModel {
-  late String status;
-  String? data;
-  // UserData? data;
+  String? status;
+  UserData? data;
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'];
-    // data = json['data'] != null ? UserData.fromJson(json['data']) : null;
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 }
 
 class UserData {
-  String? sysAcc;
+  String? userId;
+  String? orgId;
+  String? accountTitle;
+  String? accountStatus;
+  String? sysac;
+
   UserData.fromJson(Map<String, dynamic> json) {
-    sysAcc = json['sysac'];
+    userId = json['id'];
+    orgId = json['org_id'];
+    sysac = json['sysac'];
+    accountTitle = json['title'];
+    accountStatus = json['status'];
   }
 }
