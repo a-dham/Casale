@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
             BlocProvider<ProductsCubit>(create: (context) => ProductsCubit()),
             BlocProvider(create: (context) => NavigationCubit()),
             BlocProvider(create: (context) => AuthCubit()),
-            BlocProvider(create: (context) => PosCubit()),
+            BlocProvider(
+                create: (context) => PosCubit()
+                  ..getOrgData()
+                  ..getAccountData()),
           ],
           child: MaterialApp(
             restorationScopeId: 'app',

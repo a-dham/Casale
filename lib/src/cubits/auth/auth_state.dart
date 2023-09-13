@@ -14,3 +14,5 @@ final class AuthStateSuccess extends AuthState {
 }
 
 final class AuthStateFail extends AuthState {}
+
+final class GetOrgStateSuccess extends AuthState {}

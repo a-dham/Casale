@@ -1,9 +1,9 @@
-// ignore_for_file: avoid_print
-
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
+import 'package:casale/src/domain/models/login_model.dart';
+import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/domain/models/products_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,7 +84,7 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // get customers
-  CustomersModel? customerModel;
+  CustomersModel? customersModel;
   List customers = [];
 
   getCustomers() async {
@@ -94,9 +94,9 @@ class PosCubit extends Cubit<PosState> {
       'rtype': 'json',
       'sysac': 'YXpjamJkZWNiMXh6NzQ2bXo3NDJ6ejc0cWMyMHRtMjBmbjM0d3YyMA',
     }).then((value) {
-      customerModel = CustomersModel.fromJson(value!.data);
-      if (customerModel!.status == 'success') {
-        for (var element in customerModel!.customers) {
+      customersModel = CustomersModel.fromJson(value!.data);
+      if (customersModel!.status == 'success') {
+        for (var element in customersModel!.customers) {
           customers.add(element);
         }
       } else {
@@ -108,8 +108,27 @@ class PosCubit extends Cubit<PosState> {
     });
   }
 
+  String? customerName;
   getCustomer(String customerId) {
-    print('customer id ${customerId.toString()}');
+    DioHelper.postData(
+      url: EndPoints.baseUrl,
+      data: {},
+      queryParameters: {
+        "flr": "casale/manage/customers/view",
+        "rtype": "json",
+        "dtype": "json",
+        "customer_id": customerId,
+        "sysac": sysAc
+      },
+    ).then((value) {
+      customersModel = CustomersModel.fromJson2(value?.data);
+      customerName = customersModel?.customer?.firstName;
+      emit(GetCustomerState());
+      print(customersModel?.status);
+      print(customersModel?.customer?.customerId);
+      print(customersModel?.customer?.firstName);
+      print('-------------------------------------------');
+    });
   }
 
 // add customer
@@ -143,16 +162,33 @@ class PosCubit extends Cubit<PosState> {
     });
   }
 
-// "sysac":"bmZjZWNkaG1iMGJ6NzQxdno3NDF4ejc0Zm4yMHNiMjBwYTM0Zm4yMA"
-// acc/org&sysac&rtype=json&
+  // get org data
+  OrgModel? orgModel;
   getOrgData() {
-    DioHelper.getData(url: EndPoints.baseUrl, queryParameters: {
+    DioHelper.postData(url: EndPoints.baseUrl, data: {}, queryParameters: {
       "flr": "acc/org",
       "dtype": "json",
       "rtype": "json",
       "sysac": sysAc
     }).then((value) {
-      print(value?.data);
+      emit(GetAccountStateLoading());
+      orgModel = OrgModel.fromJson(value?.data);
+      emit(GetOrgStateSuccess(
+        orgModel: orgModel,
+      ));
+    });
+  }
+
+  LoginModel? loginModel;
+  getAccountData() {
+    DioHelper.postData(url: EndPoints.baseUrl, data: {}, queryParameters: {
+      'flr': 'acc/login',
+      'sysac': sysAc,
+      'rtype': 'json',
+    }).then((value) {
+      emit(GetAccountStateLoading());
+      loginModel = LoginModel.fromJson(value?.data);
+      emit(GetAccountStateSuccess());
     });
   }
 }

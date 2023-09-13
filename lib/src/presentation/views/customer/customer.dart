@@ -98,12 +98,13 @@ class Customer extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () async {
-                                int customerId =
+                                String customerId =
                                     posCubit.customers[index].customerId;
-                                await posCubit
-                                    .getCustomer(customerId.toString());
+                                await posCubit.getCustomer(customerId);
+                                Navigator.of(context).pop();
                               },
-                              child: Padding(
+                              child: Container(
+                                color: Colors.blue[100],
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
