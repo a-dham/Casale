@@ -2,20 +2,25 @@ class CustomersModel {
   String? status;
   String? callBack;
   List customers = [];
+  Customer? customer;
 
   CustomersModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     // data = json['data'] != null ? CustomerModel.fromJson(json['data']) : null;
-
     customers = json['data'] != null
         ? (json['data'] as List)
-            .map((customer) => CustomerModel.fromJson(customer))
+            .map((customer) => Customer.fromJson(customer))
             .toList()
         : [];
   }
+  // List customer = [];
+  CustomersModel.fromJson2(Map<String, dynamic> json) {
+    status = json['status'];
+    customer = json['data'] != null ? Customer.fromJson(json['data']) : null;
+  }
 }
 
-class CustomerModel {
+class Customer {
   String? customerId;
   String? orgId;
   String? customerName;
@@ -24,7 +29,7 @@ class CustomerModel {
   String? phoneNo;
   String? email;
   String? addSubmit;
-  CustomerModel.fromJson(Map<String, dynamic> json) {
+  Customer.fromJson(Map<String, dynamic> json) {
     customerId = json['id'];
     orgId = json['org_id'];
     customerName = json['customer_name'];

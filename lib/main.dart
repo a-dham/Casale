@@ -27,7 +27,6 @@ void main() async {
   } else {
     initPage = Routes.splash;
   }
-
   print(initPage);
   print(onboarding);
   print(sysac);

@@ -1,3 +1,4 @@
+import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +13,13 @@ class Sections extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'الأقسام',
-          style: TextStyle(
+          S.current.sections,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 3,
         ),
         SizedBox(
