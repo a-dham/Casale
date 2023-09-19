@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
@@ -12,75 +14,82 @@ part 'pos_state.dart';
 class PosCubit extends Cubit<PosState> {
   PosCubit() : super(PosInitial());
   static PosCubit get(context) => BlocProvider.of(context);
+  String sysAc = CacheHelper.getData(key: 'sysac');
+
   // items
-  List<ItemsModel> items = [
-    ItemsModel(
-        id: 1, title: 'cofee', price: 51, description: 'sssss', quantity: 1),
-    ItemsModel(
-        id: 2, title: 'milk', price: 20, description: 'sssss', quantity: 1),
-    ItemsModel(
-        id: 3, title: 'bread', price: 3, description: 'sssss', quantity: 1),
-    ItemsModel(
-        id: 5, title: 'ssss', price: 4, description: 'sssss', quantity: 1),
-    ItemsModel(
-        id: 6, title: 'ssss', price: 4, description: 'sssss', quantity: 1),
-    ItemsModel(
-        id: 7, title: 'ssss', price: 4, description: 'sssss', quantity: 1),
-    ItemsModel(
-        id: 8, title: 'ssss', price: 4, description: 'sssss', quantity: 1),
-  ];
+
+  ItemModel? itemModel;
+  var item;
+  getItems() {
+    emit(PosInitial());
+    DioHelper.postData(url: EndPoints.baseUrl, data: {
+      'flr': sysAc,
+    }, queryParameters: {
+      'flr': 'casale/manage/items/views',
+      'sysac': sysAc,
+      'rtype': 'json',
+      'dtype': 'json',
+    }).then((value) {
+      // print(value?.data);
+      item = ItemModel.fromJson(value?.data);
+
+      print('itemssssssssssssss--- ${item.status}');
+      print('itemssssssssssssss--- ${item.data[10]?.englishTitle}');
+      print('itemssssssssssssss--- ${item.data[35]?.price}');
+      emit(GetItemsSuccess(itemModel: itemModel));
+    });
+  }
+
   // cart
-  List<ItemsModel> cart = [];
+  List<ItemModel> cart = [];
   double totalPrice = 0;
 
   //add item to cart
-  void addItemTocart(ItemsModel item) {
-    int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
-    if (cart.contains(item)) {
-      var quantity = cart[existingIndex].quantity++;
-      print(quantity);
-    } else {
-      cart.add(item);
-    }
-    invoiceTotal();
-    emit(PosStateItemToCart());
-  }
+  // void addItemTocart(ItemModel item) {
+  //   // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
+  //   if (cart.contains(item)) {
+  //     // cart[existingIndex].quantity++;
+  //   } else {
+  //     cart.add(item);
+  //   }
+  //   invoiceTotal();
+  //   emit(PosStateItemToCart());
+  // }
 
-  void decresQuantityFromCart(ItemsModel item) {
-    int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
-    if (cart.contains(item)) {
-      if (cart[existingIndex].quantity > 1) {
-        cart[existingIndex].quantity--;
-      } else {
-        cart[existingIndex].quantity = 1;
-        cart.removeWhere((element) => element == item);
-      }
-      invoiceTotal();
-    }
-    emit(PosStateRemoveItem());
-  }
+  // void decresQuantityFromCart(ItemsModel item) {
+  //   // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
+  //   if (cart.contains(item)) {
+  //     // if (cart[existingIndex].quantity > 1) {
+  //       // cart[existingIndex].quantity--;
+  //     } else {
+  //       // cart[existingIndex].quantity = 1;
+  //       cart.removeWhere((element) => element == item);
+  //     }
+  //     invoiceTotal();
+  //   }
+  //   // emit(PosStateRemoveItem());
+  // }
 
-  void removeItemFromCart(ItemsModel item) {
-    int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
-    cart[existingIndex].quantity = 1;
-    cart.removeWhere((element) => element == item);
+  void removeItemFromCart(item) {
+    // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
+    // cart[existingIndex].quantity = 1;
+    // cart.removeWhere((element) => element == item);
     invoiceTotal();
-    emit(PosStateRemoveItem());
+    // emit(PosStateRemoveItem());
   }
 
   void clearCart() {
-    cart.clear();
-    emit(PosStateClearCart());
+    // cart.clear();
+    // emit(PosStateClearCart());
   }
 
   // calculate total invoice
   void invoiceTotal() {
-    totalPrice = 0;
-    for (var item in cart) {
-      totalPrice += (item.price * item.quantity);
-      print('total $totalPrice');
-    }
-    print('final  total $totalPrice');
+    // totalPrice = 0;
+    // for (var item in cart) {
+    // totalPrice += (item.price * item.quantity);
+    // }
+    // print('final  total $totalPrice');
   }
 
   // get customers
@@ -124,15 +133,10 @@ class PosCubit extends Cubit<PosState> {
       customersModel = CustomersModel.fromJson2(value?.data);
       customerName = customersModel?.customer?.firstName;
       emit(GetCustomerState());
-      print(customersModel?.status);
-      print(customersModel?.customer?.customerId);
-      print(customersModel?.customer?.firstName);
-      print('-------------------------------------------');
     });
   }
 
 // add customer
-  String sysAc = CacheHelper.getData(key: 'sysac');
   addCustomer({
     required String firstName,
     required String email,
@@ -152,10 +156,9 @@ class PosCubit extends Cubit<PosState> {
     }).then((value) {
       if (value != null) {
         emit(AddCustomerStateSuccess());
-        print('customer add');
         print(value.data);
       } else {
-        print('customer fail');
+        print('customer fail $value');
       }
     }).catchError((error) {
       print('catch error ${error.toString()}');
@@ -191,4 +194,8 @@ class PosCubit extends Cubit<PosState> {
       emit(GetAccountStateSuccess());
     });
   }
+
+// get paymethods
+
+  // getPaymethods
 }

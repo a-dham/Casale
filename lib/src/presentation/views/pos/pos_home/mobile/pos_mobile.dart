@@ -1,7 +1,10 @@
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/search_sections.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widget/invoice.dart';
@@ -13,96 +16,100 @@ class PosMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Locale currnetLocal = Localizations.localeOf(context);
-    // ignore: avoid_print
-    print(currnetLocal);
-    return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.orangeColor,
-          tooltip: 'show inv Itmes',
-          onPressed: () {
-            Invoice().settingModalBottomSheet(context);
-          },
-          child: const Icon(
-            Icons.request_page_rounded,
-          ),
-        ),
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          toolbarHeight: 60,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leadingWidth: 0,
+    PosCubit posCubit = PosCubit.get(context);
+    return BlocConsumer<PosCubit, PosState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: AppColors.orangeColor,
+              tooltip: 'show inv Itmes',
+              onPressed: () {
+                Invoice().settingModalBottomSheet(context);
+              },
+              child: const Icon(
+                Icons.request_page_rounded,
+              ),
+            ),
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              toolbarHeight: 60,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leadingWidth: 0,
 
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/images/accont_avatar.svg',
-                  width: 40,
-                ),
-                const SizedBox(width: 5),
-                Column(
+              title: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
                   children: [
-                    Text(
-                      S.current.account_title,
-                      style: const TextStyle(
-                        color: AppColors.orangeColor,
-                        fontSize: 15,
-                      ),
+                    SvgPicture.asset(
+                      'assets/images/accont_avatar.svg',
+                      width: 40,
+                    ),
+                    const SizedBox(width: 5),
+                    Column(
+                      children: [
+                        Text(
+                          S.current.pos,
+                          style: const TextStyle(
+                            color: AppColors.orangeColor,
+                            fontSize: 15,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          posCubit.loginModel?.data?.accountTitle ?? 'No title',
+                          style: const TextStyle(
+                            color: AppColors.greyColor,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
-                      height: 5,
+                      width: 5,
                     ),
-                    const Text(
-                      'AZOZ',
-                      style: TextStyle(
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.notifications,
                         color: AppColors.greyColor,
-                        fontSize: 15,
+                        size: 29,
                       ),
+                    ),
+                    const Spacer(),
+                    SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      width: 40,
                     ),
                   ],
                 ),
+              ),
+              // actions: [
+
+              // ],
+            ),
+            body: Column(
+              children: [
+                const SearchSeactions(),
                 const SizedBox(
-                  width: 5,
+                  height: 10,
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.notifications,
-                    color: AppColors.greyColor,
-                    size: 29,
-                  ),
+                Sections(),
+                const SizedBox(
+                  height: 10,
                 ),
-                const Spacer(),
-                SvgPicture.asset(
-                  'assets/images/logo.svg',
-                  width: 40,
+                const ItemsHeader(),
+                const Items(),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
-            ),
-          ),
-          // actions: [
-
-          // ],
-        ),
-        body: Column(
-          children: [
-            const SearchSeactions(),
-            const SizedBox(
-              height: 10,
-            ),
-            Sections(),
-            const SizedBox(
-              height: 10,
-            ),
-            const Items(),
-            const SizedBox(
-              height: 10,
-            ),
-          ],
-        ));
+            ));
+      },
+    );
   }
 }
 

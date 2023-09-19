@@ -520,6 +520,36 @@ class S {
     );
   }
 
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item`
+  String get item {
+    return Intl.message(
+      'Item',
+      name: 'item',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Ways`
+  String get paymentWays {
+    return Intl.message(
+      'Payment Ways',
+      name: 'paymentWays',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Customer To Ticket`
   String get addCustomerToTicket {
     return Intl.message(

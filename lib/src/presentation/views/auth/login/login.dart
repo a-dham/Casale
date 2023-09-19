@@ -27,12 +27,12 @@ class Login extends StatelessWidget {
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthStateSuccess) {
+        if (state is AuthStateLoading) {
+          isloading = !isloading;
+        } else if (state is AuthStateSuccess) {
           print('state success');
           Navigator.pushNamedAndRemoveUntil(
-              context, Routes.posHome, (route) => false);
-        } else if (state is AuthStateLoading) {
-          isloading = !isloading;
+              context, Routes.bottomNavigation, (route) => false);
         }
       },
       builder: (context, state) {

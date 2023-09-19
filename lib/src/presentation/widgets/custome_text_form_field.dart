@@ -10,6 +10,7 @@ class CustomeTextFormField extends StatelessWidget {
     required this.keyboardType,
     @required this.textEditingController,
     @required this.validator,
+    @required this.onSubmitted,
   });
   final String labelText;
   final Widget suffixIcon;
@@ -17,6 +18,7 @@ class CustomeTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
+  final void Function(String)? onSubmitted;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,6 +28,7 @@ class CustomeTextFormField extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         validator: validator,
+        onFieldSubmitted: onSubmitted,
         controller: textEditingController,
         keyboardType: keyboardType,
         cursorColor: AppColors.orangeColor,

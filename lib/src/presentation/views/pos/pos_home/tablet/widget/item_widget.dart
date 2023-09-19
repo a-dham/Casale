@@ -14,22 +14,25 @@ class ItemWidget extends StatelessWidget {
     required this.itemPrice,
     required this.quantity,
     required this.posCubit,
-    required this.itemIndex,
+    // required this.itemIndex,
   });
   final String itemName;
   final String itemPrice;
   final int quantity;
   final PosCubit posCubit;
-  final ItemsModel itemIndex;
+  // final ItemModel itemIndex;
   @override
   Widget build(BuildContext context) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            'assets/images/soda.png',
-          ),
+          Container(
+              constraints: const BoxConstraints(
+                maxHeight: 60,
+                minWidth: 50,
+              ),
+              child: Image.asset('assets/images/item.png')),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +53,7 @@ class ItemWidget extends StatelessWidget {
                     child: Text(S.current.note),
                   ),
                   GestureDetector(
-                    onTap: () =>
-                        showQuantityDialog(context, posCubit, itemIndex),
+                    onTap: () => showQuantityDialog(context, posCubit),
                     child: Text(
                       'X $quantity',
                       style: const TextStyle(
@@ -77,7 +79,7 @@ class ItemWidget extends StatelessWidget {
         ]);
   }
 
-  showQuantityDialog(context, PosCubit posCubit, ItemsModel item) {
+  showQuantityDialog(context, PosCubit posCubit) {
     showDialog(
         context: context,
         barrierColor: AppColors.orangeColor.withOpacity(0.08),
@@ -87,7 +89,7 @@ class ItemWidget extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  posCubit.addItemTocart(item);
+                  // posCubit.addItemTocart(item);
                 },
                 icon: const Icon(
                   Icons.add,
@@ -111,7 +113,7 @@ class ItemWidget extends StatelessWidget {
               const Spacer(),
               IconButton(
                 onPressed: () {
-                  posCubit.decresQuantityFromCart(item);
+                  // posCubit.decresQuantityFromCart(item);
                 },
                 icon: const Icon(
                   Icons.minimize,

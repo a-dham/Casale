@@ -44,8 +44,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoice": MessageLookupByLibrary.simpleMessage("الفاتورة"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("إعدادت الفواتير"),
+        "item": MessageLookupByLibrary.simpleMessage("صنف"),
         "language": MessageLookupByLibrary.simpleMessage("اللغات"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "name": MessageLookupByLibrary.simpleMessage("الإسم"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "notNull": MessageLookupByLibrary.simpleMessage("لا يمكن أن يكون فارغ"),
@@ -54,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "owner": MessageLookupByLibrary.simpleMessage("المالك"),
         "password": MessageLookupByLibrary.simpleMessage("الرقم السري"),
         "payment": MessageLookupByLibrary.simpleMessage("المدفوع"),
+        "paymentWays": MessageLookupByLibrary.simpleMessage("طرق الدفع"),
         "phone": MessageLookupByLibrary.simpleMessage("رقم الجوال"),
         "pin": MessageLookupByLibrary.simpleMessage("رمز الدخول السريع"),
         "pos": MessageLookupByLibrary.simpleMessage("نقطة البيع"),

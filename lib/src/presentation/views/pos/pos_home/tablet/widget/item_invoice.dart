@@ -1,8 +1,6 @@
-// ignore_for_file: avoid_print
-
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
-import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_widget.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
@@ -22,28 +20,34 @@ class ItemsInvoice extends StatelessWidget {
           children: [
             Container(
               constraints: BoxConstraints(maxHeight: screenHeight - 460),
-              child: ListView.builder(
+              child: ListView.separated(
+                  separatorBuilder: (context, inedx) {
+                    return const Divider(
+                      thickness: 2,
+                      color: AppColors.orangeColor,
+                    );
+                  },
                   itemCount: posCubit.cart.length,
                   itemBuilder: (context, index) {
                     var itemCart = posCubit.cart[index];
-                    double itemTotalprice = itemCart.price * itemCart.quantity;
+                    // double itemTotalprice = itemCart.price * itemCart.quantity;
                     return Dismissible(
                       resizeDuration: const Duration(
                         milliseconds: 850,
                       ),
                       key: UniqueKey(),
                       onDismissed: (_) {
-                        posCubit.removeItemFromCart(itemCart);
+                        // posCubit.removeItemFromCart(itemCart);
                       },
                       background: Container(
                         color: Colors.red,
                       ),
                       child: ItemWidget(
-                        quantity: itemCart.quantity,
-                        itemName: itemCart.title,
-                        itemPrice: itemTotalprice.toString(),
+                        quantity: 10,
+                        itemName: 'test',
+                        itemPrice: '10',
                         posCubit: posCubit,
-                        itemIndex: itemCart,
+                        // itemIndex: 5,
                       ),
                     );
                   }),
@@ -135,19 +139,16 @@ class ItemsInvoice extends StatelessWidget {
                   ),
                   borderwidth: 0,
                   isBorder: BorderStyle.none,
-                  backgroundColor: AppColors.orangeColor,
+                  backgroundColor: posCubit.totalPrice == 0
+                      ? AppColors.lightGreyColor
+                      : AppColors.orangeColor,
                   elevation: 1,
                   onPressed: () async {
-                    // posCubit.clearCart();
-                    // posCubit.invoiceTotal();
-                    CacheHelper.removeData(key: 'sysac');
-                    // Navigator.pushNamed(context, Routes.payment);
+                    // posCubit.totalPrice == 0
+                    //     ? null
+                    //     : Navigator.pushNamed(context, Routes.payment);
 
-                    // posCubit.getOrgData();
-                    // posCubit.addCustomer(
-                    //     firstName: 'bcvbcvbcv',
-                    //     lastName: 'cvbcvb',
-                    //     phoneNumber: '345345345');
+                    Navigator.pushNamed(context, Routes.payment);
                   },
                   minimumSize: Size(
                     200,

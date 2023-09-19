@@ -19,13 +19,13 @@ class Items extends StatelessWidget {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 150,
               ),
-              itemCount: posCubit.items.length,
+              itemCount: posCubit.item?.data.length,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
-                final item = posCubit.items[index];
+                final item = posCubit.itemModel?.data[index];
                 return GestureDetector(
                   onTap: () {
-                    posCubit.addItemTocart(item);
+                    // posCubit.addItemTocart(item);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -51,7 +51,7 @@ class Items extends StatelessWidget {
                               color: Color(0xff12141E),
                               fontSize: 14,
                               overflow: TextOverflow.ellipsis),
-                          item.title,
+                          item?.title ?? '',
                         ),
                         Text(
                           style: const TextStyle(
@@ -59,7 +59,7 @@ class Items extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 10,
                           ),
-                          item.price.toString(),
+                          item?.price.toString() ?? '',
                         ),
                         const Spacer(),
                       ],

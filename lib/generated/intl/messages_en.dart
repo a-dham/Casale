@@ -45,8 +45,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoice": MessageLookupByLibrary.simpleMessage("Invoice"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("Invoices Settings"),
+        "item": MessageLookupByLibrary.simpleMessage("Item"),
         "language": MessageLookupByLibrary.simpleMessage("language"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),
@@ -55,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "owner": MessageLookupByLibrary.simpleMessage("Owner"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "payment": MessageLookupByLibrary.simpleMessage("Payment"),
+        "paymentWays": MessageLookupByLibrary.simpleMessage("Payment Ways"),
         "phone": MessageLookupByLibrary.simpleMessage("phone"),
         "pin": MessageLookupByLibrary.simpleMessage("PIN"),
         "pos": MessageLookupByLibrary.simpleMessage("POS"),

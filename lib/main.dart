@@ -5,7 +5,7 @@ import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_controller.dart';
 import 'package:flutter/material.dart';
-import 'src/app.dart';
+import 'src/casale.dart';
 import 'src/presentation/views/settings/widgets/settings_service.dart';
 
 void main() async {
@@ -15,7 +15,9 @@ void main() async {
   String? initPage;
   var sysac = CacheHelper.getData(key: 'sysac');
   // CacheHelper.removeData(key: 'sysac');'
-  bool? onboarding = CacheHelper.getData(key: 'onboarding');
+  bool? onboarding = await CacheHelper.getData(key: 'onboarding');
+  Locale? locale = await CacheHelper.getData(key: 'currentLanguage');
+  print('-------$locale');
 
   if (onboarding != null) {
     if (sysac != null) {
@@ -33,7 +35,7 @@ void main() async {
 
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
-  runApp(MyApp(
+  runApp(Casale(
     settingsController: settingsController,
     initpage: initPage,
   ));

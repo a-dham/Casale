@@ -18,7 +18,6 @@ class PosTablet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final PosCubit posCubit = PosCubit.get(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<PosCubit, PosState>(
@@ -45,7 +44,13 @@ class PosTablet extends StatelessWidget {
                       const SearchSeactions(),
                       Sections(),
                       const ItemsHeader(),
-                      const Items(),
+                      state is GetItemsSuccess
+                          ? const Items()
+                          : const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.orangeColor,
+                              ),
+                            ),
                     ],
                   ),
                 ),

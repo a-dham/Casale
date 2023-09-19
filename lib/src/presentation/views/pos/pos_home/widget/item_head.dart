@@ -1,3 +1,4 @@
+import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,7 @@ class ItemsHeader extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${posCubit.items.length}  صنف',
+                '${posCubit.item?.data.length ?? '...'}  ${S.current.item}',
                 style: const TextStyle(
                   fontSize: 15,
                 ),

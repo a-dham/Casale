@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
@@ -71,6 +73,7 @@ class Customer extends StatelessWidget {
                       height: 10,
                     ),
                     CustomeTextFormField(
+                      onSubmitted: null,
                       labelText: S.current.search,
                       suffixIcon: const Icon(Icons.search),
                       obscureText: false,
@@ -101,10 +104,10 @@ class Customer extends StatelessWidget {
                                 String customerId =
                                     posCubit.customers[index].customerId;
                                 await posCubit.getCustomer(customerId);
-                                Navigator.of(context).pop();
+                                Navigator.pop(context);
                               },
                               child: Container(
-                                color: Colors.blue[100],
+                                color: Colors.blue[50],
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
@@ -159,6 +162,7 @@ class Customer extends StatelessWidget {
                     height: 20,
                   ),
                   CustomeTextFormField(
+                      onSubmitted: null,
                       labelText: S.current.name,
                       suffixIcon: const Icon(Icons.person),
                       obscureText: false,
@@ -171,6 +175,7 @@ class Customer extends StatelessWidget {
                     height: 20,
                   ),
                   CustomeTextFormField(
+                      onSubmitted: null,
                       labelText: S.current.phone,
                       suffixIcon: const Icon(Icons.phone),
                       obscureText: false,
@@ -183,6 +188,7 @@ class Customer extends StatelessWidget {
                     height: 20,
                   ),
                   CustomeTextFormField(
+                      onSubmitted: null,
                       labelText: S.current.email,
                       suffixIcon: const Icon(Icons.email),
                       obscureText: false,
