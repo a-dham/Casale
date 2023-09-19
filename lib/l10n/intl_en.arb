@@ -46,6 +46,9 @@
     "phone":"phone",
     "recentCustomers":"Recent Customers",
     "name":"name",
+    "logout":"Logout",
+    "item":"Item",
+    "paymentWays":"Payment Ways",
     "addCustomerToTicket":"Add Customer To Ticket"
 
 

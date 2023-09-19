@@ -1,10 +1,10 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/presentation/views/customer/customer.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_invoice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class InvoiceBody extends StatelessWidget {
   const InvoiceBody({super.key});
@@ -12,11 +12,7 @@ class InvoiceBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PosCubit, PosState>(
-      listener: (context, state) {
-        // if (state is AuthStateSuccess) {
-        //   print('asdadasdasdasd $state');
-        // }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         PosCubit posCubit = PosCubit.get(context);
         return SingleChildScrollView(
@@ -26,16 +22,14 @@ class InvoiceBody extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      // Image.network(
-                      //     width: 50,
-                      //     height: 50,
-                      //     'https://media.istockphoto.com/id/1146517111/photo/taj-mahal-mausoleum-in-agra.jpg?s=1024x1024&w=is&k=20&c=ATqBHzO_cgsU8v6plHxVHTgE8zgK0BfEGzixY6JYg-c='),
-                      // Image.network(
-                      //     width: 50,
-                      //     height: 50,
-                      //     posCubit.orgModel?.data?.logo.toString() ?? ''),
-                      SvgPicture.asset('assets/images/accont_avatar.svg'),
-
+                      Container(
+                        constraints: const BoxConstraints(
+                          maxHeight: 50,
+                          maxWidth: 50,
+                        ),
+                        child: Image.network(
+                            '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo.toString() ?? ''}'),
+                      ),
                       const SizedBox(
                         width: 5,
                       ),

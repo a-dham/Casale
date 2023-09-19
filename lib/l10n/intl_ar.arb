@@ -46,5 +46,9 @@
     "phone":"رقم الجوال",
     "recentCustomers":"العملاء الحالين",
     "name":"الإسم",
+    "logout":"تسجيل الخروج",
+    "item":"صنف",
+    "paymentWays":"طرق الدفع",
+
     "addCustomerToTicket":"إضافة عميل للفاتورة"
 }

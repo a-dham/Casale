@@ -4,6 +4,14 @@ sealed class PosState {}
 
 final class PosInitial extends PosState {}
 
+final class ItemsStateLoading extends PosState {}
+
+final class GetItemsSuccess extends PosState {
+  final ItemModel? itemModel;
+
+  GetItemsSuccess({required this.itemModel});
+}
+
 final class PosStateItemToCart extends PosState {}
 
 final class PosStateRemoveItem extends PosState {}
