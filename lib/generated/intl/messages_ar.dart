@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "canceld": MessageLookupByLibrary.simpleMessage("الملغاة"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد الباسورد"),
+        "cusotmer": MessageLookupByLibrary.simpleMessage("العميل"),
         "customer": MessageLookupByLibrary.simpleMessage("عميل"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
@@ -62,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pos": MessageLookupByLibrary.simpleMessage("نقطة البيع"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "print": MessageLookupByLibrary.simpleMessage("طباعة"),
+        "printPage": MessageLookupByLibrary.simpleMessage("الطباعة"),
         "printers": MessageLookupByLibrary.simpleMessage("الطابعات"),
         "printingAlert":
             MessageLookupByLibrary.simpleMessage("هل تريد الطباعة ؟"),

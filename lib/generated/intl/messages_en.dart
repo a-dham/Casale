@@ -63,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pos": MessageLookupByLibrary.simpleMessage("POS"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "print": MessageLookupByLibrary.simpleMessage("Print"),
+        "printPage": MessageLookupByLibrary.simpleMessage("Printing Page"),
         "printers": MessageLookupByLibrary.simpleMessage("printers"),
         "printingAlert": MessageLookupByLibrary.simpleMessage(
             "Would you like to Print this?"),

@@ -1,4 +1,4 @@
-import 'dart:convert';
+// ignore_for_file: avoid_print
 
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
@@ -19,7 +19,7 @@ class PosCubit extends Cubit<PosState> {
   // items
 
   ItemModel? itemModel;
-  var item;
+  List? items = [];
   getItems() {
     emit(PosInitial());
     DioHelper.postData(url: EndPoints.baseUrl, data: {
@@ -30,31 +30,43 @@ class PosCubit extends Cubit<PosState> {
       'rtype': 'json',
       'dtype': 'json',
     }).then((value) {
-      // print(value?.data);
-      item = ItemModel.fromJson(value?.data);
-
-      print('itemssssssssssssss--- ${item.status}');
-      print('itemssssssssssssss--- ${item.data[10]?.englishTitle}');
-      print('itemssssssssssssss--- ${item.data[35]?.price}');
+      itemModel = ItemModel.fromJson(value?.data);
+      items = itemModel?.dataList;
       emit(GetItemsSuccess(itemModel: itemModel));
+    }).catchError((error) {
+      print('error is = $error');
     });
   }
 
   // cart
-  List<ItemModel> cart = [];
+  List cart = [];
   double totalPrice = 0;
+  double remainingToPay = 0.00;
+
+  String dropdownValue = '';
+  List<String> units = [];
 
   //add item to cart
-  // void addItemTocart(ItemModel item) {
-  //   // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
-  //   if (cart.contains(item)) {
-  //     // cart[existingIndex].quantity++;
-  //   } else {
-  //     cart.add(item);
-  //   }
-  //   invoiceTotal();
-  //   emit(PosStateItemToCart());
-  // }
+  void addItemTocart(item) {
+    // print(item.itemId);
+    // int existingIndex =
+    //     cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
+    // if (cart.contains(item)) {
+    //   var quantity = cart[existingIndex].cartItem.units['1'].unitQuantity++;
+    //   print(quantity);
+    // } else {
+    //   cart.add(item);
+    // }
+
+    cart.add(item);
+    dropdownValue = item.units[0].title;
+    for (var element in item.units) {
+      units.add(element.title);
+      print(element.title);
+    }
+    invoiceTotal();
+    emit(PosStateItemToCart());
+  }
 
   // void decresQuantityFromCart(ItemsModel item) {
   //   // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
@@ -73,23 +85,24 @@ class PosCubit extends Cubit<PosState> {
   void removeItemFromCart(item) {
     // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
     // cart[existingIndex].quantity = 1;
-    // cart.removeWhere((element) => element == item);
+    cart.removeWhere((element) => element == item);
     invoiceTotal();
-    // emit(PosStateRemoveItem());
+    emit(PosStateRemoveItem());
   }
 
   void clearCart() {
-    // cart.clear();
-    // emit(PosStateClearCart());
+    cart.clear();
+    emit(PosStateClearCart());
   }
 
   // calculate total invoice
   void invoiceTotal() {
-    // totalPrice = 0;
-    // for (var item in cart) {
-    // totalPrice += (item.price * item.quantity);
-    // }
-    // print('final  total $totalPrice');
+    totalPrice = 0;
+    for (var item in cart) {
+      totalPrice += double.parse(item.units[0].unitPrice);
+    }
+    remainingToPay = totalPrice;
+    print('final  total $totalPrice');
   }
 
   // get customers
@@ -195,7 +208,32 @@ class PosCubit extends Cubit<PosState> {
     });
   }
 
-// get paymethods
+//  fun for filter items
 
-  // getPaymethods
+  List? filterdItems = [];
+  bool isSearched = false;
+  filterItems(dynamic input) {
+    emit(ItemSearchStateloading());
+    print('start');
+    if (isSearched == true && items != null && items!.isNotEmpty) {
+      print('second');
+      filterdItems = items!
+          .where(
+            (item) => item.arabicTitle.contains(input),
+          )
+          .toList();
+      print('third');
+      for (var element in filterdItems!) {
+        print(element.arabicTitle);
+      }
+      return filterdItems;
+    }
+    emit(ItemSearchStateSuccess());
+  }
+
+  // select unit and calculate total or item
+  selectUnit(selectedValue) {
+    dropdownValue = selectedValue;
+    emit(UnitSelectStateSuccess());
+  }
 }

@@ -4,11 +4,16 @@ import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearchSeactions extends StatelessWidget {
+class SearchSeactions extends StatefulWidget {
   const SearchSeactions({
     super.key,
   });
 
+  @override
+  State<SearchSeactions> createState() => _SearchSeactionsState();
+}
+
+class _SearchSeactionsState extends State<SearchSeactions> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -52,9 +57,18 @@ class SearchSeactions extends StatelessWidget {
                   obscureText: false,
                   keyboardType: TextInputType.text,
                   textEditingController: null,
+                  onTap: () {
+                    setState(() {
+                      posCubit.isSearched = true;
+                    });
+                  },
+                  onchanged: (input) {
+                    posCubit.filterItems(input);
+                  },
                   validator: (value) {
                     return null;
                   },
+                  onSubmitted: (value) {},
                 ),
               ),
             ],

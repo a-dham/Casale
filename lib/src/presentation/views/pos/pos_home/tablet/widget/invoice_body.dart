@@ -6,6 +6,8 @@ import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_in
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../widgets/circular_progress.dart';
+
 class InvoiceBody extends StatelessWidget {
   const InvoiceBody({super.key});
 
@@ -28,7 +30,28 @@ class InvoiceBody extends StatelessWidget {
                           maxWidth: 50,
                         ),
                         child: Image.network(
-                            '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo.toString() ?? ''}'),
+                          '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                          fit: BoxFit.scaleDown,
+                          width: double.infinity,
+                          height: 85,
+                          errorBuilder: (context, object, stacktrace) {
+                            return Image.asset(
+                                fit: BoxFit.scaleDown,
+                                width: double.infinity,
+                                height: 85,
+                                'assets/images/error-loading-items.gif');
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return const CustomeCircularProgress();
+                            }
+                          },
+                          frameBuilder:
+                              (context, child, frame, wasSynchronouslyLoaded) =>
+                                  child,
+                        ),
                       ),
                       const SizedBox(
                         width: 5,
@@ -77,14 +100,6 @@ class InvoiceBody extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Text(
-                          '${S.current.invoice} #1234485',
-                          style: const TextStyle(
-                            fontFamily: 'Cairo',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                         const Spacer(),
                         TextButton.icon(
                           onPressed: () async {

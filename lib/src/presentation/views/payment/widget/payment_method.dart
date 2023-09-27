@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +92,8 @@ class PaymentMethods extends StatelessWidget {
                     validator: (value) {
                       return null;
                     },
+                    onTap: () {},
+                    onchanged: (string) {},
                   )
                 : const Text('can`t use this payment method'),
           );

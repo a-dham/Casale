@@ -11,6 +11,8 @@ class CustomeTextFormField extends StatelessWidget {
     @required this.textEditingController,
     @required this.validator,
     @required this.onSubmitted,
+    @required this.onchanged,
+    @required this.onTap,
   });
   final String labelText;
   final Widget suffixIcon;
@@ -19,6 +21,8 @@ class CustomeTextFormField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
   final void Function(String)? onSubmitted;
+  final void Function(String)? onchanged;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,6 +31,8 @@ class CustomeTextFormField extends StatelessWidget {
         onTapOutside: (event) {
           FocusManager.instance.primaryFocus?.unfocus();
         },
+        onTap: onTap,
+        onChanged: onchanged,
         validator: validator,
         onFieldSubmitted: onSubmitted,
         controller: textEditingController,

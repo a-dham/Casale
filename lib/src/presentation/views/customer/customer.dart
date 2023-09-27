@@ -82,6 +82,8 @@ class Customer extends StatelessWidget {
                       validator: (value) {
                         return null;
                       },
+                      onTap: () {},
+                      onchanged: (string) {},
                     ),
                     const SizedBox(
                       height: 10,
@@ -162,41 +164,50 @@ class Customer extends StatelessWidget {
                     height: 20,
                   ),
                   CustomeTextFormField(
-                      onSubmitted: null,
-                      labelText: S.current.name,
-                      suffixIcon: const Icon(Icons.person),
-                      obscureText: false,
-                      keyboardType: TextInputType.name,
-                      textEditingController: nameController,
-                      validator: (value) {
-                        return null;
-                      }),
+                    onSubmitted: null,
+                    labelText: S.current.name,
+                    suffixIcon: const Icon(Icons.person),
+                    obscureText: false,
+                    keyboardType: TextInputType.name,
+                    textEditingController: nameController,
+                    validator: (value) {
+                      return null;
+                    },
+                    onchanged: (string) {},
+                    onTap: () {},
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   CustomeTextFormField(
-                      onSubmitted: null,
-                      labelText: S.current.phone,
-                      suffixIcon: const Icon(Icons.phone),
-                      obscureText: false,
-                      keyboardType: TextInputType.number,
-                      textEditingController: phoneController,
-                      validator: (value) {
-                        return null;
-                      }),
+                    onSubmitted: null,
+                    labelText: S.current.phone,
+                    suffixIcon: const Icon(Icons.phone),
+                    obscureText: false,
+                    keyboardType: TextInputType.number,
+                    textEditingController: phoneController,
+                    validator: (value) {
+                      return null;
+                    },
+                    onTap: () {},
+                    onchanged: (string) {},
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   CustomeTextFormField(
-                      onSubmitted: null,
-                      labelText: S.current.email,
-                      suffixIcon: const Icon(Icons.email),
-                      obscureText: false,
-                      keyboardType: TextInputType.emailAddress,
-                      textEditingController: emailController,
-                      validator: (value) {
-                        return null;
-                      }),
+                    onSubmitted: null,
+                    labelText: S.current.email,
+                    suffixIcon: const Icon(Icons.email),
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                    textEditingController: emailController,
+                    validator: (value) {
+                      return null;
+                    },
+                    onTap: () {},
+                    onchanged: (string) {},
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

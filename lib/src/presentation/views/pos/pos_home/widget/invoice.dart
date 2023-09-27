@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_invoice.dart';
-import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,7 +58,7 @@ class Invoice {
                       Container(
                           constraints:
                               BoxConstraints(maxHeight: screenHeight * 0.75),
-                          child: ItemsInvoice())
+                          child: const ItemsInvoice())
                     ],
                   ),
                 ),
