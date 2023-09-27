@@ -36,3 +36,11 @@ final class GetOrgStateSuccess extends PosState {
 final class GetAccountStateLoading extends PosState {}
 
 final class GetAccountStateSuccess extends PosState {}
+
+final class ItemSearchStateloading extends PosState {}
+
+final class ItemSearchStateFail extends PosState {}
+
+final class ItemSearchStateSuccess extends PosState {}
+
+final class UnitSelectStateSuccess extends PosState {}

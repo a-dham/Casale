@@ -44,13 +44,13 @@ class PosTablet extends StatelessWidget {
                       const SearchSeactions(),
                       Sections(),
                       const ItemsHeader(),
-                      state is GetItemsSuccess
-                          ? const Items()
-                          : const Center(
+                      state is ItemsStateLoading
+                          ? const Center(
                               child: CircularProgressIndicator(
                                 color: AppColors.orangeColor,
                               ),
-                            ),
+                            )
+                          : const Items(),
                     ],
                   ),
                 ),

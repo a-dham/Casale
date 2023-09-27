@@ -29,7 +29,7 @@ class ItemsInvoice extends StatelessWidget {
                   },
                   itemCount: posCubit.cart.length,
                   itemBuilder: (context, index) {
-                    var itemCart = posCubit.cart[index];
+                    var item = posCubit.cart[index];
                     // double itemTotalprice = itemCart.price * itemCart.quantity;
                     return Dismissible(
                       resizeDuration: const Duration(
@@ -37,15 +37,15 @@ class ItemsInvoice extends StatelessWidget {
                       ),
                       key: UniqueKey(),
                       onDismissed: (_) {
-                        // posCubit.removeItemFromCart(itemCart);
+                        posCubit.removeItemFromCart(item);
                       },
                       background: Container(
                         color: Colors.red,
                       ),
                       child: ItemWidget(
-                        quantity: 10,
-                        itemName: 'test',
-                        itemPrice: '10',
+                        quantity: 1,
+                        itemName: item.arabicTitle,
+                        itemPrice: item.units[0].unitPrice,
                         posCubit: posCubit,
                         // itemIndex: 5,
                       ),
@@ -144,11 +144,12 @@ class ItemsInvoice extends StatelessWidget {
                       : AppColors.orangeColor,
                   elevation: 1,
                   onPressed: () async {
-                    // posCubit.totalPrice == 0
-                    //     ? null
-                    //     : Navigator.pushNamed(context, Routes.payment);
-
-                    Navigator.pushNamed(context, Routes.payment);
+                    posCubit.totalPrice == 0
+                        ? null
+                        : Navigator.pushNamed(
+                            context,
+                            Routes.payment,
+                          );
                   },
                   minimumSize: Size(
                     200,

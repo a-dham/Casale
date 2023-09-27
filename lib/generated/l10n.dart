@@ -550,6 +550,16 @@ class S {
     );
   }
 
+  /// `Printing Page`
+  String get printPage {
+    return Intl.message(
+      'Printing Page',
+      name: 'printPage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Customer To Ticket`
   String get addCustomerToTicket {
     return Intl.message(

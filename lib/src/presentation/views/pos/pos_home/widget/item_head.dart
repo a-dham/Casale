@@ -27,7 +27,7 @@ class ItemsHeader extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '${posCubit.item?.data.length ?? '...'}  ${S.current.item}',
+                '${posCubit.itemModel?.dataList.length ?? '...'}  ${S.current.item}',
                 style: const TextStyle(
                   fontSize: 15,
                 ),

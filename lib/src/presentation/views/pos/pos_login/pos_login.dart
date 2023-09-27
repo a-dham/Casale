@@ -57,6 +57,9 @@ class PosLogin extends StatelessWidget {
                     validator: (value) {
                       return null;
                     },
+                    onSubmitted: (string) {},
+                    onTap: () {},
+                    onchanged: (string) {},
                   ),
                   const SizedBox(
                     height: 8,

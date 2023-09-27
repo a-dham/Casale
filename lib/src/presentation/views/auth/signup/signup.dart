@@ -58,6 +58,9 @@ class Signup extends StatelessWidget {
                     validator: (value) {
                       return null;
                     },
+                    onSubmitted: (string) {},
+                    onTap: () {},
+                    onchanged: (string) {},
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -71,6 +74,9 @@ class Signup extends StatelessWidget {
                     validator: (value) {
                       return null;
                     },
+                    onSubmitted: (string) {},
+                    onTap: () {},
+                    onchanged: (string) {},
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -84,6 +90,9 @@ class Signup extends StatelessWidget {
                     validator: (value) {
                       return null;
                     },
+                    onSubmitted: (string) {},
+                    onTap: () {},
+                    onchanged: (string) {},
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -97,6 +106,9 @@ class Signup extends StatelessWidget {
                     validator: (value) {
                       return null;
                     },
+                    onSubmitted: (string) {},
+                    onTap: () {},
+                    onchanged: (string) {},
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,

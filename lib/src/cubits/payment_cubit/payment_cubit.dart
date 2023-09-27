@@ -1,4 +1,5 @@
-import 'package:bloc/bloc.dart';
+// ignore_for_file: avoid_print, depend_on_referenced_packages
+
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
@@ -13,7 +14,6 @@ class PaymentCubit extends Cubit<PaymentState> {
   static PaymentCubit get(context) => BlocProvider.of(context);
 
   String sysac = CacheHelper.getData(key: 'sysac');
-  double totalInve = 0;
 
   // get paymethods
   PaymethodModel? paymethodModel;

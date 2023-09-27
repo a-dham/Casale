@@ -85,6 +85,9 @@ class Login extends StatelessWidget {
                             }
                             return null;
                           },
+                          onSubmitted: (string) {},
+                          onTap: () {},
+                          onchanged: (string) {},
                         ),
                         SizedBox(
                           height: screenHeight * 0.02,
@@ -101,6 +104,9 @@ class Login extends StatelessWidget {
                             }
                             return null;
                           },
+                          onSubmitted: (string) {},
+                          onTap: () {},
+                          onchanged: (string) {},
                         ),
                         SizedBox(
                           height: screenHeight * 0.01,

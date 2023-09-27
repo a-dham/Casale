@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_is_empty
+
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/data/datasources/end_points.dart';
+import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,18 +23,24 @@ class Items extends StatelessWidget {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 150,
               ),
-              itemCount: posCubit.item?.data.length,
+              itemCount: posCubit.itemModel?.dataList.length,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
-                final item = posCubit.itemModel?.data[index];
+                final item = posCubit.itemModel?.dataList[index];
                 return GestureDetector(
                   onTap: () {
-                    // posCubit.addItemTocart(item);
+                    posCubit.addItemTocart(item);
                   },
                   child: Container(
+                    padding:
+                        const EdgeInsets.only(top: 10, right: 15, left: 15),
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.whiteColor,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        bottomRight: Radius.circular(50),
+                      ),
                       border: Border.all(
                         width: 2,
                         color: AppColors.lightGreyColor,
@@ -39,11 +49,28 @@ class Items extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
-                        Image.asset(
-                          'assets/images/item.png',
+                        Image.network(
+                          '${EndPoints.assetsUrl}${item?.image}',
                           fit: BoxFit.scaleDown,
                           width: double.infinity,
                           height: 85,
+                          errorBuilder: (context, object, stacktrace) {
+                            return Image.asset(
+                                fit: BoxFit.scaleDown,
+                                width: double.infinity,
+                                height: 85,
+                                'assets/images/error-loading-items.gif');
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            } else {
+                              return const CustomeCircularProgress();
+                            }
+                          },
+                          frameBuilder:
+                              (context, child, frame, wasSynchronouslyLoaded) =>
+                                  child,
                         ),
                         const Spacer(),
                         Text(
@@ -51,16 +78,17 @@ class Items extends StatelessWidget {
                               color: Color(0xff12141E),
                               fontSize: 14,
                               overflow: TextOverflow.ellipsis),
-                          item?.title ?? '',
+                          item?.arabicTitle ?? '',
                         ),
                         Text(
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
-                          item?.price.toString() ?? '',
-                        ),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
+                            item?.units.length == 0
+                                ? 'No Price !!'
+                                : item?.units[0].unitPrice ?? ''),
                         const Spacer(),
                       ],
                     ),

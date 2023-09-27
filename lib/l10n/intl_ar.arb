@@ -49,6 +49,7 @@
     "logout":"تسجيل الخروج",
     "item":"صنف",
     "paymentWays":"طرق الدفع",
-
+    "printPage":"الطباعة",
+    "cusotmer":"العميل",
     "addCustomerToTicket":"إضافة عميل للفاتورة"
 }
