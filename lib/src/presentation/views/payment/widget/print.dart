@@ -3,57 +3,79 @@
 import 'dart:typed_data';
 
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+
+import '../../../../data/datasources/end_points.dart';
 
 class Print extends StatelessWidget {
   const Print({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          S.current.printPage,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
+    return BlocConsumer<PosCubit, PosState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        PosCubit posCubit = PosCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+            // backgroundColor: AppColors.orangeColor,
+            centerTitle: true,
+            title: Text(
+              S.current.printPage,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+            // backgroundColor: AppColors.orangeColor,
           ),
-        ),
-        // backgroundColor: AppColors.orangeColor,
-      ),
-      body: PdfPreview(
-        build: (format) => _generatePdf(format),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        pageFormats: const {
-          "80mm": PdfPageFormat.roll80,
-          "57mm": PdfPageFormat.roll57,
-          "A4": PdfPageFormat.a4,
-        },
-        initialPageFormat: PdfPageFormat.roll80,
-        allowPrinting: true,
-        allowSharing: false,
-        pdfFileName: 'invoice',
-        canChangePageFormat: true,
-        canChangeOrientation: false,
-        canDebug: false,
-        loadingWidget: const CustomeCircularProgress(),
-        useActions: true,
-      ),
+          body: PdfPreview(
+            build: (format) => _generatePdf(format, posCubit),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            previewPageMargin: const EdgeInsets.all(30),
+            // pdfPreviewPageDecoration:    ,
+            pageFormats: const {
+              "80mm": PdfPageFormat.roll80,
+              "57mm": PdfPageFormat.roll57,
+              "A4": PdfPageFormat.a4,
+            },
+            initialPageFormat: PdfPageFormat.roll80,
+            allowPrinting: true,
+            allowSharing: false,
+            pdfFileName: 'invoice',
+            canChangePageFormat: true,
+            canChangeOrientation: false,
+            canDebug: false,
+            loadingWidget: const CustomeCircularProgress(),
+            useActions: true,
+            dynamicLayout: true,
+          ),
+        );
+      },
     );
   }
 
-  Future<Uint8List> _generatePdf(PdfPageFormat format) async {
+  Future<Uint8List> _generatePdf(
+      PdfPageFormat format, PosCubit posCubit) async {
+    Data? orgData = posCubit.orgModel?.data;
     final pdf = pw.Document(
+        creator: 'ADHAM ELSHARKAWY',
         theme: pw.ThemeData(),
         version: PdfVersion.pdf_1_5,
         compress: true,
         author: 'منشآت ويب لتقنية المعلومات');
     final font = await PdfGoogleFonts.iBMPlexSansArabicSemiBold();
+    final orgLogo = await networkImage(
+      cache: true,
+      '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+    );
 
     pdf.addPage(
       pw.Page(
@@ -63,240 +85,107 @@ class Print extends StatelessWidget {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.center,
             children: [
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.center,
-                children: [
-                  pw.Directionality(
-                    textDirection: pw.TextDirection.rtl,
-                    child: pw.Text('منشآت ويب ',
-                        style: pw.TextStyle(
-                          font: font,
-                          fontSize: 18,
-                        )),
-                  ),
-                ],
-              ),
-              pw.SizedBox(height: 5),
-              pw.Directionality(
-                textDirection: pw.TextDirection.rtl,
-                child: pw.Text('متجر سكاكا',
-                    style: pw.TextStyle(
-                      font: font,
-                      fontSize: 15,
-                    )),
-              ),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('رقم الفاتورة : #2225255',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 10,
-                      )),
+              pw.Container(
+                constraints: const pw.BoxConstraints(
+                  minWidth: 40,
+                  maxWidth: 60,
                 ),
-              ]),
+                child: pw.Image(orgLogo),
+              ),
+              textWidget(S.current.simpleTaxInvoice, 12, font),
+              textWidget('رقم الفاتورة : #2225255', 8, font),
+              textWidget(orgData?.arabicTitle ?? 'No Data', 10, font),
+              textWidget(' العنوان : ${orgData?.address}', 8, font),
               pw.BarcodeWidget(
                 data: '21698554525',
                 barcode: pw.Barcode.code128(),
                 width: 100,
                 height: 30,
               ),
-              pw.SizedBox(height: 10),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text(' التاريخ : 01/05/2023',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
+              pw.SizedBox(height: 2),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
                 pw.Spacer(),
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text(' العنوان : سكاكا',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
+                textWidget(' التاريخ / الوقت : 01/05/2023 15:07', 8, font),
+              ]),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+                pw.Spacer(),
+                textWidget('${S.current.taxNumber}   : ${orgData?.vatNumber}',
+                    8, font),
+              ]),
+              pw.SizedBox(height: 5),
+              pw.Table(
+                  border: pw.TableBorder.symmetric(
+                    outside: const pw.BorderSide(
+                      style: pw.BorderStyle.dashed,
+                    ),
+                  ),
+                  children: [
+                    pw.TableRow(
+                        decoration: const pw.BoxDecoration(),
+                        children: [
+                          textWidget(S.current.totalPriceWithVat, 6, font),
+                          textWidget(S.current.tax, 6, font),
+                          textWidget(S.current.unitPrice, 6, font),
+                          textWidget(S.current.quantity, 6, font),
+                          textWidget(S.current.products, 8, font),
+                        ]),
+                    pw.TableRow(
+                        decoration: const pw.BoxDecoration(),
+                        children: [
+                          textWidget('2', 6, font),
+                          textWidget('4', 6, font),
+                          textWidget('2', 6, font),
+                          textWidget('100', 6, font),
+                          pw.Container(
+                            width: 20,
+                            child: textWidget('صنف 1', 8, font),
+                          ),
+                        ]),
+                    pw.TableRow(
+                        decoration: const pw.BoxDecoration(),
+                        children: [
+                          textWidget('2', 6, font),
+                          textWidget('4', 6, font),
+                          textWidget('2', 6, font),
+                          textWidget('100', 6, font),
+                          pw.Container(
+                            width: 20,
+                            child: textWidget('صنف 2', 8, font),
+                          ),
+                        ]),
+                  ]),
+              pw.SizedBox(height: 5),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+                textWidget('22.00', 8, font),
+                pw.Spacer(),
+                textWidget(S.current.total, 8, font),
               ]),
               pw.SizedBox(height: 5),
               pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text(' الوقت : 15525',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
+                textWidget('2.00', 8, font),
                 pw.Spacer(),
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text(' الرقم الضريبي : 025154544',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
+                textWidget(S.current.tax, 8, font),
               ]),
-              pw.SizedBox(height: 10),
+              pw.SizedBox(height: 2),
               pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('الأصناف',
-                      style: pw.TextStyle(
-                        font: font,
-                      )),
-                ),
-              ]),
-              pw.SizedBox(height: 5),
-              pw.Table(border: pw.TableBorder.all(width: 1), children: [
-                pw.TableRow(decoration: const pw.BoxDecoration(), children: [
-                  pw.Center(
-                    child: pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Text('السعر',
-                          style: pw.TextStyle(
-                            font: font,
-                          )),
-                    ),
-                  ),
-                  pw.Center(
-                    child: pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Text('العدد',
-                          style: pw.TextStyle(
-                            font: font,
-                          )),
-                    ),
-                  ),
-                  pw.Center(
-                    child: pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Text('الأسم',
-                          style: pw.TextStyle(
-                            font: font,
-                          )),
-                    ),
-                  ),
-                ]),
-                pw.TableRow(decoration: const pw.BoxDecoration(), children: [
-                  pw.Center(
-                    child: pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Text('100',
-                          style: pw.TextStyle(
-                            font: font,
-                          )),
-                    ),
-                  ),
-                  pw.Center(
-                    child: pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Text(
-                        '10',
-                        style: pw.TextStyle(
-                          font: font,
-                        ),
-                      ),
-                    ),
-                  ),
-                  pw.Center(
-                    child: pw.Directionality(
-                      textDirection: pw.TextDirection.rtl,
-                      child: pw.Text('صنف تست',
-                          style: pw.TextStyle(
-                            font: font,
-                          )),
-                    ),
-                  ),
-                ]),
-              ]),
-              pw.SizedBox(height: 10),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('200',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
+                textWidget('24.00', 8, font),
                 pw.Spacer(),
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('الإجمالي',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
+                textWidget(S.current.totalPriceWithVat, 8, font),
               ]),
-              pw.SizedBox(height: 5),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('40',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
+              pw.SizedBox(height: 2.5),
+              pw.Container(
+                constraints: const pw.BoxConstraints(maxWidth: double.infinity),
+                child: pw.Text(
+                  '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+                  maxLines: 1,
                 ),
-                pw.Spacer(),
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('الخصم',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
-              ]),
-              pw.SizedBox(height: 5),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('20',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
-                pw.Spacer(),
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('الضريبة',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
-              ]),
-              pw.SizedBox(height: 5),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('250',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
-                pw.Spacer(),
-                pw.Directionality(
-                  textDirection: pw.TextDirection.rtl,
-                  child: pw.Text('الإجمالي شامل الضريبة',
-                      style: pw.TextStyle(
-                        font: font,
-                        fontSize: 8,
-                      )),
-                ),
-              ]),
-              pw.SizedBox(height: 20),
+              ),
+              pw.SizedBox(height: 2.5),
               pw.BarcodeWidget(
-                data: 'https://github.com/a-dham',
+                //search for how to hash qr-data
+                // i want to hashing   ###qrData### and send it
+                data:
+                    'ASXZhdi32YjYsdmKINmG2LjYp9mFINmF2YbYtNii2Kog2YjZitioAg8xMjM0NTY3ODkxMjM0NTYDCjIwMjMtMDktMzAEBTk3Ljc1BQUxMi43NQ==',
                 barcode: pw.Barcode.qrCode(),
                 width: 70,
                 height: 70,
@@ -308,5 +197,23 @@ class Print extends StatelessWidget {
     );
 
     return pdf.save();
+  }
+
+  textWidget(
+    String value,
+    double fontSize,
+    font,
+  ) {
+    return pw.Center(
+      child: pw.Directionality(
+        textDirection: pw.TextDirection.rtl,
+        child: pw.Text(value,
+            maxLines: 3,
+            style: pw.TextStyle(
+              font: font,
+              fontSize: fontSize,
+            )),
+      ),
+    );
   }
 }

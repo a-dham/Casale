@@ -4,6 +4,7 @@ import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_controller.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'src/casale.dart';
 import 'src/presentation/views/settings/widgets/settings_service.dart';
@@ -32,6 +33,12 @@ void main() async {
   print(initPage);
   print(onboarding);
   print(sysac);
+
+  final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  final windowsInfo = await deviceInfo.windowsInfo;
+  String deviceId = windowsInfo.deviceId;
+  print('"---------------------"');
+  print(deviceId);
 
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();

@@ -27,6 +27,9 @@ class Settings extends StatelessWidget {
               child: Scaffold(
                   body: Column(
                 children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
@@ -36,17 +39,20 @@ class Settings extends StatelessWidget {
                         bottomRight: Radius.circular(10),
                       ),
                     ),
-                    height: 150,
+                    height: 250,
                     child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(
-                              'Owner',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                            Spacer(),
+                            SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: CircleAvatar(
+                                foregroundImage:
+                                    AssetImage('assets/images/item.png'),
                               ),
                             ),
                             Spacer(),
@@ -56,7 +62,15 @@ class Settings extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          'POS1',
+                          'ADHAM Elsharkawy',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            letterSpacing: 3,
+                          ),
+                        ),
+                        Text(
+                          'Project manager',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -65,22 +79,29 @@ class Settings extends StatelessWidget {
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          'ADHAM Elsharkawy',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
+                  // Container(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 40),
+                  //   alignment: Alignment.centerRight,
+                  //   child: Text(
+                  //     S.current.accounts,
+                  //     style: const TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 20,
+                  //     ),
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Expanded(
                     child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       children: [
                         ListWidget(
                           onTap: () {},
@@ -90,6 +111,9 @@ class Settings extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+                        const Divider(
+                          thickness: 2,
+                        ),
                         ListWidget(
                           onTap: () {},
                           title: S.current.invoice,
@@ -98,6 +122,9 @@ class Settings extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+                        const Divider(
+                          thickness: 2,
+                        ),
                         ListWidget(
                           onTap: () {},
                           title: S.current.printers,
@@ -105,6 +132,9 @@ class Settings extends StatelessWidget {
                         ),
                         const SizedBox(
                           height: 10,
+                        ),
+                        const Divider(
+                          thickness: 2,
                         ),
                         ListWidget(
                           onTap: () {
@@ -116,6 +146,10 @@ class Settings extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+
                         // DropdownButton<String>(
                         //   value: settingsCubit.locale,
                         //   onChanged: (String newValue) {
@@ -148,6 +182,10 @@ class Settings extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+
                         ListWidget(
                           onTap: () {
                             settingsCubit.signOut(context);

@@ -560,11 +560,121 @@ class S {
     );
   }
 
+  /// `Accounts`
+  String get accounts {
+    return Intl.message(
+      'Accounts',
+      name: 'accounts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Total Order`
+  String get requirePay {
+    return Intl.message(
+      ' Total Order',
+      name: 'requirePay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining For Customer`
+  String get remaining {
+    return Intl.message(
+      'Remaining For Customer',
+      name: 'remaining',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining To Cleint`
+  String get remainingClient {
+    return Intl.message(
+      'Remaining To Cleint',
+      name: 'remainingClient',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Customer To Ticket`
   String get addCustomerToTicket {
     return Intl.message(
       'Add Customer To Ticket',
       name: 'addCustomerToTicket',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Value`
+  String get entervalue {
+    return Intl.message(
+      'Enter Value',
+      name: 'entervalue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Simple Tax Inoice`
+  String get simpleTaxInvoice {
+    return Intl.message(
+      'Simple Tax Inoice',
+      name: 'simpleTaxInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Numer`
+  String get taxNumber {
+    return Intl.message(
+      'Tax Numer',
+      name: 'taxNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total price With Vat`
+  String get totalPriceWithVat {
+    return Intl.message(
+      'Total price With Vat',
+      name: 'totalPriceWithVat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unit Price`
+  String get unitPrice {
+    return Intl.message(
+      'Unit Price',
+      name: 'unitPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity`
+  String get quantity {
+    return Intl.message(
+      'Quantity',
+      name: 'quantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products`
+  String get products {
+    return Intl.message(
+      'Products',
+      name: 'products',
       desc: '',
       args: [],
     );

@@ -1,14 +1,16 @@
 // ignore_for_file: avoid_print
 
+import 'package:casale/src/cubits/pos_cubit/local_items.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
 import 'package:casale/src/domain/models/login_model.dart';
 import 'package:casale/src/domain/models/org_model.dart';
+import 'package:casale/src/domain/models/paymethods_model.dart';
 import 'package:casale/src/domain/models/products_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 part 'pos_state.dart';
 
 class PosCubit extends Cubit<PosState> {
@@ -17,9 +19,14 @@ class PosCubit extends Cubit<PosState> {
   String sysAc = CacheHelper.getData(key: 'sysac');
 
   // items
-
   ItemModel? itemModel;
   List? items = [];
+  List cart = [];
+  List units = [];
+  double totalorderWithVat = 0;
+  double requiredToPaid = 0;
+  double remaining = 0;
+
   getItems() {
     emit(PosInitial());
     DioHelper.postData(url: EndPoints.baseUrl, data: {
@@ -30,62 +37,60 @@ class PosCubit extends Cubit<PosState> {
       'rtype': 'json',
       'dtype': 'json',
     }).then((value) {
-      itemModel = ItemModel.fromJson(value?.data);
-      items = itemModel?.dataList;
-      emit(GetItemsSuccess(itemModel: itemModel));
+      if (value is String) {
+        print(value);
+      } else {
+        // itemModel = ItemModel.fromJson(value?.data);
+        itemModel = ItemModel.fromJson(localItem);
+        items = itemModel?.dataList;
+        emit(GetItemsSuccess(itemModel: itemModel));
+      }
     }).catchError((error) {
       print('error is = $error');
     });
   }
 
   // cart
-  List cart = [];
-  double totalPrice = 0;
-  double remainingToPay = 0.00;
-
-  String dropdownValue = '';
-  List<String> units = [];
-
   //add item to cart
   void addItemTocart(item) {
-    // print(item.itemId);
-    // int existingIndex =
-    //     cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
-    // if (cart.contains(item)) {
-    //   var quantity = cart[existingIndex].cartItem.units['1'].unitQuantity++;
-    //   print(quantity);
-    // } else {
-    //   cart.add(item);
-    // }
-
-    cart.add(item);
-    dropdownValue = item.units[0].title;
-    for (var element in item.units) {
-      units.add(element.title);
-      print(element.title);
+    int existingIndex =
+        cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
+    if (existingIndex > -1) {
+      cart[existingIndex].quantity++;
+      itemTotalWithVat(cart[existingIndex], item);
+    } else {
+      cart.add(item);
+      itemTotalWithVat(item, item);
     }
-    invoiceTotal();
+
     emit(PosStateItemToCart());
   }
 
-  // void decresQuantityFromCart(ItemsModel item) {
-  //   // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
-  //   if (cart.contains(item)) {
-  //     // if (cart[existingIndex].quantity > 1) {
-  //       // cart[existingIndex].quantity--;
-  //     } else {
-  //       // cart[existingIndex].quantity = 1;
-  //       cart.removeWhere((element) => element == item);
-  //     }
-  //     invoiceTotal();
-  //   }
-  //   // emit(PosStateRemoveItem());
-  // }
+  addOrderData(item) {
+    order['order_items'].add(item);
+    print(order['order_items']);
+    for (var element in order['order_items']) {
+      print(element.arabicTitle);
+    }
+  }
+
+  void decresQuantityFromCart(item) {
+    int existingIndex =
+        cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
+    print(existingIndex);
+    if (existingIndex > -1) {
+      cart[existingIndex].quantity--;
+      itemTotalWithVat(cart[existingIndex], item);
+    } else {
+      cart.remove(item);
+      itemTotalWithVat(cart[existingIndex], item);
+    }
+    emit(PosStateRemoveItem());
+  }
 
   void removeItemFromCart(item) {
-    // int existingIndex = cart.indexWhere((cartItem) => cartItem.id == item.id);
-    // cart[existingIndex].quantity = 1;
     cart.removeWhere((element) => element == item);
+    item.quantity = 1;
     invoiceTotal();
     emit(PosStateRemoveItem());
   }
@@ -95,14 +100,25 @@ class PosCubit extends Cubit<PosState> {
     emit(PosStateClearCart());
   }
 
-  // calculate total invoice
+  //calculate item Total With vat
+  itemTotalWithVat(index, item) {
+    index.totalPriceWithVat =
+        (double.parse(item.units[item.selectedUnit].unitPrice) *
+                item.quantity) *
+            (1 + (item.tax / 100));
+    invoiceTotal();
+    emit(PriceItemStateSuccess());
+  }
+
+  // calculate total order
   void invoiceTotal() {
-    totalPrice = 0;
+    totalorderWithVat = 0;
     for (var item in cart) {
-      totalPrice += double.parse(item.units[0].unitPrice);
+      print('total item ${item.totalPriceWithVat}');
+      totalorderWithVat += item.totalPriceWithVat;
     }
-    remainingToPay = totalPrice;
-    print('final  total $totalPrice');
+    requiredToPaid = totalorderWithVat;
+    emit(TotalOrderStateSuccess());
   }
 
   // get customers
@@ -110,12 +126,12 @@ class PosCubit extends Cubit<PosState> {
   List customers = [];
 
   getCustomers() async {
-    // String sysacc = CacheHelper.getData(key: 'sysacc');
     await DioHelper.getData(url: EndPoints.baseUrl, queryParameters: {
       'flr': 'casale/manage/customers/views',
       'rtype': 'json',
-      'sysac': 'YXpjamJkZWNiMXh6NzQ2bXo3NDJ6ejc0cWMyMHRtMjBmbjM0d3YyMA',
+      'sysac': sysAc,
     }).then((value) {
+      print(value);
       customersModel = CustomersModel.fromJson(value!.data);
       if (customersModel!.status == 'success') {
         for (var element in customersModel!.customers) {
@@ -169,7 +185,6 @@ class PosCubit extends Cubit<PosState> {
     }).then((value) {
       if (value != null) {
         emit(AddCustomerStateSuccess());
-        print(value.data);
       } else {
         print('customer fail $value');
       }
@@ -209,31 +224,72 @@ class PosCubit extends Cubit<PosState> {
   }
 
 //  fun for filter items
-
   List? filterdItems = [];
   bool isSearched = false;
   filterItems(dynamic input) {
     emit(ItemSearchStateloading());
-    print('start');
+    isSearched = true;
+    print(
+      isSearched.toString(),
+    );
     if (isSearched == true && items != null && items!.isNotEmpty) {
-      print('second');
       filterdItems = items!
           .where(
             (item) => item.arabicTitle.contains(input),
           )
           .toList();
-      print('third');
-      for (var element in filterdItems!) {
-        print(element.arabicTitle);
-      }
       return filterdItems;
     }
+    print(filterdItems);
     emit(ItemSearchStateSuccess());
   }
 
   // select unit and calculate total or item
-  selectUnit(selectedValue) {
-    dropdownValue = selectedValue;
+  changeUnit(item, int value) {
+    item.selectedUnit = value - 1;
+    itemTotalWithVat(item, item);
     emit(UnitSelectStateSuccess());
+  }
+
+  // get paymethods
+  PaymethodModel? paymethodModel;
+  getPaymethods() async {
+    emit(PaymethodsstateInitial());
+    await DioHelper.postData(
+      url: EndPoints.baseUrl,
+      data: {},
+      queryParameters: {
+        'flr': 'casale/manage/settings/inputoptions/paymethods/views',
+        'sysac': sysAc,
+        'rtype': 'json',
+        'dtype': 'json',
+      },
+    ).then((value) {
+      paymethodModel = PaymethodModel.fromJson(value?.data);
+      emit(GetPaymethodsstateSuccess(
+        paymethodModel: paymethodModel,
+      ));
+    }).catchError((error) {
+      print('error is== $error');
+    });
+  }
+
+  // calculate Remaining of payment
+  remainingPayment(
+    totalOrder,
+    payed,
+  ) {
+    print('start');
+    requiredToPaid = totalOrder;
+    requiredToPaid = totalOrder - payed;
+    if (requiredToPaid < 0) {
+      remaining = -1 * requiredToPaid;
+      requiredToPaid = 0.00;
+    } else {
+      remaining = 0;
+    }
+
+    print(remaining.toString());
+    emit(RemainingstateSuccess());
   }
 }

@@ -29,9 +29,13 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(LanguageStateSuccess());
   }
 
-  signOut(BuildContext context) {
-    CacheHelper.removeData(key: 'sysac').then((value) {
-      Navigator.popAndPushNamed(context, Routes.login);
+  signOut(BuildContext context) async {
+    await CacheHelper.removeData(key: 'sysac').then((value) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        Routes.login,
+        (route) => true,
+      );
     });
     emit(SignOutStateSuccess());
   }

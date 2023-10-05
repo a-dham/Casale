@@ -3,6 +3,7 @@ import 'package:casale/src/presentation/views/auth/signup/signUp.dart';
 import 'package:casale/src/presentation/views/bottom_navigation/bottom_navigation.dart';
 import 'package:casale/src/presentation/views/home/home.dart';
 import 'package:casale/src/presentation/views/onboarding/onboarding.dart';
+import 'package:casale/src/presentation/views/orders/widget/order_details.dart';
 import 'package:casale/src/presentation/views/payment/payment.dart';
 import 'package:casale/src/presentation/views/payment/widget/print.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/pos_home.dart';
@@ -12,6 +13,7 @@ import 'package:casale/src/presentation/views/settings/settings.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_controller.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_view.dart';
 import 'package:casale/src/presentation/views/splash/splash.dart';
+import 'package:casale/src/presentation/widgets/offline_screen.dart';
 import 'package:casale/src/utils/constant/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,9 @@ class Routes {
   static const String posHome = '/posHome';
   static const String payment = '/payment';
   static const String setting = '/settings';
+  static const String offline = '/offline';
   static const String settingview = '/settingsView';
+  static const String orderDetails = '/orderDetails';
 }
 
 class AppRouter {
@@ -80,11 +84,17 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const Print(),
         );
+      case Routes.orderDetails:
+        return MaterialPageRoute(
+          builder: (_) => const OrderDetails(),
+        );
       case Routes.settingview:
         return MaterialPageRoute(
             builder: (_) => SettingsView(controller: settingsController));
       case Routes.setting:
         return MaterialPageRoute(builder: (_) => const Settings());
+      case Routes.offline:
+        return MaterialPageRoute(builder: (_) => const OfflineScreen());
       default:
         return unDefinedRoute();
     }

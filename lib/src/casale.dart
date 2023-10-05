@@ -1,6 +1,5 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/auth/auth_cubit.dart';
-import 'package:casale/src/cubits/payment_cubit/payment_cubit.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/cubits/product_cubit/products_cubit.dart';
 import 'package:casale/src/cubits/settings/settings_cubit.dart';
@@ -39,9 +38,6 @@ class Casale extends StatelessWidget {
                   ..getItems()
                   ..getOrgData()
                   ..getAccountData()),
-            BlocProvider(
-              create: (context) => PaymentCubit()..getPaymethods(),
-            ),
           ],
           child: BlocConsumer<SettingsCubit, SettingsState>(
             listener: (context, state) {},

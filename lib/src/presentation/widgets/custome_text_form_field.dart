@@ -5,7 +5,7 @@ class CustomeTextFormField extends StatelessWidget {
   const CustomeTextFormField({
     super.key,
     required this.labelText,
-    required this.suffixIcon,
+    @required this.suffixIcon,
     required this.obscureText,
     required this.keyboardType,
     @required this.textEditingController,
@@ -15,7 +15,7 @@ class CustomeTextFormField extends StatelessWidget {
     @required this.onTap,
   });
   final String labelText;
-  final Widget suffixIcon;
+  final Widget? suffixIcon;
   final bool obscureText;
   final TextInputType keyboardType;
   final TextEditingController? textEditingController;

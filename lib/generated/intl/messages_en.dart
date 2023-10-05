@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account_title": MessageLookupByLibrary.simpleMessage("Manager"),
+        "accounts": MessageLookupByLibrary.simpleMessage("Accounts"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addCustomerToTicket":
@@ -38,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don`t have account"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "entervalue": MessageLookupByLibrary.simpleMessage("Enter Value"),
         "forget_password":
             MessageLookupByLibrary.simpleMessage("Forget Password"),
         "haveAccount": MessageLookupByLibrary.simpleMessage("Have account ? "),
@@ -67,19 +69,32 @@ class MessageLookup extends MessageLookupByLibrary {
         "printers": MessageLookupByLibrary.simpleMessage("printers"),
         "printingAlert": MessageLookupByLibrary.simpleMessage(
             "Would you like to Print this?"),
+        "products": MessageLookupByLibrary.simpleMessage("Products"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
         "recentCustomers":
             MessageLookupByLibrary.simpleMessage("Recent Customers"),
+        "remaining":
+            MessageLookupByLibrary.simpleMessage("Remaining For Customer"),
+        "remainingClient":
+            MessageLookupByLibrary.simpleMessage("Remaining To Cleint"),
+        "requirePay": MessageLookupByLibrary.simpleMessage(" Total Order"),
         "saudiaCurrency": MessageLookupByLibrary.simpleMessage("SAR"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "sections": MessageLookupByLibrary.simpleMessage("Sections"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signup": MessageLookupByLibrary.simpleMessage("SignUp"),
+        "simpleTaxInvoice":
+            MessageLookupByLibrary.simpleMessage("Simple Tax Inoice"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "start": MessageLookupByLibrary.simpleMessage("Start"),
         "tax": MessageLookupByLibrary.simpleMessage("Tax"),
+        "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Numer"),
         "themes": MessageLookupByLibrary.simpleMessage("themes"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
+        "totalPriceWithVat":
+            MessageLookupByLibrary.simpleMessage("Total price With Vat"),
+        "unitPrice": MessageLookupByLibrary.simpleMessage("Unit Price"),
         "username": MessageLookupByLibrary.simpleMessage("UserName")
       };
 }
