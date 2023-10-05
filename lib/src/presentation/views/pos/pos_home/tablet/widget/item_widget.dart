@@ -1,45 +1,46 @@
 // ignore_for_file: avoid_print
 
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/domain/models/products_model.dart';
+import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ItemWidget extends StatelessWidget {
-  const ItemWidget({
+  ItemWidget({
     super.key,
-    required this.itemName,
-    required this.itemPrice,
-    required this.quantity,
     required this.posCubit,
-    // required this.itemIndex,
+    required this.item,
+    required this.quantity,
   });
-  final String itemName;
-  final String itemPrice;
+  // final String itemName;
   final int quantity;
+  // final double itemPrice;
+  // final double vat;
+  // final double total;
+  // final String unitTitle;
   final PosCubit posCubit;
-  // final ItemModel itemIndex;
+  final Data item;
 
+  // final ItemModel itemIndex;
+  final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // final int dropDownValue = int.parse(item.units[0].unitId!);
+    final double price = double.parse(item.units[item.selectedUnit].unitPrice!);
+    final double vat = price * (item.tax! / 100);
+    // item.totalPriceWithVat = (price * quantity) + vat;
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Container(
-          //   constraints: const BoxConstraints(
-          //     maxHeight: 60,
-          //     minWidth: 50,
-          //   ),
-          //   child: Image.asset('assets/images/error-loading-items.gif'),
-          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                itemName,
+                item.arabicTitle.toString(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -47,42 +48,28 @@ class ItemWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  posCubit.units.length == 2
-                      ? DropdownButton<String>(
-                          value: posCubit.dropdownValue,
-                          icon: const Icon(
-                            Icons.arrow_downward,
-                            color: AppColors.greyColor,
-                          ),
-                          iconSize: 24,
-                          elevation: 16,
-                          style: const TextStyle(color: AppColors.orangeColor),
-                          underline: Container(
-                            height: 2,
-                            color: AppColors.lightGreyColor,
-                          ),
-                          onChanged: (String? newValue) {
-                            // posCubit.dropdownValue = newValue!;
-                            print(newValue);
-                            posCubit.selectUnit(newValue);
-                          },
-                          items: posCubit.units
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        )
-                      : Text(posCubit.dropdownValue),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(Routes.extra);
+                  DropdownButton(
+                    elevation: 0,
+                    value: item.units[item.selectedUnit].unitId,
+                    focusColor: AppColors.orangeColor,
+                    items: item.units.map<DropdownMenuItem<dynamic>>((value) {
+                      return DropdownMenuItem<dynamic>(
+                        value: value.unitId,
+                        child: Text(value.title.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      print('value IS  $value');
+                      posCubit.changeUnit(item, int.parse(value));
+                      print('---------------------------');
+                      // print('INDEX IS  ${posCubit.indexValue}');
                     },
-                    child: Text(S.current.note),
+                  ),
+                  const SizedBox(
+                    width: 10,
                   ),
                   GestureDetector(
-                    onTap: () => showQuantityDialog(context, posCubit),
+                    onTap: () => showQuantityDialog(context, posCubit, item),
                     child: Text(
                       'X $quantity',
                       style: const TextStyle(
@@ -95,7 +82,27 @@ class ItemWidget extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    '$itemPrice ${S.current.saudiaCurrency}',
+                    price.toString(),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    vat.toStringAsFixed(2),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '${item.totalPriceWithVat?.toStringAsFixed(2)} ${S.current.saudiaCurrency}',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -108,7 +115,7 @@ class ItemWidget extends StatelessWidget {
         ]);
   }
 
-  showQuantityDialog(context, PosCubit posCubit) {
+  showQuantityDialog(context, PosCubit posCubit, item) {
     showDialog(
         context: context,
         barrierColor: AppColors.orangeColor.withOpacity(0.08),
@@ -118,7 +125,7 @@ class ItemWidget extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  // posCubit.addItemTocart(item);
+                  posCubit.addItemTocart(item);
                 },
                 icon: const Icon(
                   Icons.add,
@@ -129,20 +136,38 @@ class ItemWidget extends StatelessWidget {
               const Spacer(),
               Container(
                 constraints: const BoxConstraints(maxWidth: 100),
-                child: TextField(
-                  cursorColor: AppColors.orangeColor,
+                child: CustomeTextFormField(
+                  labelText: 'add inputs',
+                  suffixIcon: null,
+                  obscureText: false,
                   keyboardType: TextInputType.number,
-                  onSubmitted: (value) {
-                    // item.quantity = value as int;
-                    // print('qqq==${item.quantity}');
-                    print(value);
+                  textEditingController: textEditingController,
+                  validator: (value) {
+                    return null;
                   },
+                  onSubmitted: (value) {
+                    item.quantity = int.parse(value);
+                    posCubit.itemTotalWithVat(item, item);
+                    Navigator.pop(context);
+                  },
+                  onchanged: null,
+                  onTap: null,
                 ),
               ),
+              // Container(
+              //   constraints: const BoxConstraints(maxWidth: 100),
+              //   child: TextField(
+              //     cursorColor: AppColors.orangeColor,
+              //     keyboardType: TextInputType.number,
+              //     onSubmitted: (value) {
+              //       print(value);
+              //     },
+              //   ),
+              // ),
               const Spacer(),
               IconButton(
                 onPressed: () {
-                  // posCubit.decresQuantityFromCart(item);
+                  posCubit.decresQuantityFromCart(item);
                 },
                 icon: const Icon(
                   Icons.minimize,

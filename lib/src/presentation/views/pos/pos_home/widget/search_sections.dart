@@ -29,26 +29,13 @@ class _SearchSeactionsState extends State<SearchSeactions> {
             horizontal: 10,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 80,
-                child: Text(
-                  posCubit.orgModel?.data!.orgTitle.toString() ?? 'no Title',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
               Container(
                 constraints: BoxConstraints(
                   maxWidth: screenWidth >= 600
                       ? (screenWidth * 0.40) - 80
-                      : (screenWidth * 0.60) - 80,
+                      : (screenWidth * 0.90) - 80,
                 ),
                 height: 30,
                 child: CustomeTextFormField(
@@ -62,13 +49,13 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                       posCubit.isSearched = true;
                     });
                   },
-                  onchanged: (input) {
-                    posCubit.filterItems(input);
-                  },
+                  onchanged: (input) {},
                   validator: (value) {
                     return null;
                   },
-                  onSubmitted: (value) {},
+                  onSubmitted: (value) {
+                    posCubit.filterItems(value);
+                  },
                 ),
               ),
             ],

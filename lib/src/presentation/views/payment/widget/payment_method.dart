@@ -1,13 +1,20 @@
 // ignore_for_file: avoid_print
 
+import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PaymentMethods extends StatelessWidget {
-  const PaymentMethods({super.key, required this.data});
+  const PaymentMethods({
+    super.key,
+    required this.data,
+    required this.posCubit,
+  });
   final List? data;
+  final PosCubit posCubit;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -15,77 +22,81 @@ class PaymentMethods extends StatelessWidget {
     TextEditingController textForm = TextEditingController();
 
     return SizedBox(
-      height: height * 0.50,
+      height: height * 0.35,
       child: ListView.builder(
           itemCount: data?.length ?? 0,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                showAlerDialog(
-                  context,
-                  data![index].inUse,
-                  textForm,
-                );
-              },
-              child: Container(
-                height: 70,
-                width: double.infinity,
-                margin: const EdgeInsets.symmetric(
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                    color: data![index].inUse == true
-                        ? AppColors.whiteColor
-                        : AppColors.greyColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.lightGreyColor,
-                        spreadRadius: 2,
-                        blurRadius: 2,
-                        offset: const Offset(5, 5),
-                      ),
-                    ]),
-                child: Row(
-                  children: [
-                    Container(
+            return data![index].inUse == true
+                ? GestureDetector(
+                    onTap: () {
+                      showAlerDialog(
+                          context, data![index].inUse, textForm, posCubit);
+                    },
+                    child: Container(
                       height: 70,
-                      width: 10,
-                      color: AppColors.orangeColor,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * .2,
-                    ),
-                    Text(
-                      currentLocal == 'ar'
-                          ? data![index].arabicTitle.toString()
-                          : data![index].englishTitle.toString(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                          color: data![index].inUse == true
+                              ? AppColors.whiteColor
+                              : AppColors.greyColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.lightGreyColor,
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(5, 5),
+                            ),
+                          ]),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 10,
+                            color: AppColors.orangeColor,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .2,
+                          ),
+                          Text(
+                            currentLocal == 'ar'
+                                ? data![index].arabicTitle.toString()
+                                : data![index].englishTitle.toString(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            );
+                  )
+                : const SizedBox();
           }),
     );
   }
 
-  showAlerDialog(BuildContext context, bool? inUse,
-      TextEditingController textEditingController) {
+  showAlerDialog(
+    BuildContext context,
+    bool? inUse,
+    TextEditingController textEditingController,
+    posCubit,
+  ) {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             content: inUse != null
                 ? CustomeTextFormField(
-                    labelText: 'Enter',
+                    labelText: S.current.entervalue,
                     suffixIcon: const Icon(Icons.numbers),
                     obscureText: false,
                     keyboardType: TextInputType.number,
                     onSubmitted: (value) {
-                      print(textEditingController.value);
+                      var totalOrder = posCubit.totalorderWithVat;
+                      posCubit.remainingPayment(totalOrder, int.parse(value));
                       Navigator.of(context).pop();
                     },
                     textEditingController: textEditingController,

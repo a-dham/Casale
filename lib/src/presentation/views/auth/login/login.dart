@@ -1,4 +1,6 @@
 // ignore_for_file: avoid_print
+import 'package:casale/src/presentation/widgets/offline_screen.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
@@ -38,138 +40,151 @@ class Login extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Form(
-            key: formkey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: screenHeight * 0.1,
-                ),
-                SvgPicture.asset(
-                  'assets/images/logo.svg',
-                  height: screenHeight * 0.1,
-                ),
-                SizedBox(
-                  height: screenHeight * 0.04,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+          body: OfflineBuilder(
+              connectivityBuilder: (context, connectivity, child) {
+            final bool connected = connectivity != ConnectivityResult.none;
+            // Image.asset('');
+            return connected
+                ? Form(
+                    key: formkey,
                     child: Column(
                       children: [
-                        Center(
-                          child: Text(
-                            S.current.login,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Cairo',
-                              letterSpacing: 2,
-                              color: AppColors.orangeColor,
-                            ),
-                          ),
+                        SizedBox(
+                          height: screenHeight * 0.1,
+                        ),
+                        SvgPicture.asset(
+                          'assets/images/logo.svg',
+                          height: screenHeight * 0.1,
                         ),
                         SizedBox(
-                          height: screenHeight * 0.02,
+                          height: screenHeight * 0.04,
                         ),
-                        CustomeTextFormField(
-                          labelText: S.current.username,
-                          suffixIcon: const Icon(Icons.person),
-                          obscureText: false,
-                          keyboardType: TextInputType.text,
-                          textEditingController: userNameController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return S.current.notNull;
-                            }
-                            return null;
-                          },
-                          onSubmitted: (string) {},
-                          onTap: () {},
-                          onchanged: (string) {},
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-                        CustomeTextFormField(
-                          labelText: S.current.password,
-                          suffixIcon: const Icon(Icons.key_outlined),
-                          obscureText: true,
-                          keyboardType: TextInputType.visiblePassword,
-                          textEditingController: passwordController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return S.current.notNull;
-                            }
-                            return null;
-                          },
-                          onSubmitted: (string) {},
-                          onTap: () {},
-                          onchanged: (string) {},
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.01,
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            S.current.forget_password,
-                            style: const TextStyle(
-                                fontSize: 15, color: AppColors.orangeColor),
-                          ),
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-                        isloading
-                            ? const CircularProgressIndicator(
-                                color: AppColors.orangeColor,
-                                semanticsValue: 'ows',
-                              )
-                            : CustomeTextButton(
-                                childWidget: Text(
-                                  S.current.login,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.whiteColor,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    S.current.login,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Cairo',
+                                      letterSpacing: 2,
+                                      color: AppColors.orangeColor,
+                                    ),
                                   ),
                                 ),
-                                borderRaduis: BorderRadius.circular(15),
-                                borderwidth: 0,
-                                isBorder: BorderStyle.none,
-                                backgroundColor: AppColors.orangeColor,
-                                elevation: 0,
-                                onPressed: () async {
-                                  if (formkey.currentState!.validate()) {
-                                    authCubit.login(
-                                      userNameController.text.toString(),
-                                      passwordController.text.toString(),
-                                    );
-                                  }
-                                },
-                                minimumSize: Size(screenWidth * 0.4, 45),
-                              ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Spacer(),
-                        Footer(
-                          onTab: () =>
-                              Navigator.pushNamed(context, Routes.signup),
-                          buttonText: ' ${S.current.signup} ',
-                          text: S.current.dontHaveAccount,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                                SizedBox(
+                                  height: screenHeight * 0.02,
+                                ),
+                                CustomeTextFormField(
+                                  labelText: S.current.username,
+                                  suffixIcon: const Icon(Icons.person),
+                                  obscureText: false,
+                                  keyboardType: TextInputType.text,
+                                  textEditingController: userNameController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return S.current.notNull;
+                                    }
+                                    return null;
+                                  },
+                                  onSubmitted: (string) {},
+                                  onTap: () {},
+                                  onchanged: (string) {},
+                                ),
+                                SizedBox(
+                                  height: screenHeight * 0.02,
+                                ),
+                                CustomeTextFormField(
+                                  labelText: S.current.password,
+                                  suffixIcon: const Icon(Icons.key_outlined),
+                                  obscureText: true,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  textEditingController: passwordController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return S.current.notNull;
+                                    }
+                                    return null;
+                                  },
+                                  onSubmitted: (string) {},
+                                  onTap: () {},
+                                  onchanged: (string) {},
+                                ),
+                                SizedBox(
+                                  height: screenHeight * 0.01,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    S.current.forget_password,
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        color: AppColors.orangeColor),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: screenHeight * 0.02,
+                                ),
+                                isloading
+                                    ? const CircularProgressIndicator(
+                                        color: AppColors.orangeColor,
+                                        semanticsValue: 'ows',
+                                      )
+                                    : CustomeTextButton(
+                                        childWidget: Text(
+                                          S.current.login,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: AppColors.whiteColor,
+                                          ),
+                                        ),
+                                        borderRaduis: BorderRadius.circular(15),
+                                        borderwidth: 0,
+                                        isBorder: BorderStyle.none,
+                                        backgroundColor: AppColors.orangeColor,
+                                        elevation: 0,
+                                        onPressed: () async {
+                                          if (formkey.currentState!
+                                              .validate()) {
+                                            authCubit.login(
+                                              userNameController.text
+                                                  .toString(),
+                                              passwordController.text
+                                                  .toString(),
+                                            );
+                                          }
+                                        },
+                                        minimumSize:
+                                            Size(screenWidth * 0.4, 45),
+                                      ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const Spacer(),
+                                Footer(
+                                  onTab: () => Navigator.pushNamed(
+                                      context, Routes.signup),
+                                  buttonText: ' ${S.current.signup} ',
+                                  text: S.current.dontHaveAccount,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                  ),
-                )
-              ],
-            ),
-          ),
+                  )
+                : const OfflineScreen();
+          }, builder: (context) {
+            return const SizedBox();
+          }),
         );
       },
     );

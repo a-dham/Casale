@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../data/datasources/end_points.dart';
+import '../../../../widgets/circular_progress.dart';
 import '../widget/invoice.dart';
 import '../widget/items.dart';
 import '../widget/sections.dart';
@@ -21,14 +23,20 @@ class PosMobile extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: AppColors.orangeColor,
-              tooltip: 'show inv Itmes',
-              onPressed: () {
-                Invoice().settingModalBottomSheet(context);
-              },
-              child: const Icon(
-                Icons.request_page_rounded,
+            floatingActionButton: Badge(
+              alignment: Alignment.topRight,
+              label: Text(posCubit.cart.length.toString()),
+              isLabelVisible: true,
+              backgroundColor: Colors.green[900],
+              child: FloatingActionButton(
+                backgroundColor: AppColors.orangeColor,
+                tooltip: 'show inv Itmes',
+                onPressed: () {
+                  Invoice().settingModalBottomSheet(context);
+                },
+                child: const Icon(
+                  Icons.request_page_rounded,
+                ),
               ),
             ),
             resizeToAvoidBottomInset: false,
@@ -37,14 +45,43 @@ class PosMobile extends StatelessWidget {
               backgroundColor: Colors.transparent,
               elevation: 0,
               leadingWidth: 0,
-
               title: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/images/accont_avatar.svg',
-                      width: 40,
+                    // SvgPicture.asset(
+                    //   'assets/images/accont_avatar.svg',
+                    //   width: 40,
+                    // ),
+
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxHeight: 50,
+                        maxWidth: 50,
+                      ),
+                      child: Image.network(
+                        '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                        fit: BoxFit.scaleDown,
+                        width: double.infinity,
+                        height: 85,
+                        errorBuilder: (context, object, stacktrace) {
+                          return Image.asset(
+                              fit: BoxFit.scaleDown,
+                              width: double.infinity,
+                              height: 85,
+                              'assets/images/error-loading-items.gif');
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          } else {
+                            return const CustomeCircularProgress();
+                          }
+                        },
+                        frameBuilder:
+                            (context, child, frame, wasSynchronouslyLoaded) =>
+                                child,
+                      ),
                     ),
                     const SizedBox(width: 5),
                     Column(
@@ -68,17 +105,7 @@ class PosMobile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.notifications,
-                        color: AppColors.greyColor,
-                        size: 29,
-                      ),
-                    ),
+
                     const Spacer(),
                     SvgPicture.asset(
                       'assets/images/logo.svg',
@@ -87,9 +114,6 @@ class PosMobile extends StatelessWidget {
                   ],
                 ),
               ),
-              // actions: [
-
-              // ],
             ),
             body: Column(
               children: [
@@ -112,43 +136,3 @@ class PosMobile extends StatelessWidget {
     );
   }
 }
-
-// SizedBox(
-//               width: 220,
-//               height: 40,
-//               child: CustomeTextButton(
-//                   childWidget: Row(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Container(
-//                           width: 30,
-//                           alignment: Alignment.center,
-//                           decoration: const BoxDecoration(
-//                               color: AppColors.whiteColor,
-//                               shape: BoxShape.circle),
-//                           child: const Text(
-//                             'X3',
-//                             style: TextStyle(
-//                               color: AppColors.orangeColor,
-//                             ),
-//                           ),
-//                         ),
-//                         const Spacer(),
-//                         const Text(
-//                           'Invoice',
-//                           style: TextStyle(
-//                             color: AppColors.whiteColor,
-//                             fontWeight: FontWeight.bold,
-//                             fontSize: 17,
-//                           ),
-//                         ),
-//                         const Spacer(),
-//                       ]),
-//                   borderwidth: 0,
-//                   isBorder: BorderStyle.none,
-//                   backgroundColor: AppColors.orangeColor,
-//                   elevation: 2,
-//                   onPressed: () {},
-//                   minimumSize: null,
-//                   borderRaduis: BorderRadius.circular(15)),
-//             ),

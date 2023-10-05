@@ -25,14 +25,13 @@ class AuthCubit extends Cubit<AuthState> {
       'rtype': 'json',
     }).then((value) async {
       loginModel = LoginModel.fromJson(value!.data);
-      await CacheHelper.saveData(key: 'sysac', value: loginModel.data!.sysac);
-      print(loginModel.data?.sysac);
       if (loginModel.status == 'success') {
+        await CacheHelper.saveData(key: 'sysac', value: loginModel.data!.sysac);
         emit(AuthStateSuccess(
           loginModel: loginModel,
         ));
-      } else {
-        print('status is fail ');
+      } else if (loginModel.status == 'fail') {
+        print('status is fail');
         emit(AuthStateFail());
       }
     }).catchError((error) {

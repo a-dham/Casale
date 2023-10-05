@@ -1,5 +1,5 @@
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/presentation/views/orders/widget/order_list.dart';
+import 'package:casale/src/presentation/views/orders/widget/order_card.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 

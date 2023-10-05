@@ -19,7 +19,7 @@ class Items extends StatelessWidget {
         return Expanded(
           child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: width >= 600 ? 4 : 2,
+                crossAxisCount: width >= 730 ? 4 : 2,
                 mainAxisSpacing: 10,
                 mainAxisExtent: 150,
               ),

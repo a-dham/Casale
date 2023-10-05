@@ -2,6 +2,6 @@ class Responive {
   isMobile(double width) {
     // ignore: avoid_print
     print(width);
-    return width < 600 ? 'mobile' : 'tablet';
+    return width <= 780 ? 'mobile' : 'tablet';
   }
 }

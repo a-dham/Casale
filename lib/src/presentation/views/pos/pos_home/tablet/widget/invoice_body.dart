@@ -1,12 +1,10 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
-import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/presentation/views/customer/customer.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_invoice.dart';
+import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../widgets/circular_progress.dart';
 
 class InvoiceBody extends StatelessWidget {
   const InvoiceBody({super.key});
@@ -21,38 +19,10 @@ class InvoiceBody extends StatelessWidget {
           child: Column(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Container(
-                        constraints: const BoxConstraints(
-                          maxHeight: 50,
-                          maxWidth: 50,
-                        ),
-                        child: Image.network(
-                          '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
-                          fit: BoxFit.scaleDown,
-                          width: double.infinity,
-                          height: 85,
-                          errorBuilder: (context, object, stacktrace) {
-                            return Image.asset(
-                                fit: BoxFit.scaleDown,
-                                width: double.infinity,
-                                height: 85,
-                                'assets/images/error-loading-items.gif');
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return const CustomeCircularProgress();
-                            }
-                          },
-                          frameBuilder:
-                              (context, child, frame, wasSynchronouslyLoaded) =>
-                                  child,
-                        ),
-                      ),
                       const SizedBox(
                         width: 5,
                       ),
@@ -77,11 +47,16 @@ class InvoiceBody extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      IconButton(
-                        onPressed: () {},
-                        color: Colors.black,
-                        icon: const Icon(
-                          Icons.notification_add,
+                      Badge(
+                        smallSize: 5,
+                        alignment: Alignment.bottomLeft,
+                        label: Text(posCubit.cart.length.toString()),
+                        isLabelVisible: true,
+                        backgroundColor: Colors.green[900],
+                        child: const Icon(
+                          Icons.shopping_basket_outlined,
+                          color: AppColors.orangeColor,
+                          size: 40,
                         ),
                       ),
                     ],

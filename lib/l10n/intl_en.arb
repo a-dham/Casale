@@ -50,7 +50,18 @@
     "item":"Item",
     "paymentWays":"Payment Ways",
     "printPage":"Printing Page",
-    "addCustomerToTicket":"Add Customer To Ticket"
+    "accounts":"Accounts",
+    "requirePay":" Total Order",
+    "remaining":"Remaining For Customer",
+    "remainingClient":"Remaining To Cleint",
+    "addCustomerToTicket":"Add Customer To Ticket",
+    "entervalue":"Enter Value",
+    "simpleTaxInvoice":"Simple Tax Inoice",
+    "taxNumber":"Tax Numer",
+    "totalPriceWithVat":"Total price With Vat",
+    "unitPrice":"Unit Price",
+    "quantity":"Quantity",
+    "products":"Products"
 
 
 }

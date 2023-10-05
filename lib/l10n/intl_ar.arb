@@ -51,5 +51,17 @@
     "paymentWays":"طرق الدفع",
     "printPage":"الطباعة",
     "cusotmer":"العميل",
-    "addCustomerToTicket":"إضافة عميل للفاتورة"
+    "accounts":"الحسابات",
+    "requirePay":"المطلوب للدفع",
+    "remaining":"المُتبقي",
+    "remainingClient":"المُتبقي للعميل",
+    "entervalue":"أدخل القيمة",
+    "addCustomerToTicket":"إضافة عميل للفاتورة",
+    "simpleTaxInvoice":"فاتورة ضريبية مبسطة",
+    "taxNumber":"الرقم الضريبي",
+    "totalPriceWithVat":"السعر ش.ض",
+    "unitPrice":"سعر الوحدة",
+    "quantity":"الكمية",
+    "products":"المنتجات"
+    
 }

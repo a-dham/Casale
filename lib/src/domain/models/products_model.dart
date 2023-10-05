@@ -23,9 +23,13 @@ class Data {
   String? arabicTitle;
   String? image;
   String? itemCode;
+  int? quantity;
+  double? tax;
+  double? totalPriceWithVat;
   // Map<dynamic, Units> units = {};
   List<Units> units = [];
   List<UsedTaxes> taxes = [];
+  int selectedUnit = 0;
 
   Data.fromJson(Map<String, dynamic> json) {
     itemId = json['id'];
@@ -34,6 +38,10 @@ class Data {
     arabicTitle = json['ar_title'];
     image = json['thumb_dir'];
     itemCode = json['item_code'];
+    quantity = 1;
+    totalPriceWithVat = 0;
+    tax = 15;
+    selectedUnit = 0;
 
     if (json['units'] != null) {
       json['units'].forEach((String key, dynamic value) {

@@ -19,7 +19,10 @@ class ItemsInvoice extends StatelessWidget {
         return Column(
           children: [
             Container(
-              constraints: BoxConstraints(maxHeight: screenHeight - 460),
+              constraints: BoxConstraints(
+                maxHeight: screenHeight - 460,
+                maxWidth: double.infinity,
+              ),
               child: ListView.separated(
                   separatorBuilder: (context, inedx) {
                     return const Divider(
@@ -30,7 +33,6 @@ class ItemsInvoice extends StatelessWidget {
                   itemCount: posCubit.cart.length,
                   itemBuilder: (context, index) {
                     var item = posCubit.cart[index];
-                    // double itemTotalprice = itemCart.price * itemCart.quantity;
                     return Dismissible(
                       resizeDuration: const Duration(
                         milliseconds: 850,
@@ -40,14 +42,12 @@ class ItemsInvoice extends StatelessWidget {
                         posCubit.removeItemFromCart(item);
                       },
                       background: Container(
-                        color: Colors.red,
+                        color: AppColors.orangeColor,
                       ),
                       child: ItemWidget(
-                        quantity: 1,
-                        itemName: item.arabicTitle,
-                        itemPrice: item.units[0].unitPrice,
+                        item: item,
+                        quantity: item.quantity,
                         posCubit: posCubit,
-                        // itemIndex: 5,
                       ),
                     );
                   }),
@@ -55,51 +55,30 @@ class ItemsInvoice extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.01,
             ),
-            SizedBox(
-              child: Row(
-                children: [
-                  Text(
-                    S.current.price,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${posCubit.totalPrice} ${S.current.saudiaCurrency}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
-            ),
             const SizedBox(
               height: 10,
             ),
             Column(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      S.current.tax,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      ' ${posCubit.totalPrice} ${S.current.saudiaCurrency}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Text(
+                //       S.current.tax,
+                //       style: const TextStyle(
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 18,
+                //       ),
+                //     ),
+                //     const Spacer(),
+                //     Text(
+                //       ' ${posCubit.totalPrice} ${S.current.saudiaCurrency}',
+                //       style: const TextStyle(
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 18,
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const Text(
                   overflow: TextOverflow.clip,
                   maxLines: 1,
@@ -119,7 +98,7 @@ class ItemsInvoice extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '${posCubit.totalPrice}  ${S.current.saudiaCurrency}',
+                      '${posCubit.totalorderWithVat.toStringAsFixed(2)}  ${S.current.saudiaCurrency}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -139,17 +118,17 @@ class ItemsInvoice extends StatelessWidget {
                   ),
                   borderwidth: 0,
                   isBorder: BorderStyle.none,
-                  backgroundColor: posCubit.totalPrice == 0
+                  backgroundColor: posCubit.totalorderWithVat == 0
                       ? AppColors.lightGreyColor
                       : AppColors.orangeColor,
                   elevation: 1,
                   onPressed: () async {
-                    posCubit.totalPrice == 0
+                    posCubit.totalorderWithVat == 0
                         ? null
-                        : Navigator.pushNamed(
-                            context,
-                            Routes.payment,
-                          );
+                        : posCubit.getPaymethods().then(Navigator.pushNamed(
+                              context,
+                              Routes.payment,
+                            ));
                   },
                   minimumSize: Size(
                     200,

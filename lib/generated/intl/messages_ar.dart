@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account_title": MessageLookupByLibrary.simpleMessage("المدير"),
+        "accounts": MessageLookupByLibrary.simpleMessage("الحسابات"),
         "active": MessageLookupByLibrary.simpleMessage("النشطة"),
         "add": MessageLookupByLibrary.simpleMessage("إضافة"),
         "addCustomerToTicket":
@@ -38,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "entervalue": MessageLookupByLibrary.simpleMessage("أدخل القيمة"),
         "forget_password":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة السر؟"),
         "haveAccount": MessageLookupByLibrary.simpleMessage("لديك حساب؟"),
@@ -67,19 +69,30 @@ class MessageLookup extends MessageLookupByLibrary {
         "printers": MessageLookupByLibrary.simpleMessage("الطابعات"),
         "printingAlert":
             MessageLookupByLibrary.simpleMessage("هل تريد الطباعة ؟"),
+        "products": MessageLookupByLibrary.simpleMessage("المنتجات"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
+        "quantity": MessageLookupByLibrary.simpleMessage("الكمية"),
         "recentCustomers":
             MessageLookupByLibrary.simpleMessage("العملاء الحالين"),
+        "remaining": MessageLookupByLibrary.simpleMessage("المُتبقي"),
+        "remainingClient":
+            MessageLookupByLibrary.simpleMessage("المُتبقي للعميل"),
+        "requirePay": MessageLookupByLibrary.simpleMessage("المطلوب للدفع"),
         "saudiaCurrency": MessageLookupByLibrary.simpleMessage("رس"),
         "search": MessageLookupByLibrary.simpleMessage("البحث"),
         "sections": MessageLookupByLibrary.simpleMessage("الأقسام"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادت"),
         "signup": MessageLookupByLibrary.simpleMessage("تسجيل جديد"),
+        "simpleTaxInvoice":
+            MessageLookupByLibrary.simpleMessage("فاتورة ضريبية مبسطة"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
         "start": MessageLookupByLibrary.simpleMessage("لننطلق"),
         "tax": MessageLookupByLibrary.simpleMessage("الضريبة"),
+        "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "themes": MessageLookupByLibrary.simpleMessage("السيمات"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
+        "totalPriceWithVat": MessageLookupByLibrary.simpleMessage("السعر ش.ض"),
+        "unitPrice": MessageLookupByLibrary.simpleMessage("سعر الوحدة"),
         "username": MessageLookupByLibrary.simpleMessage("إسم المستخدم")
       };
 }
