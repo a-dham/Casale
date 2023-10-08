@@ -3,7 +3,7 @@ Map<String, dynamic> localItem = {
   "data": {
     "0": {
       "id": "1",
-      "ar_title": "item1",
+      "ar_title": "قهوة",
       "units": {
         "0": {
           "_ai": "1",
@@ -38,7 +38,7 @@ Map<String, dynamic> localItem = {
     },
     "1": {
       "id": "2",
-      "ar_title": "item2",
+      "ar_title": "شاي",
       "units": {
         "0": {
           "_ai": "1",
@@ -63,7 +63,7 @@ Map<String, dynamic> localItem = {
     },
     "2": {
       "id": "3",
-      "ar_title": "item3",
+      "ar_title": "قهوة عربي",
       "units": {
         "0": {
           "_ai": "1",
@@ -98,7 +98,7 @@ Map<String, dynamic> localItem = {
     },
     "3": {
       "id": "4",
-      "ar_title": "item4",
+      "ar_title": "عصير برتقال",
       "units": {
         "0": {
           "_ai": "1",

@@ -1,11 +1,11 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/presentation/views/customer/customer.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/search_sections.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../data/datasources/end_points.dart';
 import '../../../../widgets/circular_progress.dart';
@@ -107,9 +107,94 @@ class PosMobile extends StatelessWidget {
                     ),
 
                     const Spacer(),
-                    SvgPicture.asset(
-                      'assets/images/logo.svg',
-                      width: 40,
+
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(
+                    //     horizontal: 10,
+                    //     vertical: 10,
+                    //   ),
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     color: Colors.black.withOpacity(0.04),
+                    //   ),
+                    //   child: Row(
+                    //     children: [
+                    //       const Spacer(),
+                    //       TextButton.icon(
+                    //         onPressed: () async {
+                    //           if (posCubit.customers.isEmpty) {
+                    //             await posCubit.getCustomers().then((value) {
+                    //               Customer().showAlert(context, posCubit);
+                    //             });
+                    //           } else {
+                    //             Customer().showAlert(context, posCubit);
+                    //           }
+                    //         },
+                    //         icon: const Icon(
+                    //           Icons.add,
+                    //           color: Colors.black,
+                    //         ),
+                    //         label: Text(
+                    //           posCubit.customerName != null
+                    //               ? posCubit.customerName.toString()
+                    //               : S.current.cusotmer,
+                    //           style: const TextStyle(
+                    //             color: Colors.black,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 50,
+                    //   width: 50,
+                    //   child: CustomerSection(posCubit: posCubit),
+                    // ),
+                    // SvgPicture.asset(
+                    //   'assets/images/logo.svg',
+                    //   width: 40,
+                    // ),
+
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 150,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.black.withOpacity(0.04),
+                      ),
+                      child: Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: () async {
+                              if (posCubit.customers.isEmpty) {
+                                await posCubit.getCustomers().then((value) {
+                                  Customer().showAlert(context, posCubit);
+                                });
+                              } else {
+                                Customer().showAlert(context, posCubit);
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.check,
+                              color: Colors.black,
+                            ),
+                            label: Text(
+                              posCubit.customerName != null
+                                  ? posCubit.customerName.toString()
+                                  : S.current.cusotmer,
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -121,7 +206,9 @@ class PosMobile extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                Sections(),
+                Sections(
+                  posCubit: posCubit,
+                ),
                 const SizedBox(
                   height: 10,
                 ),

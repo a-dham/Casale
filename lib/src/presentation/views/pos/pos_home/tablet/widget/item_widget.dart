@@ -14,23 +14,15 @@ class ItemWidget extends StatelessWidget {
     required this.item,
     required this.quantity,
   });
-  // final String itemName;
   final int quantity;
-  // final double itemPrice;
-  // final double vat;
-  // final double total;
-  // final String unitTitle;
   final PosCubit posCubit;
   final Data item;
 
-  // final ItemModel itemIndex;
   final TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // final int dropDownValue = int.parse(item.units[0].unitId!);
     final double price = double.parse(item.units[item.selectedUnit].unitPrice!);
     final double vat = price * (item.tax! / 100);
-    // item.totalPriceWithVat = (price * quantity) + vat;
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,15 +31,43 @@ class ItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                item.arabicTitle.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      posCubit.removeItemFromCart(item);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        duration: Duration(milliseconds: 500),
+                        backgroundColor: Colors.red,
+                        content: Center(
+                          child: Text('Delete Success'),
+                        ),
+                      ));
+                    },
+                    icon: const Icon(
+                      Icons.delete,
+                      color: AppColors.orangeColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    item.arabicTitle.toString(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
               Row(
                 children: [
+                  // ElevatedButton(
+                  //     onPressed: () {
+                  //       print('adham');
+                  //     },
+                  //     child: Text('print')),
                   DropdownButton(
                     elevation: 0,
                     value: item.units[item.selectedUnit].unitId,
@@ -69,7 +89,9 @@ class ItemWidget extends StatelessWidget {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () => showQuantityDialog(context, posCubit, item),
+                    onTap: () {
+                      showQuantityDialog(context, posCubit, item);
+                    },
                     child: Text(
                       'X $quantity',
                       style: const TextStyle(

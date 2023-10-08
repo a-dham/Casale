@@ -33,22 +33,14 @@ class ItemsInvoice extends StatelessWidget {
                   itemCount: posCubit.cart.length,
                   itemBuilder: (context, index) {
                     var item = posCubit.cart[index];
-                    return Dismissible(
-                      resizeDuration: const Duration(
-                        milliseconds: 850,
-                      ),
-                      key: UniqueKey(),
-                      onDismissed: (_) {
-                        posCubit.removeItemFromCart(item);
-                      },
-                      background: Container(
-                        color: AppColors.orangeColor,
-                      ),
-                      child: ItemWidget(
-                        item: item,
-                        quantity: item.quantity,
-                        posCubit: posCubit,
-                      ),
+                    //                 ScaffoldMessenger.of(context)
+                    // .showSnackBar(SnackBar(content: Text('$item dismissed')));
+                    // posCubit.removeItemFromCart(item);
+
+                    return ItemWidget(
+                      item: item,
+                      quantity: item.quantity,
+                      posCubit: posCubit,
                     );
                   }),
             ),
@@ -60,25 +52,6 @@ class ItemsInvoice extends StatelessWidget {
             ),
             Column(
               children: [
-                // Row(
-                //   children: [
-                //     Text(
-                //       S.current.tax,
-                //       style: const TextStyle(
-                //         fontWeight: FontWeight.bold,
-                //         fontSize: 18,
-                //       ),
-                //     ),
-                //     const Spacer(),
-                //     Text(
-                //       ' ${posCubit.totalPrice} ${S.current.saudiaCurrency}',
-                //       style: const TextStyle(
-                //         fontWeight: FontWeight.bold,
-                //         fontSize: 18,
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 const Text(
                   overflow: TextOverflow.clip,
                   maxLines: 1,

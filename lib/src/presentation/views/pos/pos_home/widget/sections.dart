@@ -1,11 +1,15 @@
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Sections extends StatelessWidget {
-  Sections({super.key});
+  Sections({
+    super.key,
+    required this.posCubit,
+  });
   final List sections = ['section1', 'section2', 'section3'];
-
+  final PosCubit posCubit;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +30,7 @@ class Sections extends StatelessWidget {
           height: 100,
           width: double.infinity,
           child: ListView.builder(
-              itemCount: sections.length,
+              itemCount: posCubit.sections?.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Container(
@@ -51,7 +55,7 @@ class Sections extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        sections[index],
+                        posCubit.sections?[index].arabicTitle,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.black.withOpacity(0.43),

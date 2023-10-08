@@ -97,7 +97,9 @@ class PosTablet extends StatelessWidget {
                         ],
                       ),
                       const SearchSeactions(),
-                      Sections(),
+                      Sections(
+                        posCubit: posCubit,
+                      ),
                       const ItemsHeader(),
                       state is ItemsStateLoading
                           ? const Center(
