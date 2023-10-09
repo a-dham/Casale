@@ -28,6 +28,7 @@ class Data {
   double? totalPriceWithVat;
   String? sectionId;
   String? sectionTitle;
+  String? itemKey;
   // ss_io_id
   // section_title
   // Map<dynamic, Units> units = {};
@@ -44,6 +45,7 @@ class Data {
     itemCode = json['item_code'];
     sectionId = json['ss_io_id'];
     sectionTitle = json['section_title'];
+    itemKey = '${json['en_title']} ${json['ar_title']} ${json['item_code']}';
     quantity = 1;
     totalPriceWithVat = 0;
     tax = 15;

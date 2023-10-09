@@ -1,11 +1,15 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
-import 'package:casale/src/cubits/product_cubit/products_cubit.dart';
 import 'package:casale/src/cubits/settings/settings_cubit.dart';
 import 'package:casale/src/presentation/views/settings/widgets/list_widget.dart';
+import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+
+import '../../../cubits/pos_cubit/pos_cubit.dart';
+import '../../../data/datasources/end_points.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -16,13 +20,9 @@ class Settings extends StatelessWidget {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         SettingsCubit settingsCubit = SettingsCubit.get(context);
-        return BlocBuilder<ProductsCubit, ProductsState>(
+        return BlocBuilder<PosCubit, PosState>(
           builder: (context, state) {
-            // ProductsCubit productsCubit = ProductsCubit.get(context);
-            // productsCubit.getProductData();
-            // Locale locale = Localizations.localeOf(context);
-            // print('sssssssssssss ${locale}');
-
+            PosCubit posCubit = PosCubit.get(context);
             return SafeArea(
               child: Scaffold(
                   body: Column(
@@ -40,43 +40,63 @@ class Settings extends StatelessWidget {
                       ),
                     ),
                     height: 250,
-                    child: const Column(
+                    child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Spacer(),
+                            const Spacer(),
                             SizedBox(
                               height: 100,
                               width: 100,
-                              child: CircleAvatar(
-                                foregroundImage:
-                                    AssetImage('assets/images/item.png'),
+                              child: Image.network(
+                                '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                                fit: BoxFit.scaleDown,
+                                width: double.infinity,
+                                height: 85,
+                                errorBuilder: (context, object, stacktrace) {
+                                  return Image.asset(
+                                      fit: BoxFit.scaleDown,
+                                      width: double.infinity,
+                                      height: 85,
+                                      'assets/images/error-loading-items.gif');
+                                },
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  } else {
+                                    return const CustomeCircularProgress();
+                                  }
+                                },
+                                frameBuilder: (context, child, frame,
+                                        wasSynchronouslyLoaded) =>
+                                    child,
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          'ADHAM Elsharkawy',
-                          style: TextStyle(
+                          posCubit.loginModel?.data?.accountTitle ?? 'No Data',
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
                             letterSpacing: 3,
                           ),
                         ),
                         Text(
-                          'Project manager',
-                          style: TextStyle(
+                          posCubit.loginModel?.data?.userId ?? 'No Data',
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -85,17 +105,7 @@ class Settings extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Container(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  //   alignment: Alignment.centerRight,
-                  //   child: Text(
-                  //     S.current.accounts,
-                  //     style: const TextStyle(
-                  //       fontWeight: FontWeight.bold,
-                  //       fontSize: 20,
-                  //     ),
-                  //   ),
-                  // ),
+
                   const SizedBox(
                     height: 10,
                   ),
@@ -149,32 +159,12 @@ class Settings extends StatelessWidget {
                         const Divider(
                           thickness: 2,
                         ),
-
-                        // DropdownButton<String>(
-                        //   value: settingsCubit.locale,
-                        //   onChanged: (String newValue) {
-
-                        //       selectedLanguage = newValue;
-
-                        //   },
-                        //   items: [
-                        //     DropdownMenuItem<String>(
-                        //       value: 'ar',
-                        //       child: Text('Arabic'),
-                        //     ),
-                        //     DropdownMenuItem<String>(
-                        //       value: 'en',
-                        //       child: Text('English'),
-                        //     ),
-                        //   ],
-                        // ),
                         ListWidget(
                           onTap: () {
-                            // String currentLocal = Intl.getCurrentLocale();
-                            // currentLocal == 'ar'
-                            //     ? settingsCubit.changeDefaultlanguage('en')
-                            //     : settingsCubit.changeDefaultlanguage('ar');
-                            settingsCubit.changeDefaultlanguage();
+                            String currentLocal = Intl.getCurrentLocale();
+                            currentLocal == 'ar'
+                                ? settingsCubit.changeDefaultlanguage('en')
+                                : settingsCubit.changeDefaultlanguage('ar');
                           },
                           title: S.current.language,
                           iconData: Icons.language,
@@ -185,7 +175,6 @@ class Settings extends StatelessWidget {
                         const Divider(
                           thickness: 2,
                         ),
-
                         ListWidget(
                           onTap: () {
                             settingsCubit.signOut(context);

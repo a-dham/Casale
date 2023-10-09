@@ -20,7 +20,7 @@ class ItemsInvoice extends StatelessWidget {
           children: [
             Container(
               constraints: BoxConstraints(
-                maxHeight: screenHeight - 460,
+                maxHeight: screenHeight - 400,
                 maxWidth: double.infinity,
               ),
               child: ListView.separated(

@@ -249,18 +249,31 @@ class PosCubit extends Cubit<PosState> {
       isSearched.toString(),
     );
     if (isSearched == true && items != null && items!.isNotEmpty) {
+      print(items);
       print('con start');
       filterdItems = items!
           .where(
-            (item) => item.arabicTitle.contains(input),
+            (item) => item.itemKey.contains(input),
           )
           .toList();
     }
-    // for (var element in filterdItems!) {
-    //   print(element.arabicTitle);
-    // }
-    // print(filterdItems);
+    print(filterdItems);
     emit(ItemSearchStateSuccess());
+  }
+
+  // filter item with section id
+  var itemsSection;
+  filterItemsSection(sectionId) {
+    print(sectionId);
+    // for (var item in items!) {
+    //   if (item.sectionId == sectionId) {
+    //     print('there is section id ');
+    //     itemsSection.add(item);
+    //   }
+    // }
+    // // itemsSection = items!.where((item) => item.sectionId == sectionId).toList();
+    // print(itemsSection);
+    // emit(ItemsSectionStateSuccess());
   }
 
   // select unit and calculate total or item

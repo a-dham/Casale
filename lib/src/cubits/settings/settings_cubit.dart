@@ -18,12 +18,9 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   // language selection
   Locale locale = const Locale('ar');
-  changeDefaultlanguage() async {
+  changeDefaultlanguage(String countryCode) async {
     emit(SettingsInitial());
-    String countryCode = Intl.getCurrentLocale();
-    countryCode == 'ar'
-        ? S.load(const Locale('en'))
-        : S.load(const Locale('ar'));
+
     locale = Locale(countryCode);
     // await CacheHelper.saveData(key: 'currentLanguage', value: locale);
     emit(LanguageStateSuccess());

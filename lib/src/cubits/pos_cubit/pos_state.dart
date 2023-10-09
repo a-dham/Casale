@@ -8,6 +8,8 @@ final class ItemsSectionsStateLoading extends PosState {}
 
 final class ItemsSectionsStateSuccess extends PosState {}
 
+final class ItemsSectionStateSuccess extends PosState {}
+
 final class ItemsStateLoading extends PosState {}
 
 final class GetItemsSuccess extends PosState {
