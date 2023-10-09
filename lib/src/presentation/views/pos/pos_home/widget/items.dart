@@ -23,9 +23,15 @@ class Items extends StatelessWidget {
                 mainAxisSpacing: 10,
                 mainAxisExtent: 150,
               ),
-              itemCount: posCubit.itemModel?.dataList.length,
+              itemCount: posCubit.isSearched == true
+                  ? posCubit.filterdItems?.length
+                  : posCubit.itemModel?.dataList.length,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
+                // final item = posCubit.isSearched != true
+                //     ? posCubit.filterdItems![index]
+                //     : posCubit.itemModel?.dataList[index];
+
                 final item = posCubit.itemModel?.dataList[index];
                 return GestureDetector(
                   onTap: () {
@@ -98,6 +104,10 @@ class Items extends StatelessWidget {
         );
       },
     );
+  }
+
+  items(item) {
+    return;
   }
 }
 

@@ -4,11 +4,14 @@ import 'package:casale/src/cubits/pos_cubit/local_items.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
+import 'package:casale/src/data/repository/item_section_repository.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
+import 'package:casale/src/domain/models/item_sections_model.dart';
 import 'package:casale/src/domain/models/login_model.dart';
 import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/domain/models/paymethods_model.dart';
 import 'package:casale/src/domain/models/products_model.dart';
+import 'package:casale/src/presentation/views/pos/pos_home/widget/sections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'pos_state.dart';
@@ -17,16 +20,29 @@ class PosCubit extends Cubit<PosState> {
   PosCubit() : super(PosInitial());
   static PosCubit get(context) => BlocProvider.of(context);
   String sysAc = CacheHelper.getData(key: 'sysac');
-
+  final ItemSectionsRepository sectionsRepository = ItemSectionsRepository();
   // items
   ItemModel? itemModel;
   List? items = [];
+  ItemSectionsModel? itemSections;
+  List? sections = [];
   List cart = [];
   List units = [];
   double totalorderWithVat = 0;
   double requiredToPaid = 0;
   double remaining = 0;
 
+//  get Items sections
+  getItemSections() {
+    emit(ItemsSectionsStateLoading());
+    sectionsRepository.getItemSections().then((sections) {
+      emit(ItemsSectionsStateSuccess());
+      this.sections = sections.data;
+    });
+    return sections;
+  }
+
+// get all items
   getItems() {
     emit(PosInitial());
     DioHelper.postData(url: EndPoints.baseUrl, data: {
@@ -41,6 +57,7 @@ class PosCubit extends Cubit<PosState> {
         print(value);
       } else {
         // itemModel = ItemModel.fromJson(value?.data);
+
         itemModel = ItemModel.fromJson(localItem);
         items = itemModel?.dataList;
         emit(GetItemsSuccess(itemModel: itemModel));
@@ -56,13 +73,14 @@ class PosCubit extends Cubit<PosState> {
     int existingIndex =
         cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
     if (existingIndex > -1) {
+      print(existingIndex);
       cart[existingIndex].quantity++;
       itemTotalWithVat(cart[existingIndex], item);
     } else {
+      print(existingIndex);
       cart.add(item);
       itemTotalWithVat(item, item);
     }
-
     emit(PosStateItemToCart());
   }
 
@@ -81,9 +99,8 @@ class PosCubit extends Cubit<PosState> {
     if (existingIndex > -1) {
       cart[existingIndex].quantity--;
       itemTotalWithVat(cart[existingIndex], item);
-    } else {
-      cart.remove(item);
-      itemTotalWithVat(cart[existingIndex], item);
+    } else if (cart[existingIndex].quantity == 0) {
+      removeItemFromCart(item);
     }
     emit(PosStateRemoveItem());
   }
@@ -228,20 +245,35 @@ class PosCubit extends Cubit<PosState> {
   bool isSearched = false;
   filterItems(dynamic input) {
     emit(ItemSearchStateloading());
-    isSearched = true;
     print(
       isSearched.toString(),
     );
     if (isSearched == true && items != null && items!.isNotEmpty) {
+      print(items);
+      print('con start');
       filterdItems = items!
           .where(
-            (item) => item.arabicTitle.contains(input),
+            (item) => item.itemKey.contains(input),
           )
           .toList();
-      return filterdItems;
     }
     print(filterdItems);
     emit(ItemSearchStateSuccess());
+  }
+
+  // filter item with section id
+  var itemsSection;
+  filterItemsSection(sectionId) {
+    print(sectionId);
+    // for (var item in items!) {
+    //   if (item.sectionId == sectionId) {
+    //     print('there is section id ');
+    //     itemsSection.add(item);
+    //   }
+    // }
+    // // itemsSection = items!.where((item) => item.sectionId == sectionId).toList();
+    // print(itemsSection);
+    // emit(ItemsSectionStateSuccess());
   }
 
   // select unit and calculate total or item

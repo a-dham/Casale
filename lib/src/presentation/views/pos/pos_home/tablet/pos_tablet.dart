@@ -97,7 +97,9 @@ class PosTablet extends StatelessWidget {
                         ],
                       ),
                       const SearchSeactions(),
-                      Sections(),
+                      Sections(
+                        posCubit: posCubit,
+                      ),
                       const ItemsHeader(),
                       state is ItemsStateLoading
                           ? const Center(
@@ -113,8 +115,10 @@ class PosTablet extends StatelessWidget {
                   constraints: BoxConstraints(
                     maxWidth: screenWidth < 780 ? 250 : 400,
                     minWidth: 150,
+                    maxHeight: double.infinity,
                   ),
                   color: AppColors.whiteColor,
+                  height: 100000,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 25,
                     vertical: 10,

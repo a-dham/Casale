@@ -3,7 +3,9 @@ Map<String, dynamic> localItem = {
   "data": {
     "0": {
       "id": "1",
-      "ar_title": "item1",
+      "ar_title": "قهوة",
+      "en_title": "coffe",
+      "ss_io_id": "1026",
       "units": {
         "0": {
           "_ai": "1",
@@ -34,11 +36,13 @@ Map<String, dynamic> localItem = {
           "title": "ضريبة 15 ",
         },
       },
-      "itemCode": "1234656",
+      "item_code": "55",
     },
     "1": {
       "id": "2",
-      "ar_title": "item2",
+      "ar_title": "شاي",
+      "en_title": "tee",
+      "ss_io_id": "1027",
       "units": {
         "0": {
           "_ai": "1",
@@ -59,11 +63,13 @@ Map<String, dynamic> localItem = {
           "measurunits_title": "درزنة",
         },
       },
-      "itemCode": "1234656",
+      "item_code": "66",
     },
     "2": {
       "id": "3",
-      "ar_title": "item3",
+      "ar_title": "قهوة عربي",
+      "en_title": "arabic coffe",
+      "ss_io_id": "1027",
       "units": {
         "0": {
           "_ai": "1",
@@ -94,11 +100,12 @@ Map<String, dynamic> localItem = {
           "title": "ضريبة 15 ",
         },
       },
-      "itemCode": "1234656",
+      "item_code": "1234656",
     },
     "3": {
       "id": "4",
-      "ar_title": "item4",
+      "ar_title": "عصير برتقال",
+      "en_title": "jouce",
       "units": {
         "0": {
           "_ai": "1",
@@ -129,7 +136,7 @@ Map<String, dynamic> localItem = {
           "title": "ضريبة 15 ",
         },
       },
-      "itemCode": "1234656",
+      "item_code": "77",
     },
   }
 };

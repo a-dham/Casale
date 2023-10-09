@@ -31,16 +31,20 @@ class OrderCard extends StatelessWidget {
               textWidget('Adham', FontWeight.normal),
               textWidget('10/10/2023 10:05', FontWeight.normal),
               textWidget('Total:250 SAR', FontWeight.normal),
-              const Icon(
-                Icons.print,
-                color: AppColors.orangeColor,
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.print,
+                  );
+                },
+                icon: const Icon(
+                  Icons.print,
+                  color: AppColors.orangeColor,
+                ),
               ),
               const Icon(
                 Icons.edit,
-                color: AppColors.orangeColor,
-              ),
-              const Icon(
-                Icons.delete,
                 color: AppColors.orangeColor,
               ),
             ],

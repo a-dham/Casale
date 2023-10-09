@@ -18,6 +18,7 @@ class _SearchSeactionsState extends State<SearchSeactions> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final PosCubit posCubit = PosCubit.get(context);
+    TextEditingController textEditingController = TextEditingController();
     return BlocConsumer<PosCubit, PosState>(
       listener: (context, state) {
         if (state is GetAccountStateLoading) {}
@@ -40,10 +41,23 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                 height: 30,
                 child: CustomeTextFormField(
                   labelText: S.current.search,
-                  suffixIcon: const Icon(Icons.search),
+                  suffixIcon: posCubit.isSearched == true
+                      ? IconButton(
+                          onPressed: () {
+                            setState(() {
+                              posCubit.isSearched = false;
+                              textEditingController.clear();
+                              // Is there any way to get item when close search ??
+                              posCubit.getItems();
+                            });
+                          },
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(0),
+                          icon: const Icon(Icons.close))
+                      : const Icon(Icons.search),
                   obscureText: false,
                   keyboardType: TextInputType.text,
-                  textEditingController: null,
+                  textEditingController: textEditingController,
                   onTap: () {
                     setState(() {
                       posCubit.isSearched = true;

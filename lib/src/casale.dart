@@ -6,7 +6,6 @@ import 'package:casale/src/cubits/settings/settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'config/routes/app_router.dart';
 import 'cubits/navigation_cubit/navigation_cubit.dart';
 import 'presentation/views/settings/widgets/settings_controller.dart';
@@ -37,7 +36,8 @@ class Casale extends StatelessWidget {
                 create: (context) => PosCubit()
                   ..getItems()
                   ..getOrgData()
-                  ..getAccountData()),
+                  ..getAccountData()
+                  ..getItemSections()),
           ],
           child: BlocConsumer<SettingsCubit, SettingsState>(
             listener: (context, state) {},

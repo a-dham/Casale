@@ -78,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "remainingClient":
             MessageLookupByLibrary.simpleMessage("المُتبقي للعميل"),
         "requirePay": MessageLookupByLibrary.simpleMessage("المطلوب للدفع"),
-        "saudiaCurrency": MessageLookupByLibrary.simpleMessage("رس"),
+        "saudiaCurrency": MessageLookupByLibrary.simpleMessage("ر.س"),
         "search": MessageLookupByLibrary.simpleMessage("البحث"),
         "sections": MessageLookupByLibrary.simpleMessage("الأقسام"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادت"),

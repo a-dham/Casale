@@ -26,6 +26,11 @@ class Data {
   int? quantity;
   double? tax;
   double? totalPriceWithVat;
+  String? sectionId;
+  String? sectionTitle;
+  String? itemKey;
+  // ss_io_id
+  // section_title
   // Map<dynamic, Units> units = {};
   List<Units> units = [];
   List<UsedTaxes> taxes = [];
@@ -38,6 +43,9 @@ class Data {
     arabicTitle = json['ar_title'];
     image = json['thumb_dir'];
     itemCode = json['item_code'];
+    sectionId = json['ss_io_id'];
+    sectionTitle = json['section_title'];
+    itemKey = '${json['en_title']} ${json['ar_title']} ${json['item_code']}';
     quantity = 1;
     totalPriceWithVat = 0;
     tax = 15;

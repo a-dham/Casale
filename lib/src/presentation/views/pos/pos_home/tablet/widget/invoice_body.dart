@@ -2,9 +2,10 @@ import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/presentation/views/customer/customer.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_invoice.dart';
-import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../../utils/constant/app_colors.dart';
 
 class InvoiceBody extends StatelessWidget {
   const InvoiceBody({super.key});
@@ -86,8 +87,10 @@ class InvoiceBody extends StatelessWidget {
                               Customer().showAlert(context, posCubit);
                             }
                           },
-                          icon: const Icon(
-                            Icons.add,
+                          icon: Icon(
+                            posCubit.customerName != null
+                                ? Icons.check
+                                : Icons.add,
                             color: Colors.black,
                           ),
                           label: Text(
