@@ -5,7 +5,6 @@ import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
-import 'package:casale/src/presentation/widgets/toast_massage.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -149,103 +148,176 @@ class Customer extends StatelessWidget {
     showDialog(
         context: context,
         builder: (context) {
+          final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+          final String errorMessage = '';
+
           return AlertDialog(
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(
-                    '${S.current.add} ${S.current.customer}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomeTextFormField(
-                    onSubmitted: null,
-                    labelText: S.current.name,
-                    suffixIcon: const Icon(Icons.person),
-                    obscureText: false,
-                    keyboardType: TextInputType.name,
-                    textEditingController: nameController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onchanged: (string) {},
-                    onTap: () {},
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomeTextFormField(
-                    onSubmitted: null,
-                    labelText: S.current.phone,
-                    suffixIcon: const Icon(Icons.phone),
-                    obscureText: false,
-                    keyboardType: TextInputType.number,
-                    textEditingController: phoneController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onTap: () {},
-                    onchanged: (string) {},
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomeTextFormField(
-                    onSubmitted: null,
-                    labelText: S.current.email,
-                    suffixIcon: const Icon(Icons.email),
-                    obscureText: false,
-                    keyboardType: TextInputType.emailAddress,
-                    textEditingController: emailController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onTap: () {},
-                    onchanged: (string) {},
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomeTextButton(
-                    childWidget: Text(
-                      S.current.add,
+            content: Form(
+              key: formkey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      '${S.current.add} ${S.current.customer}',
                       style: const TextStyle(
-                        color: AppColors.orangeColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    borderwidth: 1,
-                    isBorder: BorderStyle.solid,
-                    backgroundColor: AppColors.whiteColor,
-                    elevation: 1,
-                    onPressed: () {
-                      posCubit
-                          .addCustomer(
-                              firstName: nameController.text.toString(),
-                              email: emailController.text.toString(),
-                              phoneNumber: phoneController.text.toString())
-                          .then((value) async {
-                        Navigator.popAndPushNamed(
-                            context, Routes.bottomNavigation);
-                        emailController.clear();
-                        phoneController.clear();
-                        nameController.clear();
-                        posCubit.customers.clear();
-                        posCubit.getCustomers();
-                        const Toast().showToast();
-                      });
-                    },
-                    minimumSize: const Size(150, 35),
-                    borderRaduis: BorderRadius.circular(10),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomeTextFormField(
+                      onSubmitted: null,
+                      labelText: S.current.name,
+                      suffixIcon: const Icon(Icons.person),
+                      obscureText: false,
+                      keyboardType: TextInputType.name,
+                      textEditingController: nameController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return S.current.notNull;
+                        }
+                        return null;
+                      },
+                      onchanged: (string) {},
+                      onTap: () {},
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomeTextFormField(
+                      onSubmitted: null,
+                      labelText: S.current.phone,
+                      suffixIcon: const Icon(Icons.phone),
+                      obscureText: false,
+                      keyboardType: TextInputType.number,
+                      textEditingController: phoneController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return S.current.notNull;
+                        }
+                        return null;
+                      },
+                      onTap: () {},
+                      onchanged: (string) {},
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomeTextFormField(
+                      onSubmitted: null,
+                      labelText: S.current.email,
+                      suffixIcon: const Icon(Icons.email),
+                      obscureText: false,
+                      keyboardType: TextInputType.emailAddress,
+                      textEditingController: emailController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return S.current.notNull;
+                        }
+                        return null;
+                      },
+                      onTap: () {},
+                      onchanged: (string) {},
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomeTextButton(
+                      childWidget: Text(
+                        S.current.add,
+                        style: const TextStyle(
+                          color: AppColors.orangeColor,
+                        ),
+                      ),
+                      borderwidth: 1,
+                      isBorder: BorderStyle.solid,
+                      backgroundColor: AppColors.whiteColor,
+                      elevation: 1,
+                      onPressed: () {
+                        if (formkey.currentState!.validate()) {
+                          posCubit
+                              .addCustomer(
+                                  firstName: nameController.text.toString(),
+                                  email: emailController.text.toString(),
+                                  phoneNumber: phoneController.text.toString())
+                              .then(
+                            (value) async {
+                              if (value == null) {
+                                List<dynamic>? messages = posCubit
+                                    .validateModel?.data?.validator?.messages;
+                                String errorMessage = '';
+                                for (var element in messages!) {
+                                  errorMessage =
+                                      ' $errorMessage ${element.toString()}';
+                                }
+                                // emailController.text = errorMessage;
+                                // CustomToast().showToast();
+                                // showToast() {
+                                //   print('toast');
+                                //   Fluttertoast.showToast(
+                                //       msg: errorMessage,
+                                //       // toastLength: Toast.LENGTH_SHORT,
+                                //       gravity: ToastGravity.BOTTOM,
+                                //       timeInSecForIosWeb: 5,
+                                //       backgroundColor: Colors.green,
+                                //       textColor: Colors.white,
+                                //       fontSize: 16.0);
+                                // }
+                              } else {
+                                Navigator.popAndPushNamed(
+                                    context, Routes.bottomNavigation);
+
+                                emailController.clear();
+                                phoneController.clear();
+                                nameController.clear();
+                                posCubit.customers.clear();
+
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  actionOverflowThreshold: 1,
+                                  duration: const Duration(milliseconds: 900),
+                                  backgroundColor: Colors.green,
+                                  content: Center(
+                                    child: Text(S.current.cutomerAdded),
+                                  ),
+                                ));
+                              }
+                            },
+                          );
+                        }
+                      },
+                      minimumSize: const Size(150, 35),
+                      borderRaduis: BorderRadius.circular(10),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
         });
   }
 }
+
+// class CustomPageRouteBuilder extends PageRouteBuilder {
+//   final Widget page;
+
+//   CustomPageRouteBuilder({required this.page})
+//       : super(
+//           pageBuilder: (context, animation, secondaryAnimation) => page,
+//           transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//             var begin = Offset(1.0, 0.0);
+//             var end = Offset.zero;
+//             var curve = Curves.easeInOut;
+//             var tween =
+//                 Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+//             var offsetAnimation = animation.drive(tween);
+//             return SlideTransition(position: offsetAnimation, child: child);
+//           },
+//         );
+// }
+
+// Usage
+// Navigator.push(context, CustomPageRouteBuilder(page: NewScreen()));

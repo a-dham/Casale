@@ -62,6 +62,12 @@
     "totalPriceWithVat":"السعر ش.ض",
     "unitPrice":"سعر الوحدة",
     "quantity":"الكمية",
-    "products":"المنتجات"
+    "products":"المنتجات",
+    "authMessageFail":"إسم المستخدم أو الرقم السري خطأ ..!",
+    "yes":"نعم",
+    "no":"لا",
+    "areSure":"تأكيد تسجيل الخروج؟",
+    "itemDeleted":"تم حذف الصنف",
+    "cutomerAdded":"تم إضافة العميل"  
     
 }

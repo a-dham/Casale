@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../../../../generated/l10n.dart';
 import '../../../../utils/constant/app_colors.dart';
@@ -120,7 +119,7 @@ class OrderDetails extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           )
         ],

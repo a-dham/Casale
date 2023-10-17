@@ -12,11 +12,7 @@ final class ItemsSectionStateSuccess extends PosState {}
 
 final class ItemsStateLoading extends PosState {}
 
-final class GetItemsSuccess extends PosState {
-  final ItemModel? itemModel;
-
-  GetItemsSuccess({required this.itemModel});
-}
+final class GetItemsSuccess extends PosState {}
 
 final class PosStateItemToCart extends PosState {}
 

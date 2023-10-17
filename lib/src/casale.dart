@@ -1,5 +1,6 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/auth/auth_cubit.dart';
+import 'package:casale/src/cubits/order_%20cubit/order_cubit.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/cubits/product_cubit/products_cubit.dart';
 import 'package:casale/src/cubits/settings/settings_cubit.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'config/routes/app_router.dart';
-import 'cubits/navigation_cubit/navigation_cubit.dart';
 import 'presentation/views/settings/widgets/settings_controller.dart';
 
 class Casale extends StatelessWidget {
@@ -29,9 +29,9 @@ class Casale extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider<ProductsCubit>(create: (context) => ProductsCubit()),
-            BlocProvider(create: (context) => NavigationCubit()),
             BlocProvider(create: (context) => SettingsCubit()),
             BlocProvider(create: (context) => AuthCubit()),
+            BlocProvider(create: (context) => OrderCubit()),
             BlocProvider(
                 create: (context) => PosCubit()
                   ..getItems()

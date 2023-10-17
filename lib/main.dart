@@ -14,11 +14,9 @@ void main() async {
   await CacheHelper.init();
   String? initPage;
   var sysac = CacheHelper.getData(key: 'sysac');
-
   // CacheHelper.removeData(key: 'sysac');'
   bool? onboarding = await CacheHelper.getData(key: 'onboarding');
-  Locale? locale = await CacheHelper.getData(key: 'currentLanguage');
-  print('-------$locale');
+  String? locale = await CacheHelper.getData(key: 'localization');
 
   if (onboarding != null) {
     if (sysac != null) {
@@ -33,7 +31,8 @@ void main() async {
   print(initPage);
   print(onboarding);
   print(sysac);
-
+  print(locale);
+  // OrderRepository().getOrders();
   // final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   // final windowsInfo = await deviceInfo.windowsInfo;
   // String deviceId = windowsInfo.deviceId;

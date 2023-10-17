@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:casale/generated/l10n.dart';
+import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/presentation/widgets/circular_progress.dart';
@@ -24,18 +25,24 @@ class Print extends StatelessWidget {
       builder: (context, state) {
         PosCubit posCubit = PosCubit.get(context);
         return Scaffold(
-          appBar: AppBar(
-            // backgroundColor: AppColors.orangeColor,
-            centerTitle: true,
-            title: Text(
-              S.current.printPage,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
-            ),
-            // backgroundColor: AppColors.orangeColor,
-          ),
+          // appBar: AppBar(
+          //   // backgroundColor: AppColors.orangeColor,
+          //   centerTitle: true,
+          //   leading: IconButton(
+          //       onPressed: () {
+          //         Navigator.pushNamedAndRemoveUntil(
+          //             context, Routes.bottomNavigation, (route) => false);
+          //       },
+          //       icon: const Icon(Icons.arrow_back)),
+          //   title: Text(
+          //     S.current.printPage,
+          //     style: const TextStyle(
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 22,
+          //     ),
+          //   ),
+          //   // backgroundColor: AppColors.orangeColor,
+          // ),
           body: PdfPreview(
             build: (format) => _generatePdf(format, posCubit),
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),

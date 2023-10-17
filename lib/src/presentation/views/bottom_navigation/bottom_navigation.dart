@@ -1,16 +1,16 @@
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../cubits/settings/settings_cubit.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationCubit, NavigationState>(
-        builder: (context, state) {
-      NavigationCubit navigationCubit = NavigationCubit.get(context);
+    return BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
+      SettingsCubit settingsCubit = SettingsCubit.get(context);
       return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
             showSelectedLabels: true,
@@ -22,9 +22,9 @@ class BottomNavigation extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontFamily: 'Cairo',
             ),
-            currentIndex: navigationCubit.selectedIndex,
+            currentIndex: settingsCubit.selectedIndex,
             onTap: (index) {
-              navigationCubit.navigation(index);
+              settingsCubit.navigation(index);
             },
             items: [
               BottomNavigationBarItem(
@@ -43,8 +43,8 @@ class BottomNavigation extends StatelessWidget {
                   ),
                   label: S.current.settings),
             ]),
-        body: navigationCubit
-            .bottomNavigationscreens[navigationCubit.selectedIndex],
+        body:
+            settingsCubit.bottomNavigationscreens[settingsCubit.selectedIndex],
       );
     });
   }

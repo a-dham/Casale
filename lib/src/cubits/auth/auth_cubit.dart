@@ -13,8 +13,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   static AuthCubit get(context) => BlocProvider.of(context);
   late LoginModel loginModel;
+  bool isloading = false;
   login(username, password) async {
     emit(AuthStateLoading());
+    isloading = true;
     await DioHelper.postData(url: EndPoints.baseUrl, data: {
       'un': username,
       'up': password,
@@ -27,15 +29,19 @@ class AuthCubit extends Cubit<AuthState> {
       loginModel = LoginModel.fromJson(value!.data);
       if (loginModel.status == 'success') {
         await CacheHelper.saveData(key: 'sysac', value: loginModel.data!.sysac);
+        isloading = false;
         emit(AuthStateSuccess(
           loginModel: loginModel,
         ));
       } else if (loginModel.status == 'fail') {
         print('status is fail');
         emit(AuthStateFail());
+        isloading = false;
       }
     }).catchError((error) {
       print('Catch Error = $error');
+      isloading = false;
+      emit(AuthStateFail());
     });
   }
 }

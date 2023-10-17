@@ -11,19 +11,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class PosTablet extends StatelessWidget {
+class PosTablet extends StatefulWidget {
   const PosTablet({super.key});
 
+  @override
+  State<PosTablet> createState() => _PosTabletState();
+}
+
+class _PosTabletState extends State<PosTablet> {
+  @override
+  void initState() {
+    // ..getItems()
+    //               ..getItemSections()
+    // BlocProvider.of<PosCubit>(context).getOrgData();
+    // BlocProvider.of<PosCubit>(context).getAccountData();
+    super.initState();
+  }
+
   // getCurrnteLocal(context) {
-  //   Locale currnetLocal = Localizations.localeOf(context);
-  // }
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    PosCubit posCubit = PosCubit.get(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<PosCubit, PosState>(
-        listener: (context, state) {},
+        listener: (context, state) async {
+          if (state is PosInitial) {
+            // print('init state');
+            // await posCubit.getOrgData();
+            // await posCubit.getAccountData();
+          }
+        },
         builder: (context, state) {
           PosCubit posCubit = PosCubit.get(context);
           return SafeArea(

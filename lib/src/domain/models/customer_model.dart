@@ -6,7 +6,9 @@ class CustomersModel {
 
   CustomersModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+
     // data = json['data'] != null ? CustomerModel.fromJson(json['data']) : null;
+
     customers = json['data'] != null
         ? (json['data'] as List)
             .map((customer) => Customer.fromJson(customer))
@@ -19,6 +21,16 @@ class CustomersModel {
     customer = json['data'] != null ? Customer.fromJson(json['data']) : null;
   }
 }
+
+// {
+//    "add_customer_submit": "1",
+//       "first_name": "firstNamesss",
+//       "family_name": "firstNamesss",
+//       "email": "asdadasdas@sss.com",
+//       "phone_no": "phoneNumssbers",
+//             "cellphone_no": "phoneNumssbers"
+
+// }
 
 class Customer {
   String? customerId;

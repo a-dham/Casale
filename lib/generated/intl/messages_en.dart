@@ -30,12 +30,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Add Customer To Ticket"),
         "afterTax": MessageLookupByLibrary.simpleMessage("After Tax"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "areSure": MessageLookupByLibrary.simpleMessage("Are You Sure ?"),
+        "authMessageFail":
+            MessageLookupByLibrary.simpleMessage("UserName Or Password Wrong"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "canceld": MessageLookupByLibrary.simpleMessage("canceld"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
+        "cutomerAdded": MessageLookupByLibrary.simpleMessage("Cutomer Added"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don`t have account"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -48,11 +52,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("Invoices Settings"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
+        "itemDeleted": MessageLookupByLibrary.simpleMessage("Item Deleted"),
         "language": MessageLookupByLibrary.simpleMessage("language"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),
         "note": MessageLookupByLibrary.simpleMessage("Note"),
         "orders": MessageLookupByLibrary.simpleMessage("orders"),
@@ -95,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPriceWithVat":
             MessageLookupByLibrary.simpleMessage("Total price With Vat"),
         "unitPrice": MessageLookupByLibrary.simpleMessage("Unit Price"),
-        "username": MessageLookupByLibrary.simpleMessage("UserName")
+        "username": MessageLookupByLibrary.simpleMessage("UserName"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }
