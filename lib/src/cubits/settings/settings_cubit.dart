@@ -2,6 +2,7 @@ import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../config/routes/app_router.dart';
 import '../../presentation/views/Orders/orders.dart';
 import '../../presentation/views/pos/pos_home/pos_home.dart';
 import '../../presentation/views/settings/settings.dart';
@@ -43,10 +44,37 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(LanguageStateSuccess());
   }
 
-  signOut() async {
+  // signOut() async {
+  //   emit(SignOutStateLoading());
+  //   isloading = true;
+  //   await CacheHelper.removeData(key: 'sysac');
+  //   emit(SignOutStateSuccess());
+  // }
+
+  void signOut(BuildContext context) async {
     emit(SignOutStateLoading());
     isloading = true;
-    await CacheHelper.removeData(key: 'sysac');
-    emit(SignOutStateSuccess());
+    try {
+      Future.delayed(const Duration(
+        seconds: 1,
+      ));
+      Navigator.pushReplacementNamed(context, Routes.login);
+
+      await CacheHelper.removeData(key: 'sysac');
+      isloading = false;
+      selectedIndex = 0;
+      emit(SignOutStateSuccess());
+    } catch (error) {
+      isloading = false;
+      // emit(SignOutStateError(error.toString())); // إرسال حالة الخطأ مع الرسالة إلى واجهة المستخدم
+    }
   }
 }
+
+
+        //  Future.delayed(
+        //     Duration(seconds: 1),
+        //   ).then((value) {
+            
+        //     settingsCubit.isloading = false;
+        //   })

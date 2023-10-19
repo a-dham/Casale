@@ -7,6 +7,7 @@ class OrderRepository {
       Map<String, dynamic> ordersServices = await OrderServices().getOrders();
       return OrderModel.fromJson(ordersServices);
     } catch (error) {
+      // ignore: avoid_print
       print('error from repo is =============$error');
       return null;
     }

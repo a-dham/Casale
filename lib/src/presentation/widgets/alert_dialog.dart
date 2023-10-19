@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
-import '../../config/routes/app_router.dart';
 import '../../utils/constant/app_colors.dart';
 
 class CustomeAlertDialog extends StatelessWidget {
@@ -17,7 +15,7 @@ class CustomeAlertDialog extends StatelessWidget {
     required String textContent,
     required String textCancel,
     required VoidCallback onTapCancel,
-    required String texAccept,
+    required Widget acceptWidget,
     required VoidCallback onTapAccept,
   }) async {
     return showDialog<void>(
@@ -43,12 +41,7 @@ class CustomeAlertDialog extends StatelessWidget {
             ),
             TextButton(
               onPressed: onTapAccept,
-              child: Text(
-                texAccept,
-                style: const TextStyle(
-                  color: AppColors.orangeColor,
-                ),
-              ),
+              child: acceptWidget,
             ),
           ],
         );

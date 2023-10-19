@@ -22,14 +22,7 @@ class Settings extends StatelessWidget {
 
     return BlocConsumer<SettingsCubit, SettingsState>(
       listener: (context, state) {
-        if (state is SignOutStateSuccess) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            Routes.login,
-            (route) => true,
-          );
-          settingsCubit.selectedIndex = 0;
-        }
+        if (state is SignOutStateSuccess) {}
       },
       builder: (context, state) {
         return BlocBuilder<PosCubit, PosState>(
@@ -65,7 +58,7 @@ class Settings extends StatelessWidget {
                                   height: 100,
                                   width: 100,
                                   child: Image.network(
-                                    '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                                    '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
                                     fit: BoxFit.scaleDown,
                                     width: double.infinity,
                                     height: 85,
@@ -197,9 +190,19 @@ class Settings extends StatelessWidget {
                                 // make alert massage for confirmation
                                 const CustomeAlertDialog().showMyDialog(
                                   context: context,
-                                  texAccept: S.current.yes,
+                                  acceptWidget: settingsCubit.isloading == true
+                                      ? const CustomeCircularProgress()
+                                      : Text(
+                                          S.current.yes,
+                                          style: const TextStyle(
+                                            color: AppColors.orangeColor,
+                                          ),
+                                        ),
                                   onTapAccept: () {
-                                    settingsCubit.signOut();
+                                    settingsCubit.signOut(context);
+                                    // settingsCubit.isloading == true
+                                    //     ? CustomeCircularProgress()
+                                    //     : null;
                                   },
                                   onTapCancel: () {
                                     Navigator.of(context).pop();
@@ -217,9 +220,6 @@ class Settings extends StatelessWidget {
                       // SettingsView(controller: settingsController),
                     ],
                   ),
-                  settingsCubit.isloading == true
-                      ? const CustomeCircularProgress()
-                      : const SizedBox(),
                 ],
               )),
             );
@@ -229,25 +229,25 @@ class Settings extends StatelessWidget {
     );
   }
 
-  void showAlert(
-    BuildContext context,
-  ) {
-    showDialog(
-        useSafeArea: true,
-        barrierDismissible: true,
-        barrierColor: AppColors.orangeColor.withOpacity(0.08),
-        context: context,
-        builder: (BuildContext context) {
-          return const AlertDialog(
-            scrollable: true,
-            content: SizedBox(
-              height: 100,
-              width: 200,
-              child: Column(
-                children: [],
-              ),
-            ),
-          );
-        });
-  }
+  // void showAlert(
+  //   BuildContext context,
+  // ) {
+  //   showDialog(
+  //       useSafeArea: true,
+  //       barrierDismissible: true,
+  //       barrierColor: AppColors.orangeColor.withOpacity(0.08),
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return const AlertDialog(
+  //           scrollable: true,
+  //           content: SizedBox(
+  //             height: 100,
+  //             width: 200,
+  //             child: Column(
+  //               children: [],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 }

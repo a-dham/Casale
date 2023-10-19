@@ -39,7 +39,7 @@ class InvoiceBody extends StatelessWidget {
                           Text(
                             posCubit.loginModel?.data?.accountTitle
                                     .toString() ??
-                                'no title',
+                                '........',
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,

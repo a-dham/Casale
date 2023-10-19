@@ -61,6 +61,7 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                     setState(() {
                       // posCubit.isSearched = true;
                     });
+                    // ignore: avoid_print
                     print('search start');
                   },
                   onchanged: (input) {},

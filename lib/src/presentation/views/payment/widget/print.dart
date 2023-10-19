@@ -3,7 +3,6 @@
 import 'dart:typed_data';
 
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/presentation/widgets/circular_progress.dart';
@@ -13,6 +12,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../../../config/routes/app_router.dart';
 import '../../../../data/datasources/end_points.dart';
 
 class Print extends StatelessWidget {
@@ -25,24 +25,24 @@ class Print extends StatelessWidget {
       builder: (context, state) {
         PosCubit posCubit = PosCubit.get(context);
         return Scaffold(
-          // appBar: AppBar(
-          //   // backgroundColor: AppColors.orangeColor,
-          //   centerTitle: true,
-          //   leading: IconButton(
-          //       onPressed: () {
-          //         Navigator.pushNamedAndRemoveUntil(
-          //             context, Routes.bottomNavigation, (route) => false);
-          //       },
-          //       icon: const Icon(Icons.arrow_back)),
-          //   title: Text(
-          //     S.current.printPage,
-          //     style: const TextStyle(
-          //       fontWeight: FontWeight.bold,
-          //       fontSize: 22,
-          //     ),
-          //   ),
-          //   // backgroundColor: AppColors.orangeColor,
-          // ),
+          appBar: AppBar(
+            // backgroundColor: AppColors.orangeColor,
+            centerTitle: true,
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Routes.bottomNavigation, (route) => false);
+                },
+                icon: const Icon(Icons.arrow_back)),
+            title: Text(
+              S.current.printPage,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+            // backgroundColor: AppColors.orangeColor,
+          ),
           body: PdfPreview(
             build: (format) => _generatePdf(format, posCubit),
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -71,7 +71,7 @@ class Print extends StatelessWidget {
 
   Future<Uint8List> _generatePdf(
       PdfPageFormat format, PosCubit posCubit) async {
-    Data? orgData = posCubit.orgModel?.data;
+    Data? orgData = posCubit.orgData?.data;
     final pdf = pw.Document(
         creator: 'ADHAM ELSHARKAWY',
         theme: pw.ThemeData(),
@@ -81,7 +81,7 @@ class Print extends StatelessWidget {
     final font = await PdfGoogleFonts.iBMPlexSansArabicSemiBold();
     final orgLogo = await networkImage(
       cache: true,
-      '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+      '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
     );
 
     pdf.addPage(

@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/presentation/widgets/offline_screen.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
@@ -42,6 +43,10 @@ class _LoginState extends State<Login> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthStateSuccess) {
+          // posCubit.getItems();
+          // posCubit.getOrgData();
+          // posCubit.getAccountData();
+          // posCubit.getItemSections();
           print('state success');
           Navigator.pushNamedAndRemoveUntil(
               context, Routes.bottomNavigation, (route) => false);

@@ -60,7 +60,7 @@ class PosMobile extends StatelessWidget {
                         maxWidth: 50,
                       ),
                       child: Image.network(
-                        '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                        '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
                         fit: BoxFit.scaleDown,
                         width: double.infinity,
                         height: 85,

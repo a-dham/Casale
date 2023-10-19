@@ -49,7 +49,7 @@ class AppRouter {
         );
       case Routes.login:
         return MaterialPageRoute(
-          builder: (_) => Login(),
+          builder: (_) => const Login(),
         );
 
       case Routes.signup:

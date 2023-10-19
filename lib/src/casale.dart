@@ -32,12 +32,7 @@ class Casale extends StatelessWidget {
             BlocProvider(create: (context) => SettingsCubit()),
             BlocProvider(create: (context) => AuthCubit()),
             BlocProvider(create: (context) => OrderCubit()),
-            BlocProvider(
-                create: (context) => PosCubit()
-                  ..getItems()
-                  ..getOrgData()
-                  ..getAccountData()
-                  ..getItemSections()),
+            BlocProvider(create: (context) => PosCubit()),
           ],
           child: BlocConsumer<SettingsCubit, SettingsState>(
             listener: (context, state) {},

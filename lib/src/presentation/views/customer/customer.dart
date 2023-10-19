@@ -150,8 +150,6 @@ class Customer extends StatelessWidget {
         builder: (context) {
           final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-          final String errorMessage = '';
-
           return AlertDialog(
             content: Form(
               key: formkey,

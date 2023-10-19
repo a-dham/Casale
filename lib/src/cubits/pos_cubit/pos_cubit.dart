@@ -4,8 +4,10 @@ import 'package:casale/src/cubits/pos_cubit/local_items.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
+import 'package:casale/src/data/repository/account_data_repository.dart';
 import 'package:casale/src/data/repository/item_section_repository.dart';
 import 'package:casale/src/data/repository/items_repository.dart';
+import 'package:casale/src/data/repository/org_data_repository.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
 import 'package:casale/src/domain/models/item_sections_model.dart';
 import 'package:casale/src/domain/models/login_model.dart';
@@ -201,41 +203,18 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // get org data
-  OrgModel? orgModel;
+  OrgModel? orgData;
   getOrgData() async {
-    emit(GetAccountStateLoading());
-    await DioHelper.postData(
-        url: EndPoints.baseUrl,
-        data: {},
-        queryParameters: {
-          "flr": "acc/org",
-          "dtype": "json",
-          "rtype": "json",
-          "sysac": sysAc
-        }).then((value) {
-      orgModel = OrgModel.fromJson(value?.data);
-      emit(GetOrgStateSuccess(
-        orgModel: orgModel,
-      ));
-      return orgModel;
-    });
+    emit(GetOrgDataStateLoading());
+    orgData = await OrgDataRepository().getOrgData();
+    emit(GetOrgDataStateSuccess());
   }
 
   LoginModel? loginModel;
   getAccountData() async {
     emit(GetAccountStateLoading());
-    emit(PosInitial());
-    await DioHelper.postData(
-        url: EndPoints.baseUrl,
-        data: {},
-        queryParameters: {
-          'flr': 'acc/login',
-          'sysac': sysAc,
-          'rtype': 'json',
-        }).then((value) {
-      loginModel = LoginModel.fromJson(value?.data);
-      emit(GetAccountStateSuccess());
-    });
+    loginModel = await AccountDataRepostory().getAccountData();
+    emit(GetAccountStateSuccess());
   }
 
 //  fun for filter items

@@ -32,16 +32,13 @@ final class AddCustomerStateFail extends PosState {}
 
 final class GetCustomerState extends PosState {}
 
-final class GetOrgStateSuccess extends PosState {
-  GetOrgStateSuccess({
-    required this.orgModel,
-  });
-  final OrgModel? orgModel;
-}
-
 final class GetAccountStateLoading extends PosState {}
 
 final class GetAccountStateSuccess extends PosState {}
+
+final class GetOrgDataStateLoading extends PosState {}
+
+final class GetOrgDataStateSuccess extends PosState {}
 
 final class ItemSearchStateloading extends PosState {}
 

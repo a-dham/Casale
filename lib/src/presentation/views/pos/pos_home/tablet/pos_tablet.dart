@@ -1,5 +1,6 @@
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
+import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/invoice_body.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/items.dart';
@@ -21,10 +22,11 @@ class PosTablet extends StatefulWidget {
 class _PosTabletState extends State<PosTablet> {
   @override
   void initState() {
-    // ..getItems()
-    //               ..getItemSections()
-    // BlocProvider.of<PosCubit>(context).getOrgData();
-    // BlocProvider.of<PosCubit>(context).getAccountData();
+    // (BlocProvider.of<PosCubit>(context).orgData?.data as Map).clear();
+    BlocProvider.of<PosCubit>(context).getOrgData();
+    BlocProvider.of<PosCubit>(context).getAccountData();
+    BlocProvider.of<PosCubit>(context).getItems();
+    BlocProvider.of<PosCubit>(context).getItemSections();
     super.initState();
   }
 
@@ -32,17 +34,16 @@ class _PosTabletState extends State<PosTablet> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    PosCubit posCubit = PosCubit.get(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<PosCubit, PosState>(
         listener: (context, state) async {
-          if (state is PosInitial) {
-            // print('init state');
-            // await posCubit.getOrgData();
-            // await posCubit.getAccountData();
-          }
+          // if (state is PosInitial) {
+          // print('init state');
+          // await posCubit.getOrgData();
+          // await posCubit.getAccountData();
+          // }
         },
         builder: (context, state) {
           PosCubit posCubit = PosCubit.get(context);
@@ -69,7 +70,7 @@ class _PosTabletState extends State<PosTablet> {
                               maxWidth: 70,
                             ),
                             child: Image.network(
-                              '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                              '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
                               fit: BoxFit.scaleDown,
                               width: double.infinity,
                               height: 85,
@@ -101,7 +102,7 @@ class _PosTabletState extends State<PosTablet> {
                               maxWidth: 250,
                             ),
                             child: Text(
-                              posCubit.orgModel?.data!.orgTitle.toString() ??
+                              posCubit.orgData?.data!.orgTitle.toString() ??
                                   'no Title',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
