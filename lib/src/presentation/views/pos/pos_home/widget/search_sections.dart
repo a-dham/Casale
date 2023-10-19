@@ -20,9 +20,7 @@ class _SearchSeactionsState extends State<SearchSeactions> {
     final PosCubit posCubit = PosCubit.get(context);
     TextEditingController textEditingController = TextEditingController();
     return BlocConsumer<PosCubit, PosState>(
-      listener: (context, state) {
-        if (state is GetAccountStateLoading) {}
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Container(
           padding: const EdgeInsets.symmetric(
@@ -34,7 +32,7 @@ class _SearchSeactionsState extends State<SearchSeactions> {
             children: [
               Container(
                 constraints: BoxConstraints(
-                  maxWidth: screenWidth >= 600
+                  maxWidth: screenWidth >= 780
                       ? (screenWidth * 0.40) - 80
                       : (screenWidth * 0.90) - 80,
                 ),
@@ -59,9 +57,12 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                   keyboardType: TextInputType.text,
                   textEditingController: textEditingController,
                   onTap: () {
+                    // _showAlertDialogAndAnotherScreen(context);
                     setState(() {
-                      posCubit.isSearched = true;
+                      // posCubit.isSearched = true;
                     });
+                    // ignore: avoid_print
+                    print('search start');
                   },
                   onchanged: (input) {},
                   validator: (value) {
@@ -78,4 +79,32 @@ class _SearchSeactionsState extends State<SearchSeactions> {
       },
     );
   }
+
+  // Function to show alert dialog
+  // Future<void> _showAlertDialogAndAnotherScreen(BuildContext context) async {
+  //   // Show the alert dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Alert Dialog Title'),
+  //         content: Text('This is the content of the alert dialog.'),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               // Close the alert dialog
+  //               Navigator.of(context).pop();
+
+  //               // // Push another screen onto the navigation stack
+  //               // Navigator.of(context).push(MaterialPageRoute(
+  //               //   builder: (BuildContext context) => AnotherScreen(),
+  //               // ));
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }

@@ -1,5 +1,6 @@
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
+import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/invoice_body.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/items.dart';
@@ -11,19 +12,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class PosTablet extends StatelessWidget {
+class PosTablet extends StatefulWidget {
   const PosTablet({super.key});
 
+  @override
+  State<PosTablet> createState() => _PosTabletState();
+}
+
+class _PosTabletState extends State<PosTablet> {
+  @override
+  void initState() {
+    // (BlocProvider.of<PosCubit>(context).orgData?.data as Map).clear();
+    BlocProvider.of<PosCubit>(context).getOrgData();
+    BlocProvider.of<PosCubit>(context).getAccountData();
+    BlocProvider.of<PosCubit>(context).getItems();
+    BlocProvider.of<PosCubit>(context).getItemSections();
+    super.initState();
+  }
+
   // getCurrnteLocal(context) {
-  //   Locale currnetLocal = Localizations.localeOf(context);
-  // }
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<PosCubit, PosState>(
-        listener: (context, state) {},
+        listener: (context, state) async {
+          // if (state is PosInitial) {
+          // print('init state');
+          // await posCubit.getOrgData();
+          // await posCubit.getAccountData();
+          // }
+        },
         builder: (context, state) {
           PosCubit posCubit = PosCubit.get(context);
           return SafeArea(
@@ -49,7 +70,7 @@ class PosTablet extends StatelessWidget {
                               maxWidth: 70,
                             ),
                             child: Image.network(
-                              '${EndPoints.assetsUrl}${posCubit.orgModel?.data?.logo}',
+                              '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
                               fit: BoxFit.scaleDown,
                               width: double.infinity,
                               height: 85,
@@ -81,7 +102,7 @@ class PosTablet extends StatelessWidget {
                               maxWidth: 250,
                             ),
                             child: Text(
-                              posCubit.orgModel?.data!.orgTitle.toString() ??
+                              posCubit.orgData?.data!.orgTitle.toString() ??
                                   'no Title',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,

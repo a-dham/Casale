@@ -23,6 +23,8 @@ class CacheHelper {
       return await sharedPreferences!.setStringList(key, value);
     } else if (value is Map<String, dynamic>) {
       return await sharedPreferences!.setString(key, value.toString());
+    } else if (value is Future<dynamic>) {
+      return await sharedPreferences!.setString(key, value.toString());
     }
     return null;
   }

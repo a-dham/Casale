@@ -36,11 +36,12 @@ class ItemWidget extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       posCubit.removeItemFromCart(item);
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        duration: Duration(milliseconds: 500),
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        actionOverflowThreshold: 1,
+                        duration: const Duration(milliseconds: 500),
                         backgroundColor: Colors.red,
                         content: Center(
-                          child: Text('Delete Success'),
+                          child: Text(S.current.itemDeleted),
                         ),
                       ));
                     },

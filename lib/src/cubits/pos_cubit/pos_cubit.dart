@@ -4,14 +4,16 @@ import 'package:casale/src/cubits/pos_cubit/local_items.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
+import 'package:casale/src/data/repository/account_data_repository.dart';
 import 'package:casale/src/data/repository/item_section_repository.dart';
+import 'package:casale/src/data/repository/items_repository.dart';
+import 'package:casale/src/data/repository/org_data_repository.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
 import 'package:casale/src/domain/models/item_sections_model.dart';
 import 'package:casale/src/domain/models/login_model.dart';
 import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/domain/models/paymethods_model.dart';
-import 'package:casale/src/domain/models/products_model.dart';
-import 'package:casale/src/presentation/views/pos/pos_home/widget/sections.dart';
+import 'package:casale/src/domain/models/validate_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'pos_state.dart';
@@ -19,10 +21,9 @@ part 'pos_state.dart';
 class PosCubit extends Cubit<PosState> {
   PosCubit() : super(PosInitial());
   static PosCubit get(context) => BlocProvider.of(context);
+
   String sysAc = CacheHelper.getData(key: 'sysac');
   final ItemSectionsRepository sectionsRepository = ItemSectionsRepository();
-  // items
-  ItemModel? itemModel;
   List? items = [];
   ItemSectionsModel? itemSections;
   List? sections = [];
@@ -43,28 +44,13 @@ class PosCubit extends Cubit<PosState> {
   }
 
 // get all items
-  getItems() {
-    emit(PosInitial());
-    DioHelper.postData(url: EndPoints.baseUrl, data: {
-      'flr': sysAc,
-    }, queryParameters: {
-      'flr': 'casale/manage/items/views',
-      'sysac': sysAc,
-      'rtype': 'json',
-      'dtype': 'json',
-    }).then((value) {
-      if (value is String) {
-        print(value);
-      } else {
-        // itemModel = ItemModel.fromJson(value?.data);
-
-        itemModel = ItemModel.fromJson(localItem);
-        items = itemModel?.dataList;
-        emit(GetItemsSuccess(itemModel: itemModel));
-      }
-    }).catchError((error) {
-      print('error is = $error');
+  getItems() async {
+    emit(ItemsStateLoading());
+    await ItemsRepository().getItems().then((items) {
+      this.items = items?.dataList;
     });
+    emit(GetItemsSuccess());
+    return items;
   }
 
   // cart
@@ -148,7 +134,6 @@ class PosCubit extends Cubit<PosState> {
       'rtype': 'json',
       'sysac': sysAc,
     }).then((value) {
-      print(value);
       customersModel = CustomersModel.fromJson(value!.data);
       if (customersModel!.status == 'success') {
         for (var element in customersModel!.customers) {
@@ -183,6 +168,7 @@ class PosCubit extends Cubit<PosState> {
   }
 
 // add customer
+  ValidateModel? validateModel;
   addCustomer({
     required String firstName,
     required String email,
@@ -200,44 +186,35 @@ class PosCubit extends Cubit<PosState> {
       "rtype": "json",
       "sysac": sysAc
     }).then((value) {
-      if (value != null) {
+      validateModel = ValidateModel.fromjson(value?.data);
+      if (validateModel?.status == "success") {
+        print(validateModel?.cusotmerId);
+        print(validateModel?.status);
         emit(AddCustomerStateSuccess());
-      } else {
-        print('customer fail $value');
+        return validateModel?.status;
+      } else if (validateModel?.status == null) {
+        emit(AddCustomerStateFail());
+        print('customer fail ${value?.data}');
       }
     }).catchError((error) {
-      print('catch error ${error.toString()}');
+      print('catch error====== ${error.toString()}');
+      return error;
     });
   }
 
   // get org data
-  OrgModel? orgModel;
-  getOrgData() {
-    DioHelper.postData(url: EndPoints.baseUrl, data: {}, queryParameters: {
-      "flr": "acc/org",
-      "dtype": "json",
-      "rtype": "json",
-      "sysac": sysAc
-    }).then((value) {
-      emit(GetAccountStateLoading());
-      orgModel = OrgModel.fromJson(value?.data);
-      emit(GetOrgStateSuccess(
-        orgModel: orgModel,
-      ));
-    });
+  OrgModel? orgData;
+  getOrgData() async {
+    emit(GetOrgDataStateLoading());
+    orgData = await OrgDataRepository().getOrgData();
+    emit(GetOrgDataStateSuccess());
   }
 
   LoginModel? loginModel;
-  getAccountData() {
-    DioHelper.postData(url: EndPoints.baseUrl, data: {}, queryParameters: {
-      'flr': 'acc/login',
-      'sysac': sysAc,
-      'rtype': 'json',
-    }).then((value) {
-      emit(GetAccountStateLoading());
-      loginModel = LoginModel.fromJson(value?.data);
-      emit(GetAccountStateSuccess());
-    });
+  getAccountData() async {
+    emit(GetAccountStateLoading());
+    loginModel = await AccountDataRepostory().getAccountData();
+    emit(GetAccountStateSuccess());
   }
 
 //  fun for filter items
@@ -245,10 +222,8 @@ class PosCubit extends Cubit<PosState> {
   bool isSearched = false;
   filterItems(dynamic input) {
     emit(ItemSearchStateloading());
-    print(
-      isSearched.toString(),
-    );
-    if (isSearched == true && items != null && items!.isNotEmpty) {
+
+    if (items != null && items!.isNotEmpty) {
       print(items);
       print('con start');
       filterdItems = items!
@@ -262,7 +237,7 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // filter item with section id
-  var itemsSection;
+  // var itemsSection;
   filterItemsSection(sectionId) {
     print(sectionId);
     // for (var item in items!) {

@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print
+import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/presentation/widgets/offline_screen.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 
@@ -14,27 +15,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Login extends StatelessWidget {
-  Login({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final Dio dio = Dio();
+
   final TextEditingController userNameController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> passwordTextFiledState = GlobalKey<FormState>();
+  bool showError = false;
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
-    bool isloading = false;
+
     AuthCubit authCubit = AuthCubit.get(context);
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthStateLoading) {
-          isloading = !isloading;
-        } else if (state is AuthStateSuccess) {
+        if (state is AuthStateSuccess) {
+          // posCubit.getItems();
+          // posCubit.getOrgData();
+          // posCubit.getAccountData();
+          // posCubit.getItemSections();
           print('state success');
           Navigator.pushNamedAndRemoveUntil(
               context, Routes.bottomNavigation, (route) => false);
+        } else if (state is AuthStateFail) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            actionOverflowThreshold: 1,
+            duration: const Duration(milliseconds: 1100),
+            backgroundColor: Colors.red,
+            content: Center(
+              child: Text(S.current.authMessageFail),
+            ),
+          ));
         }
       },
       builder: (context, state) {
@@ -86,13 +110,20 @@ class Login extends StatelessWidget {
                                   keyboardType: TextInputType.text,
                                   textEditingController: userNameController,
                                   validator: (value) {
-                                    if (value!.isEmpty) {
+                                    if (value != null &&
+                                        value.isEmpty &&
+                                        showError) {
                                       return S.current.notNull;
                                     }
                                     return null;
                                   },
                                   onSubmitted: (string) {},
-                                  onTap: () {},
+                                  onTap: () {
+                                    setState(() {
+                                      showError = false;
+                                      formkey.currentState!.validate();
+                                    });
+                                  },
                                   onchanged: (string) {},
                                 ),
                                 SizedBox(
@@ -105,13 +136,30 @@ class Login extends StatelessWidget {
                                   keyboardType: TextInputType.visiblePassword,
                                   textEditingController: passwordController,
                                   validator: (value) {
-                                    if (value!.isEmpty) {
+                                    if (value != null &&
+                                        value.isEmpty &&
+                                        showError) {
                                       return S.current.notNull;
                                     }
                                     return null;
                                   },
-                                  onSubmitted: (string) {},
-                                  onTap: () {},
+                                  onSubmitted: (string) {
+                                    setState(() {
+                                      showError = true;
+                                    });
+                                    if (formkey.currentState!.validate()) {
+                                      authCubit.login(
+                                        userNameController.text.toString(),
+                                        passwordController.text.toString(),
+                                      );
+                                    }
+                                  },
+                                  onTap: () {
+                                    setState(() {
+                                      showError = false;
+                                      formkey.currentState!.validate();
+                                    });
+                                  },
                                   onchanged: (string) {},
                                 ),
                                 SizedBox(
@@ -129,7 +177,7 @@ class Login extends StatelessWidget {
                                 SizedBox(
                                   height: screenHeight * 0.02,
                                 ),
-                                isloading
+                                authCubit.isloading
                                     ? const CircularProgressIndicator(
                                         color: AppColors.orangeColor,
                                         semanticsValue: 'ows',
@@ -148,6 +196,9 @@ class Login extends StatelessWidget {
                                         backgroundColor: AppColors.orangeColor,
                                         elevation: 0,
                                         onPressed: () async {
+                                          setState(() {
+                                            showError = true;
+                                          });
                                           if (formkey.currentState!
                                               .validate()) {
                                             authCubit.login(

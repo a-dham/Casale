@@ -30,12 +30,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إضافة عميل للفاتورة"),
         "afterTax": MessageLookupByLibrary.simpleMessage("بعد الضريبة"),
         "all": MessageLookupByLibrary.simpleMessage("الجميع"),
+        "areSure": MessageLookupByLibrary.simpleMessage("تأكيد تسجيل الخروج؟"),
+        "authMessageFail": MessageLookupByLibrary.simpleMessage(
+            "إسم المستخدم أو الرقم السري خطأ ..!"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "canceld": MessageLookupByLibrary.simpleMessage("الملغاة"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد الباسورد"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("العميل"),
         "customer": MessageLookupByLibrary.simpleMessage("عميل"),
+        "cutomerAdded": MessageLookupByLibrary.simpleMessage("تم إضافة العميل"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
@@ -48,11 +52,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("إعدادت الفواتير"),
         "item": MessageLookupByLibrary.simpleMessage("صنف"),
+        "itemDeleted": MessageLookupByLibrary.simpleMessage("تم حذف الصنف"),
         "language": MessageLookupByLibrary.simpleMessage("اللغات"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "name": MessageLookupByLibrary.simpleMessage("الإسم"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
+        "no": MessageLookupByLibrary.simpleMessage("لا"),
         "notNull": MessageLookupByLibrary.simpleMessage("لا يمكن أن يكون فارغ"),
         "note": MessageLookupByLibrary.simpleMessage("ملاحظة"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
@@ -93,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalPriceWithVat": MessageLookupByLibrary.simpleMessage("السعر ش.ض"),
         "unitPrice": MessageLookupByLibrary.simpleMessage("سعر الوحدة"),
-        "username": MessageLookupByLibrary.simpleMessage("إسم المستخدم")
+        "username": MessageLookupByLibrary.simpleMessage("إسم المستخدم"),
+        "yes": MessageLookupByLibrary.simpleMessage("نعم")
       };
 }

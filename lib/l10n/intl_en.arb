@@ -61,7 +61,13 @@
     "totalPriceWithVat":"Total price With Vat",
     "unitPrice":"Unit Price",
     "quantity":"Quantity",
-    "products":"Products"
+    "products":"Products",
+    "authMessageFail":"UserName Or Password Wrong",
+    "yes":"Yes",
+    "no":"No",
+    "areSure":"Are You Sure ?",
+    "itemDeleted":"Item Deleted",
+    "cutomerAdded":"Cutomer Added"
 
 
 }

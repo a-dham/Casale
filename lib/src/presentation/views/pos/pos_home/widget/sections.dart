@@ -46,6 +46,7 @@ class Sections extends StatelessWidget {
                 return posCubit.sections?[index].inUse == true
                     ? GestureDetector(
                         onTap: () {
+                          // ignore: avoid_print
                           print(
                               'sectionssss ${posCubit.sections?[index].sectionId}');
                           // fun for filter  item with section id

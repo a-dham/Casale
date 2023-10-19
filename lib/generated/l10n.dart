@@ -679,6 +679,66 @@ class S {
       args: [],
     );
   }
+
+  /// `UserName Or Password Wrong`
+  String get authMessageFail {
+    return Intl.message(
+      'UserName Or Password Wrong',
+      name: 'authMessageFail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are You Sure ?`
+  String get areSure {
+    return Intl.message(
+      'Are You Sure ?',
+      name: 'areSure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item Deleted`
+  String get itemDeleted {
+    return Intl.message(
+      'Item Deleted',
+      name: 'itemDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cutomer Added`
+  String get cutomerAdded {
+    return Intl.message(
+      'Cutomer Added',
+      name: 'cutomerAdded',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
