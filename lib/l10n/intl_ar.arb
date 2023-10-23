@@ -68,6 +68,8 @@
     "no":"لا",
     "areSure":"تأكيد تسجيل الخروج؟",
     "itemDeleted":"تم حذف الصنف",
-    "cutomerAdded":"تم إضافة العميل"  
-    
+    "cutomerAdded":"تم إضافة العميل"  ,
+    "items":"Items",
+    "orderNumber":"رقم الطلب"
+
 }

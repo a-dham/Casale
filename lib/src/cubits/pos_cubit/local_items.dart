@@ -138,6 +138,43 @@ Map<String, dynamic> localItem = {
       },
       "item_code": "77",
     },
+    "4": {
+      "id": "5",
+      "ar_title": "  قهوة تركي",
+      "en_title": "coffe",
+      "ss_io_id": "1028",
+      "units": {
+        "0": {
+          "_ai": "1",
+          "unit_price": "2",
+          "unit_quantity": "1",
+          "measurunits_title": "حبة",
+        },
+        "1": {
+          "_ai": "2",
+          "unit_price": "2",
+          "unit_quantity": "1",
+          "measurunits_title": "شدة",
+        },
+        "2": {
+          "_ai": "3",
+          "unit_price": "50",
+          "unit_quantity": "1",
+          "measurunits_title": "درزنة",
+        },
+      },
+      "used_taxes": {
+        "0": {
+          "val": "1",
+          "title": "ضريبة 15 ",
+        },
+        "1": {
+          "val": "1",
+          "title": "ضريبة 15 ",
+        },
+      },
+      "item_code": "99",
+    },
   }
 };
 

@@ -32,6 +32,7 @@ void main() async {
   print(onboarding);
   print(sysac);
   print(locale);
+
   // OrderRepository().getOrders();
   // final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   // final windowsInfo = await deviceInfo.windowsInfo;

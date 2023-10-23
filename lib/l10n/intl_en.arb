@@ -67,7 +67,10 @@
     "no":"No",
     "areSure":"Are You Sure ?",
     "itemDeleted":"Item Deleted",
-    "cutomerAdded":"Cutomer Added"
+    "items":"Items",
+    "cutomerAdded":"Cutomer Added",
+    "orderNumber":"Order Number"
+    
 
 
 }

@@ -730,11 +730,31 @@ class S {
     );
   }
 
+  /// `Items`
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cutomer Added`
   String get cutomerAdded {
     return Intl.message(
       'Cutomer Added',
       name: 'cutomerAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Number`
+  String get orderNumber {
+    return Intl.message(
+      'Order Number',
+      name: 'orderNumber',
       desc: '',
       args: [],
     );

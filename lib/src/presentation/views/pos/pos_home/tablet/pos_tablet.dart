@@ -1,7 +1,7 @@
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
-import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/invoice_body.dart';
+import 'package:casale/src/presentation/views/pos/pos_home/widget/filterd_items.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/items.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/search_sections.dart';
@@ -122,13 +122,15 @@ class _PosTabletState extends State<PosTablet> {
                         posCubit: posCubit,
                       ),
                       const ItemsHeader(),
-                      state is ItemsStateLoading
-                          ? const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.orangeColor,
-                              ),
-                            )
-                          : const Items(),
+                      posCubit.isSearched == false
+                          ? state is ItemsStateLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.orangeColor,
+                                  ),
+                                )
+                              : const Items()
+                          : const FiltteredItems(),
                     ],
                   ),
                 ),

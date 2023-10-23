@@ -1,5 +1,4 @@
 import 'package:casale/generated/l10n.dart';
-import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/item_widget.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
@@ -98,10 +97,23 @@ class ItemsInvoice extends StatelessWidget {
                   onPressed: () async {
                     posCubit.totalorderWithVat == 0
                         ? null
-                        : posCubit.getPaymethods().then(Navigator.pushNamed(
-                              context,
-                              Routes.payment,
-                            ));
+                        : posCubit.orderData(
+                            orderId: '10',
+                            orgId: posCubit.orgData?.data?.orgId,
+                            accountId: posCubit.loginModel?.data?.userId,
+                            customerId:
+                                posCubit.customersModel?.customer?.customerId,
+                            totalOrder:
+                                posCubit.totalorderWithVat.toStringAsFixed(6),
+                            totalOrderWithVat:
+                                posCubit.totalorderWithVat.toStringAsFixed(6),
+                            payed: '100',
+                            items: posCubit.cart,
+                          );
+                    // posCubit.getPaymethods().then(Navigator.pushNamed(
+                    //       context,
+                    //       Routes.payment,
+                    //     ));
                   },
                   minimumSize: Size(
                     200,

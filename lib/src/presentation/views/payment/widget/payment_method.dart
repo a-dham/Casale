@@ -2,6 +2,7 @@
 
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/domain/models/paymethods_model.dart';
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,7 @@ class PaymentMethods extends StatelessWidget {
             return data![index].inUse == true
                 ? GestureDetector(
                     onTap: () {
-                      showAlerDialog(
-                          context, data![index].inUse, textForm, posCubit);
+                      showAlerDialog(context, data![index], textForm, posCubit);
                     },
                     child: Container(
                       height: 70,
@@ -80,34 +80,34 @@ class PaymentMethods extends StatelessWidget {
 
   showAlerDialog(
     BuildContext context,
-    bool? inUse,
+    Data paymethod,
     TextEditingController textEditingController,
-    posCubit,
+    PosCubit posCubit,
   ) {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            content: inUse != null
-                ? CustomeTextFormField(
-                    labelText: S.current.entervalue,
-                    suffixIcon: const Icon(Icons.numbers),
-                    obscureText: false,
-                    keyboardType: TextInputType.number,
-                    onSubmitted: (value) {
-                      var totalOrder = posCubit.totalorderWithVat;
-                      posCubit.remainingPayment(totalOrder, int.parse(value));
-                      Navigator.of(context).pop();
-                    },
-                    textEditingController: textEditingController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onTap: () {},
-                    onchanged: (string) {},
-                  )
-                : const Text('can`t use this payment method'),
-          );
+              content: CustomeTextFormField(
+            labelText: S.current.entervalue,
+            suffixIcon: const Icon(Icons.numbers),
+            obscureText: false,
+            keyboardType: TextInputType.number,
+            onSubmitted: (value) {
+              var totalOrder = posCubit.totalorderWithVat;
+              String? paymethodID = paymethod.paymethodId;
+
+              posCubit.remainingPayment(
+                  totalOrder, double.parse(value), paymethodID);
+              Navigator.of(context).pop();
+            },
+            textEditingController: textEditingController,
+            validator: (value) {
+              return null;
+            },
+            onTap: () {},
+            onchanged: (string) {},
+          ));
         });
   }
 }

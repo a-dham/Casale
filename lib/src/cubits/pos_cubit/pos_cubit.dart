@@ -33,6 +33,27 @@ class PosCubit extends Cubit<PosState> {
   double requiredToPaid = 0;
   double remaining = 0;
 
+  // collect Order Data
+  orderData({
+    required String? orderId,
+    required String? orgId,
+    required String? accountId,
+    required String? customerId,
+    required String? totalOrder,
+    required String? totalOrderWithVat,
+    required String? payed,
+    required List? items,
+  }) {
+    print(orderId);
+    print(orgId);
+    print(accountId);
+    print(customerId);
+    print(totalOrder);
+    print(totalOrderWithVat);
+    print(payed);
+    print(items);
+  }
+
 //  get Items sections
   getItemSections() {
     emit(ItemsSectionsStateLoading());
@@ -221,9 +242,9 @@ class PosCubit extends Cubit<PosState> {
   List? filterdItems = [];
   bool isSearched = false;
   filterItems(dynamic input) {
+    isSearched = true;
     emit(ItemSearchStateloading());
-
-    if (items != null && items!.isNotEmpty) {
+    if (isSearched == true && items != null && items!.isNotEmpty) {
       print(items);
       print('con start');
       filterdItems = items!
@@ -282,10 +303,8 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // calculate Remaining of payment
-  remainingPayment(
-    totalOrder,
-    payed,
-  ) {
+  remainingPayment(totalOrder, payed, paymethodID) {
+    print(paymethodID);
     print('start');
     requiredToPaid = totalOrder;
     requiredToPaid = totalOrder - payed;

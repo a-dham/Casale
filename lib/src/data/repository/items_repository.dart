@@ -1,5 +1,4 @@
 import 'package:casale/src/cubits/pos_cubit/local_items.dart';
-import 'package:casale/src/data/services/items_services.dart';
 import 'package:casale/src/domain/models/products_model.dart';
 
 class ItemsRepository {
