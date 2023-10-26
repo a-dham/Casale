@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "name": MessageLookupByLibrary.simpleMessage("الإسم"),
+        "newOrder": MessageLookupByLibrary.simpleMessage("فاتورة جديدة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "no": MessageLookupByLibrary.simpleMessage("لا"),
         "notNull": MessageLookupByLibrary.simpleMessage("لا يمكن أن يكون فارغ"),

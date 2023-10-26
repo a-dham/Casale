@@ -6,6 +6,8 @@ import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../config/routes/app_router.dart';
+
 class ItemsInvoice extends StatelessWidget {
   const ItemsInvoice({super.key});
 
@@ -97,23 +99,10 @@ class ItemsInvoice extends StatelessWidget {
                   onPressed: () async {
                     posCubit.totalorderWithVat == 0
                         ? null
-                        : posCubit.orderData(
-                            orderId: '10',
-                            orgId: posCubit.orgData?.data?.orgId,
-                            accountId: posCubit.loginModel?.data?.userId,
-                            customerId:
-                                posCubit.customersModel?.customer?.customerId,
-                            totalOrder:
-                                posCubit.totalorderWithVat.toStringAsFixed(6),
-                            totalOrderWithVat:
-                                posCubit.totalorderWithVat.toStringAsFixed(6),
-                            payed: '100',
-                            items: posCubit.cart,
-                          );
-                    // posCubit.getPaymethods().then(Navigator.pushNamed(
-                    //       context,
-                    //       Routes.payment,
-                    //     ));
+                        : posCubit.getPaymethods().then(Navigator.pushNamed(
+                              context,
+                              Routes.payment,
+                            ));
                   },
                   minimumSize: Size(
                     200,

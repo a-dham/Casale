@@ -70,6 +70,7 @@
     "itemDeleted":"تم حذف الصنف",
     "cutomerAdded":"تم إضافة العميل"  ,
     "items":"Items",
-    "orderNumber":"رقم الطلب"
+    "orderNumber":"رقم الطلب",
+    "newOrder":"فاتورة جديدة"
 
 }

@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
+        "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),

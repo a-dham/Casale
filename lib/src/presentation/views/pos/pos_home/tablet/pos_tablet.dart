@@ -21,14 +21,6 @@ class PosTablet extends StatefulWidget {
 
 class _PosTabletState extends State<PosTablet> {
   @override
-  void initState() {
-    // (BlocProvider.of<PosCubit>(context).orgData?.data as Map).clear();
-    BlocProvider.of<PosCubit>(context).getOrgData();
-    BlocProvider.of<PosCubit>(context).getAccountData();
-    BlocProvider.of<PosCubit>(context).getItems();
-    BlocProvider.of<PosCubit>(context).getItemSections();
-    super.initState();
-  }
 
   // getCurrnteLocal(context) {
   @override

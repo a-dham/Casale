@@ -34,24 +34,51 @@ class PosCubit extends Cubit<PosState> {
   double remaining = 0;
 
   // collect Order Data
-  orderData({
-    required String? orderId,
-    required String? orgId,
-    required String? accountId,
-    required String? customerId,
-    required String? totalOrder,
-    required String? totalOrderWithVat,
-    required String? payed,
-    required List? items,
-  }) {
-    print(orderId);
-    print(orgId);
-    print(accountId);
-    print(customerId);
-    print(totalOrder);
-    print(totalOrderWithVat);
-    print(payed);
-    print(items);
+  Map<String, dynamic> orderData = {};
+  // logo - orderId - orgTitle - address - dateTime - VatRegstrationNumber - Items - total - totalOrderWithVat - selectedPeyMethods ||
+  // CustomerId - CustomerName - vatRegistrationNumber - customerAddress
+  newOrder(
+      {required String? customerId,
+      required String? customerName,
+      required String? vatRegistrationNumber,
+      required String? customerAddress,
+      required String? totalOrder,
+      required String? totalOrderWithVat,
+      required String? payed,
+      required List? items,
+      required List? selectedUnits,
+      required String? addOrdertime,
+      required}) {
+    // First  Send pos Data to add order.
+
+    // check if order is successed added
+
+    // Add Order Data to Map to print
+    orderData = {
+      'logo': 'logo_test',
+      'orderNumber': '102300',
+      'orgId': '100',
+      'orgTitle': 'إسم المنشأة',
+      'orgvatRegistrationNumber': '65465445465445646546',
+      'barnchId': '10200',
+      'branchTitel': 'الفرع الأول',
+      'branchAddress': 'الفرع الأول',
+      'accountId': '10200',
+      'accountTitle': 'موظف أدهم',
+      'customerId': customerId,
+      'customerName': customerName,
+      'vatRegistrationNumber': vatRegistrationNumber,
+      'customerAddress': customerAddress,
+      'totalOrder': totalOrder,
+      'totalOrderWithVat': totalOrderWithVat,
+      'payed': payed,
+      'selectedPaymethods': selectedUnits,
+      'items': items,
+      'notes': 'Notessssssssssssssss',
+      'addOrdertime': addOrdertime,
+      'status': 'added'
+    };
+    // Clear cart - customer,
   }
 
 //  get Items sections

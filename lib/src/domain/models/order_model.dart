@@ -23,8 +23,8 @@ class Data {
   String? branchId;
   String? customerTitle;
   String? branchTitle;
-  String? addotime;
-  String? savedotime;
+  String? addOrdertime;
+  String? savedOrdertime;
   String? orgId;
   String? paymethods;
   String? shiftId;

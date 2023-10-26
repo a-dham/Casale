@@ -6,6 +6,7 @@ import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import 'widget/payment_method.dart';
 
@@ -134,7 +135,7 @@ class Payment extends StatelessWidget {
                     elevation: 1,
                     onPressed: () {
                       posCubit.requiredToPaid == 0
-                          ? _showMyDialog(context)
+                          ? _showMyDialog(context, posCubit)
                           : null;
                     },
                     minimumSize: const Size(double.infinity, 50),
@@ -148,7 +149,9 @@ class Payment extends StatelessWidget {
     );
   }
 
-  Future<void> _showMyDialog(context) async {
+  Future<void> _showMyDialog(context, PosCubit posCubit) async {
+    final DateTime now = DateTime.now();
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -163,13 +166,26 @@ class Payment extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: Text(
-                S.current.cancel,
+                S.current.newOrder,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               onPressed: () {
                 // save order -> clear cart ->  navigate to home .
+
+                posCubit.newOrder(
+                  customerId: '12',
+                  customerAddress: 'skaka',
+                  customerName: 'adham',
+                  vatRegistrationNumber: '546564546545',
+                  payed: '100255',
+                  totalOrder: '100',
+                  totalOrderWithVat: '115',
+                  items: [],
+                  selectedUnits: [],
+                  addOrdertime: DateFormat('dd-MM-yyyy HH:mm').format(now),
+                );
                 Navigator.of(context).pop();
               },
             ),
@@ -182,6 +198,18 @@ class Payment extends StatelessWidget {
               ),
               onPressed: () {
                 // Save order -> get order data -> send data to print pay
+                posCubit.newOrder(
+                  customerId: '12',
+                  customerAddress: 'skaka',
+                  customerName: 'adham',
+                  vatRegistrationNumber: '546564546545',
+                  payed: '100255',
+                  totalOrder: '100',
+                  totalOrderWithVat: '115',
+                  items: [],
+                  selectedUnits: [],
+                  addOrdertime: DateFormat('dd-MM-yyyy HH:mm').format(now),
+                );
                 Navigator.of(context).pushNamed(Routes.print);
               },
             ),
