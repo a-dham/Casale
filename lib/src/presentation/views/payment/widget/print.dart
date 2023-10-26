@@ -23,7 +23,14 @@ class Print extends StatelessWidget {
     return BlocConsumer<PosCubit, PosState>(
       listener: (context, state) {},
       builder: (context, state) {
+//اسم المؤسسة التجاري.
+// رقم التسجيل الضريبي للتاجر.
+// وقت وتاريخ إنشاء الفاتورة.
+// إجمالي قيمة الفاتورة.
+// إجمالي قيمة الضريبة.
+
         PosCubit posCubit = PosCubit.get(context);
+
         return Scaffold(
           appBar: AppBar(
             // backgroundColor: AppColors.orangeColor,
@@ -71,7 +78,9 @@ class Print extends StatelessWidget {
 
   Future<Uint8List> _generatePdf(
       PdfPageFormat format, PosCubit posCubit) async {
+    // print('here print from print page ${posCubit.orderData}');
     Data? orgData = posCubit.orgData?.data;
+    final order = posCubit.orderData;
     final pdf = pw.Document(
         creator: 'ADHAM ELSHARKAWY',
         theme: pw.ThemeData(),
@@ -84,124 +93,119 @@ class Print extends StatelessWidget {
       '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
     );
 
-    pdf.addPage(
-      pw.Page(
-        margin: const pw.EdgeInsets.all(15),
-        pageFormat: format,
-        build: (context) {
-          return pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.center,
-            children: [
-              pw.Container(
-                constraints: const pw.BoxConstraints(
-                  minWidth: 40,
-                  maxWidth: 60,
-                ),
-                child: pw.Image(orgLogo),
+    pdf.addPage(pw.Page(
+      margin: const pw.EdgeInsets.all(15),
+      pageFormat: format,
+      build: (context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.center,
+          children: [
+            pw.Container(
+              constraints: const pw.BoxConstraints(
+                minWidth: 40,
+                maxWidth: 60,
               ),
-              textWidget(S.current.simpleTaxInvoice, 12, font),
-              textWidget('رقم الفاتورة : #2225255', 8, font),
-              textWidget(orgData?.arabicTitle ?? 'No Data', 10, font),
-              textWidget(' العنوان : ${orgData?.address}', 8, font),
-              pw.BarcodeWidget(
-                data: '21698554525',
-                barcode: pw.Barcode.code128(),
-                width: 100,
-                height: 30,
-              ),
-              pw.SizedBox(height: 2),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
-                pw.Spacer(),
-                textWidget(' التاريخ / الوقت : 01/05/2023 15:07', 8, font),
-              ]),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                pw.Spacer(),
-                textWidget('${S.current.taxNumber}   : ${orgData?.vatNumber}',
-                    8, font),
-              ]),
-              pw.SizedBox(height: 5),
-              pw.Table(
-                  border: pw.TableBorder.symmetric(
-                    outside: const pw.BorderSide(
-                      style: pw.BorderStyle.dashed,
-                    ),
+              child: pw.Image(orgLogo),
+            ),
+            textWidget(S.current.simpleTaxInvoice, 12, font),
+            textWidget('رقم الفاتورة : #${order['orderNumber']}', 8, font),
+            textWidget(order['orgTitle'] ?? 'No Data', 10, font),
+            textWidget(' الفرع : ${order['branchTitel']}', 8, font),
+            textWidget(' العنوان : ${order['branchAddress']}', 8, font),
+            pw.BarcodeWidget(
+              data: order['orderNumber'] ?? '0',
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 30,
+            ),
+            pw.SizedBox(height: 2),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
+              pw.Spacer(),
+              textWidget(
+                  '${order['addOrdertime']} التاريخ / الوقت : ', 8, font),
+            ]),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              pw.Spacer(),
+              textWidget(
+                  '${S.current.taxNumber}   : ${orgData?.vatNumber}', 8, font),
+            ]),
+            pw.SizedBox(height: 5),
+            pw.Table(
+                border: pw.TableBorder.symmetric(
+                  outside: const pw.BorderSide(
+                    style: pw.BorderStyle.dashed,
                   ),
-                  children: [
-                    pw.TableRow(
-                        decoration: const pw.BoxDecoration(),
-                        children: [
-                          textWidget(S.current.totalPriceWithVat, 6, font),
-                          textWidget(S.current.tax, 6, font),
-                          textWidget(S.current.unitPrice, 6, font),
-                          textWidget(S.current.quantity, 6, font),
-                          textWidget(S.current.products, 8, font),
-                        ]),
-                    pw.TableRow(
-                        decoration: const pw.BoxDecoration(),
-                        children: [
-                          textWidget('2', 6, font),
-                          textWidget('4', 6, font),
-                          textWidget('2', 6, font),
-                          textWidget('100', 6, font),
-                          pw.Container(
-                            width: 20,
-                            child: textWidget('صنف 1', 8, font),
-                          ),
-                        ]),
-                    pw.TableRow(
-                        decoration: const pw.BoxDecoration(),
-                        children: [
-                          textWidget('2', 6, font),
-                          textWidget('4', 6, font),
-                          textWidget('2', 6, font),
-                          textWidget('100', 6, font),
-                          pw.Container(
-                            width: 20,
-                            child: textWidget('صنف 2', 8, font),
-                          ),
-                        ]),
-                  ]),
-              pw.SizedBox(height: 5),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                textWidget('22.00', 8, font),
-                pw.Spacer(),
-                textWidget(S.current.total, 8, font),
-              ]),
-              pw.SizedBox(height: 5),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                textWidget('2.00', 8, font),
-                pw.Spacer(),
-                textWidget(S.current.tax, 8, font),
-              ]),
-              pw.SizedBox(height: 2),
-              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                textWidget('24.00', 8, font),
-                pw.Spacer(),
-                textWidget(S.current.totalPriceWithVat, 8, font),
-              ]),
-              pw.SizedBox(height: 2.5),
-              pw.Container(
-                constraints: const pw.BoxConstraints(maxWidth: double.infinity),
-                child: pw.Text(
-                  '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
-                  maxLines: 1,
                 ),
+                children: [
+                  pw.TableRow(decoration: const pw.BoxDecoration(), children: [
+                    textWidget(S.current.totalPriceWithVat, 6, font),
+                    textWidget(S.current.tax, 6, font),
+                    textWidget(S.current.unitPrice, 6, font),
+                    textWidget(S.current.quantity, 6, font),
+                    textWidget(S.current.products, 8, font),
+                  ]),
+                  pw.TableRow(decoration: const pw.BoxDecoration(), children: [
+                    textWidget('2', 6, font),
+                    textWidget('4', 6, font),
+                    textWidget('2', 6, font),
+                    textWidget('100', 6, font),
+                    pw.Container(
+                      width: 20,
+                      child: textWidget('صنف 1', 8, font),
+                    ),
+                  ]),
+                  pw.TableRow(decoration: const pw.BoxDecoration(), children: [
+                    textWidget('2', 6, font),
+                    textWidget('4', 6, font),
+                    textWidget('2', 6, font),
+                    textWidget('100', 6, font),
+                    pw.Container(
+                      width: 20,
+                      child: textWidget('صنف 2', 8, font),
+                    ),
+                  ]),
+                ]),
+            pw.SizedBox(height: 5),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget('22.00', 8, font),
+              pw.Spacer(),
+              textWidget(S.current.total, 8, font),
+            ]),
+            pw.SizedBox(height: 5),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget('2.00', 8, font),
+              pw.Spacer(),
+              textWidget(S.current.tax, 8, font),
+            ]),
+            pw.SizedBox(height: 2),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget('24.00', 8, font),
+              pw.Spacer(),
+              textWidget(S.current.totalPriceWithVat, 8, font),
+            ]),
+            pw.SizedBox(height: 2.5),
+            pw.Container(
+              constraints: const pw.BoxConstraints(maxWidth: double.infinity),
+              child: pw.Text(
+                '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+                maxLines: 1,
               ),
-              pw.SizedBox(height: 2.5),
-              pw.BarcodeWidget(
-                //search for how to hash qr-data
-                // i want to hashing   ###qrData### and send it
-                data:
-                    'ASXZhdi32YjYsdmKINmG2LjYp9mFINmF2YbYtNii2Kog2YjZitioAg8xMjM0NTY3ODkxMjM0NTYDCjIwMjMtMDktMzAEBTk3Ljc1BQUxMi43NQ==',
-                barcode: pw.Barcode.qrCode(),
-                width: 70,
-                height: 70,
-              ),
-            ],
-          );
-        },
-      ),
-    );
+            ),
+            pw.SizedBox(height: 2.5),
+            pw.BarcodeWidget(
+              //search for how to hash qr-data
+              // i want to hashing   ###qrData### and send it
+              // ASXZhdi32YjYsdmKINmG2LjYp9mFINmF2YbYtNii2Kog2YjZitioAg8xMjM0NTY3ODkxMjM0NTYDCjIwMjMtMDktMzAEBTk3Ljc1BQUxMi43NQ
+              data:
+                  'ASXZhdi32YjYsdmKINmG2LjYp9mFINmF2YbYtNii2Kog2YjZitioAg8xMjM0NTY3ODkxMjM0NTYDCjIwMjMtMDktMzAEBTk3Ljc1BQUxMi43NQ',
+              barcode: pw.Barcode.qrCode(),
+              width: 70,
+              height: 70,
+            ),
+          ],
+        );
+      },
+    ));
 
     return pdf.save();
   }

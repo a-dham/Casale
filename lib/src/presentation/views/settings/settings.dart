@@ -200,6 +200,8 @@ class Settings extends StatelessWidget {
                                         ),
                                   onTapAccept: () {
                                     settingsCubit.signOut(context);
+                                    posCubit.cart.clear();
+                                    posCubit.invoiceTotal();
                                     // settingsCubit.isloading == true
                                     //     ? CustomeCircularProgress()
                                     //     : null;

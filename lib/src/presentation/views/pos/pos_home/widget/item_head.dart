@@ -18,16 +18,16 @@ class ItemsHeader extends StatelessWidget {
           ),
           child: Row(
             children: [
-              const Text(
-                'قائمة القهوة',
-                style: TextStyle(
+              Text(
+                S.current.items,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
               ),
               const Spacer(),
               Text(
-                '${posCubit.items?.length ?? '...'}  ${S.current.item}',
+                '${posCubit.isSearched == true ? posCubit.filterdItems?.length : posCubit.items?.length ?? '...'}  ${S.current.item}',
                 style: const TextStyle(
                   fontSize: 15,
                 ),

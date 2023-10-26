@@ -64,13 +64,13 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                     // ignore: avoid_print
                     print('search start');
                   },
-                  onchanged: (input) {},
+                  onchanged: (value) {
+                    posCubit.filterItems(value);
+                  },
                   validator: (value) {
                     return null;
                   },
-                  onSubmitted: (value) {
-                    posCubit.filterItems(value);
-                  },
+                  onSubmitted: (value) {},
                 ),
               ),
             ],

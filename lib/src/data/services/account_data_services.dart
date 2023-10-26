@@ -18,6 +18,7 @@ class AccountDataServices {
           });
       return response?.data;
     } catch (error) {
+      // ignore: avoid_print
       print('error from account services ${error.toString()}');
       return {};
     }

@@ -40,6 +40,7 @@ class AppRouter {
   final SettingsController settingsController;
 
   Route onGenerateRoute(RouteSettings settings) {
+    final order = settings.arguments;
     switch (settings.name) {
       case Routes.splash:
         return MaterialPageRoute(builder: (_) => const Splash());
@@ -86,7 +87,9 @@ class AppRouter {
         );
       case Routes.orderDetails:
         return MaterialPageRoute(
-          builder: (_) => const OrderDetails(),
+          builder: (_) => OrderDetails(
+            order: order,
+          ),
         );
       case Routes.settingview:
         return MaterialPageRoute(

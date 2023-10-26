@@ -11,7 +11,9 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, Routes.orderDetails, arguments: order);
+      },
       child: Container(
         constraints: const BoxConstraints(
           maxWidth: double.infinity,
@@ -25,17 +27,12 @@ class OrderCard extends StatelessWidget {
             child: Table(
               children: [
                 TableRow(children: [
-                  GestureDetector(
-                    onDoubleTap: () {
-                      Navigator.pushNamed(context, Routes.orderDetails);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                      ),
-                      child: textWidget(
-                          order.orderNumber.toString(), FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30,
                     ),
+                    child: textWidget(
+                        order.orderNumber.toString(), FontWeight.bold),
                   ),
                   textWidget(order.customerTitle.toString(), FontWeight.normal),
                   textWidget(order.orderdate.toString(), FontWeight.normal),

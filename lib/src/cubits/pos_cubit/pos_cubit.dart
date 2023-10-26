@@ -33,6 +33,54 @@ class PosCubit extends Cubit<PosState> {
   double requiredToPaid = 0;
   double remaining = 0;
 
+  // collect Order Data
+  Map<String, dynamic> orderData = {};
+  // logo - orderId - orgTitle - address - dateTime - VatRegstrationNumber - Items - total - totalOrderWithVat - selectedPeyMethods ||
+  // CustomerId - CustomerName - vatRegistrationNumber - customerAddress
+  newOrder(
+      {required String? customerId,
+      required String? customerName,
+      required String? vatRegistrationNumber,
+      required String? customerAddress,
+      required String? totalOrder,
+      required String? totalOrderWithVat,
+      required String? payed,
+      required List? items,
+      required List? selectedUnits,
+      required String? addOrdertime,
+      required}) {
+    // First  Send pos Data to add order.
+
+    // check if order is successed added
+
+    // Add Order Data to Map to print
+    orderData = {
+      'logo': 'logo_test',
+      'orderNumber': '102300',
+      'orgId': '100',
+      'orgTitle': 'إسم المنشأة',
+      'orgvatRegistrationNumber': '65465445465445646546',
+      'barnchId': '10200',
+      'branchTitel': 'الفرع الأول',
+      'branchAddress': 'الفرع الأول',
+      'accountId': '10200',
+      'accountTitle': 'موظف أدهم',
+      'customerId': customerId,
+      'customerName': customerName,
+      'vatRegistrationNumber': vatRegistrationNumber,
+      'customerAddress': customerAddress,
+      'totalOrder': totalOrder,
+      'totalOrderWithVat': totalOrderWithVat,
+      'payed': payed,
+      'selectedPaymethods': selectedUnits,
+      'items': items,
+      'notes': 'Notessssssssssssssss',
+      'addOrdertime': addOrdertime,
+      'status': 'added'
+    };
+    // Clear cart - customer,
+  }
+
 //  get Items sections
   getItemSections() {
     emit(ItemsSectionsStateLoading());
@@ -221,9 +269,9 @@ class PosCubit extends Cubit<PosState> {
   List? filterdItems = [];
   bool isSearched = false;
   filterItems(dynamic input) {
+    isSearched = true;
     emit(ItemSearchStateloading());
-
-    if (items != null && items!.isNotEmpty) {
+    if (isSearched == true && items != null && items!.isNotEmpty) {
       print(items);
       print('con start');
       filterdItems = items!
@@ -282,10 +330,8 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // calculate Remaining of payment
-  remainingPayment(
-    totalOrder,
-    payed,
-  ) {
+  remainingPayment(totalOrder, payed, paymethodID) {
+    print(paymethodID);
     print('start');
     requiredToPaid = totalOrder;
     requiredToPaid = totalOrder - payed;

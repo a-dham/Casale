@@ -8,6 +8,7 @@ class AccountDataRepostory {
           await AccountDataServices().getAccountData();
       return LoginModel.fromJson(accountServices);
     } catch (error) {
+      // ignore: avoid_print
       print('error from account repo ${error.toString()}');
       return null;
     }
