@@ -25,7 +25,9 @@ class Data {
   String? itemCode;
   int? quantity;
   double? tax;
+  double? vat;
   double? totalPriceWithVat;
+  double? totalPrice;
   String? sectionId;
   String? sectionTitle;
   String? itemKey;
@@ -48,7 +50,9 @@ class Data {
     itemKey = '${json['en_title']} ${json['ar_title']} ${json['item_code']}';
     quantity = 1;
     totalPriceWithVat = 0;
+    totalPrice = 0;
     tax = 15;
+    vat = 0;
     selectedUnit = 0;
 
     if (json['units'] != null) {

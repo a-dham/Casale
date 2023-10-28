@@ -7,6 +7,8 @@ import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../utils/constant/tofixed.dart';
+
 class ItemWidget extends StatelessWidget {
   ItemWidget({
     super.key,
@@ -22,7 +24,7 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double price = double.parse(item.units[item.selectedUnit].unitPrice!);
-    final double vat = price * (item.tax! / 100);
+    item.vat = price * (item.tax! / 100);
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +117,7 @@ class ItemWidget extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    vat.toStringAsFixed(2),
+                    item.vat!.toStringAsFixed(2),
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -125,7 +127,7 @@ class ItemWidget extends StatelessWidget {
                     width: 20,
                   ),
                   Text(
-                    '${item.totalPriceWithVat?.toStringAsFixed(2)} ${S.current.saudiaCurrency}',
+                    '${toFixed(item.totalPriceWithVat!)} ${S.current.saudiaCurrency}',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

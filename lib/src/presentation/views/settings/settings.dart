@@ -57,31 +57,36 @@ class Settings extends StatelessWidget {
                                 SizedBox(
                                   height: 100,
                                   width: 100,
-                                  child: Image.network(
-                                    '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                                    fit: BoxFit.scaleDown,
-                                    width: double.infinity,
-                                    height: 85,
-                                    errorBuilder:
-                                        (context, object, stacktrace) {
-                                      return Image.asset(
-                                          fit: BoxFit.scaleDown,
-                                          width: double.infinity,
-                                          height: 85,
-                                          'assets/images/error-loading-items.gif');
-                                    },
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      } else {
-                                        return const CustomeCircularProgress();
-                                      }
-                                    },
-                                    frameBuilder: (context, child, frame,
-                                            wasSynchronouslyLoaded) =>
-                                        child,
-                                  ),
+                                  child: Image.asset(
+                                      fit: BoxFit.scaleDown,
+                                      width: double.infinity,
+                                      height: 85,
+                                      'assets/images/error-loading-items.gif'),
+                                  // Image.network(
+                                  //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                                  //   fit: BoxFit.scaleDown,
+                                  //   width: double.infinity,
+                                  //   height: 85,
+                                  //   errorBuilder:
+                                  //       (context, object, stacktrace) {
+                                  //     return Image.asset(
+                                  //         fit: BoxFit.scaleDown,
+                                  //         width: double.infinity,
+                                  //         height: 85,
+                                  //         'assets/images/error-loading-items.gif');
+                                  //   },
+                                  //   loadingBuilder:
+                                  //       (context, child, loadingProgress) {
+                                  //     if (loadingProgress == null) {
+                                  //       return child;
+                                  //     } else {
+                                  //       return const CustomeCircularProgress();
+                                  //     }
+                                  //   },
+                                  //   frameBuilder: (context, child, frame,
+                                  //           wasSynchronouslyLoaded) =>
+                                  //       child,
+                                  // ),
                                 ),
                                 const Spacer(),
                               ],

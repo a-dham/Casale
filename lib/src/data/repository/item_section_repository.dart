@@ -3,7 +3,13 @@ import 'package:casale/src/domain/models/item_sections_model.dart';
 
 class ItemSectionsRepository {
   Future getItemSections() async {
-    final itemsSections = await ItemSectionsServices().getItemsSections();
-    return ItemSectionsModel.fromJson(itemsSections);
+    try {
+      final itemsSections = await ItemSectionsServices().getItemsSections();
+      return ItemSectionsModel.fromJson(itemsSections);
+    } catch (error) {
+      // ignore: avoid_print
+      print(error.toString());
+      return {};
+    }
   }
 }
