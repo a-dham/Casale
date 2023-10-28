@@ -27,28 +27,34 @@ class Item extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          Image.network(
-            '${EndPoints.assetsUrl}${item.image}',
-            fit: BoxFit.scaleDown,
-            width: double.infinity,
-            height: 85,
-            errorBuilder: (context, object, stacktrace) {
-              return Image.asset(
-                  fit: BoxFit.scaleDown,
-                  width: double.infinity,
-                  height: 85,
-                  'assets/images/error-loading-items.gif');
-            },
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              } else {
-                return const CustomeCircularProgress();
-              }
-            },
-            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
-                child,
-          ),
+          Image.asset(
+              fit: BoxFit.scaleDown,
+              width: double.infinity,
+              height: 85,
+              'assets/images/item.png'),
+
+          // Image.network(
+          //   '${EndPoints.assetsUrl}${item.image}',
+          //   fit: BoxFit.scaleDown,
+          //   width: double.infinity,
+          //   height: 85,
+          //   errorBuilder: (context, object, stacktrace) {
+          //     return Image.asset(
+          //         fit: BoxFit.scaleDown,
+          //         width: double.infinity,
+          //         height: 85,
+          //         'assets/images/error-loading-items.gif');
+          //   },
+          //   loadingBuilder: (context, child, loadingProgress) {
+          //     if (loadingProgress == null) {
+          //       return child;
+          //     } else {
+          //       return const CustomeCircularProgress();
+          //     }
+          //   },
+          //   frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
+          //       child,
+          // ),
           const Spacer(),
           Text(
             style: const TextStyle(

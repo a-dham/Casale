@@ -4,8 +4,8 @@ import 'dart:typed_data';
 
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
-import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/presentation/widgets/circular_progress.dart';
+import 'package:casale/src/utils/constant/tofixed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
@@ -79,14 +79,14 @@ class Print extends StatelessWidget {
   Future<Uint8List> _generatePdf(
       PdfPageFormat format, PosCubit posCubit) async {
     // print('here print from print page ${posCubit.orderData}');
-    Data? orgData = posCubit.orgData?.data;
+    // Data? orgData = posCubit.orgData?.data;
     final order = posCubit.orderData;
     final pdf = pw.Document(
         creator: 'ADHAM ELSHARKAWY',
         theme: pw.ThemeData(),
         version: PdfVersion.pdf_1_5,
         compress: true,
-        author: 'منشآت ويب لتقنية المعلومات');
+        author: 'Orgs Web');
     final font = await PdfGoogleFonts.iBMPlexSansArabicSemiBold();
     final orgLogo = await networkImage(
       cache: true,
@@ -122,12 +122,14 @@ class Print extends StatelessWidget {
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
               pw.Spacer(),
               textWidget(
-                  '${order['addOrdertime']} التاريخ / الوقت : ', 8, font),
+                  ' التاريخ / الوقت : ${order['addOrdertime']}', 8, font),
             ]),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               pw.Spacer(),
               textWidget(
-                  '${S.current.taxNumber}   : ${orgData?.vatNumber}', 8, font),
+                  '${S.current.taxNumber}   : ${order['orgvatRegistrationNumber']}',
+                  8,
+                  font),
             ]),
             pw.SizedBox(height: 5),
             pw.Table(
@@ -136,50 +138,22 @@ class Print extends StatelessWidget {
                     style: pw.BorderStyle.dashed,
                   ),
                 ),
-                children: [
-                  pw.TableRow(decoration: const pw.BoxDecoration(), children: [
-                    textWidget(S.current.totalPriceWithVat, 6, font),
-                    textWidget(S.current.tax, 6, font),
-                    textWidget(S.current.unitPrice, 6, font),
-                    textWidget(S.current.quantity, 6, font),
-                    textWidget(S.current.products, 8, font),
-                  ]),
-                  pw.TableRow(decoration: const pw.BoxDecoration(), children: [
-                    textWidget('2', 6, font),
-                    textWidget('4', 6, font),
-                    textWidget('2', 6, font),
-                    textWidget('100', 6, font),
-                    pw.Container(
-                      width: 20,
-                      child: textWidget('صنف 1', 8, font),
-                    ),
-                  ]),
-                  pw.TableRow(decoration: const pw.BoxDecoration(), children: [
-                    textWidget('2', 6, font),
-                    textWidget('4', 6, font),
-                    textWidget('2', 6, font),
-                    textWidget('100', 6, font),
-                    pw.Container(
-                      width: 20,
-                      child: textWidget('صنف 2', 8, font),
-                    ),
-                  ]),
-                ]),
+                children: generateRows(font, order['items'])),
             pw.SizedBox(height: 5),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-              textWidget('22.00', 8, font),
+              textWidget(order['totalOrder'], 8, font),
               pw.Spacer(),
               textWidget(S.current.total, 8, font),
             ]),
             pw.SizedBox(height: 5),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-              textWidget('2.00', 8, font),
+              textWidget(order['totalVat'], 8, font),
               pw.Spacer(),
               textWidget(S.current.tax, 8, font),
             ]),
             pw.SizedBox(height: 2),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-              textWidget('24.00', 8, font),
+              textWidget(order['totalOrderWithVat'], 8, font),
               pw.Spacer(),
               textWidget(S.current.totalPriceWithVat, 8, font),
             ]),
@@ -208,6 +182,48 @@ class Print extends StatelessWidget {
     ));
 
     return pdf.save();
+  }
+
+  List<pw.TableRow> generateRows(font, items) {
+    List<pw.TableRow> rows = [];
+
+    // Header row
+    rows.add(
+      pw.TableRow(
+        decoration: const pw.BoxDecoration(),
+        children: [
+          textWidget(S.current.totalPriceWithVat, 6, font),
+          textWidget(S.current.tax, 6, font),
+          textWidget(S.current.unitPrice, 6, font),
+          textWidget(S.current.quantity, 6, font),
+          textWidget(S.current.products, 8, font),
+        ],
+      ),
+    );
+
+// toStringAsFixed(3)
+// toFixed(item.totalPriceWithVat)
+    // Data rows
+    for (var item in items) {
+      rows.add(
+        pw.TableRow(
+          decoration: const pw.BoxDecoration(),
+          children: [
+            textWidget(toFixed(item.totalPriceWithVat), 6, font),
+            textWidget(toFixed(item.vat), 6, font),
+            textWidget(
+                toFixed(double.parse(item.units[item.selectedUnit].unitPrice))
+                    .toString(),
+                6,
+                font),
+            textWidget(item.quantity.toString(), 6, font),
+            textWidget(item.arabicTitle, 6, font),
+          ],
+        ),
+      );
+    }
+
+    return rows;
   }
 
   textWidget(

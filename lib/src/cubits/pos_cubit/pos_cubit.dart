@@ -16,6 +16,7 @@ import 'package:casale/src/domain/models/paymethods_model.dart';
 import 'package:casale/src/domain/models/validate_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:casale/src/utils/constant/tofixed.dart';
 part 'pos_state.dart';
 
 class PosCubit extends Cubit<PosState> {
@@ -30,6 +31,8 @@ class PosCubit extends Cubit<PosState> {
   List cart = [];
   List units = [];
   double totalorderWithVat = 0;
+  double totalorder = 0;
+  double totalVat = 0;
   double requiredToPaid = 0;
   double remaining = 0;
 
@@ -42,11 +45,9 @@ class PosCubit extends Cubit<PosState> {
       required String? customerName,
       required String? vatRegistrationNumber,
       required String? customerAddress,
-      required String? totalOrder,
-      required String? totalOrderWithVat,
       required String? payed,
       required List? items,
-      required List? selectedUnits,
+      required List? selectedPaymethods,
       required String? addOrdertime,
       required}) {
     // First  Send pos Data to add order.
@@ -54,40 +55,48 @@ class PosCubit extends Cubit<PosState> {
     // check if order is successed added
 
     // Add Order Data to Map to print
+    print('from pos cubit befor order add $totalorderWithVat');
     orderData = {
       'logo': 'logo_test',
-      'orderNumber': '102300',
-      'orgId': '100',
-      'orgTitle': 'إسم المنشأة',
-      'orgvatRegistrationNumber': '65465445465445646546',
+      'orgTitle': orgData?.data?.arabicTitle,
+      'orgvatRegistrationNumber': orgData?.data?.vatNumber,
       'barnchId': '10200',
       'branchTitel': 'الفرع الأول',
-      'branchAddress': 'الفرع الأول',
-      'accountId': '10200',
-      'accountTitle': 'موظف أدهم',
+      'branchAddress': 'سكاكا - الجوف',
+      'accountId': loginModel?.data?.userId,
+      'accountTitle': loginModel?.data?.accountTitle,
+      'orderNumber': '123131 test',
       'customerId': customerId,
       'customerName': customerName,
       'vatRegistrationNumber': vatRegistrationNumber,
       'customerAddress': customerAddress,
-      'totalOrder': totalOrder,
-      'totalOrderWithVat': totalOrderWithVat,
+      'totalOrder': toFixed(totalorderWithVat),
+      'totalVat': toFixed(totalVat),
+      'totalOrderWithVat': toFixed(totalorderWithVat),
       'payed': payed,
-      'selectedPaymethods': selectedUnits,
+      'selectedPaymethods': selectedPaymethods,
       'items': items,
       'notes': 'Notessssssssssssssss',
       'addOrdertime': addOrdertime,
       'status': 'added'
     };
     // Clear cart - customer,
+    // cart.clear();
+    // customersModel?.customer = null;
   }
 
 //  get Items sections
   getItemSections() {
     emit(ItemsSectionsStateLoading());
-    sectionsRepository.getItemSections().then((sections) {
-      emit(ItemsSectionsStateSuccess());
-      this.sections = sections.data;
-    });
+    try {
+      sectionsRepository.getItemSections().then((sections) {
+        emit(ItemsSectionsStateSuccess());
+        this.sections = sections.data;
+      });
+    } catch (error) {
+      print(error.toString());
+    }
+
     return sections;
   }
 
@@ -157,6 +166,7 @@ class PosCubit extends Cubit<PosState> {
         (double.parse(item.units[item.selectedUnit].unitPrice) *
                 item.quantity) *
             (1 + (item.tax / 100));
+    index.totalPrice = double.parse(item.units[item.selectedUnit].unitPrice);
     invoiceTotal();
     emit(PriceItemStateSuccess());
   }
@@ -164,11 +174,17 @@ class PosCubit extends Cubit<PosState> {
   // calculate total order
   void invoiceTotal() {
     totalorderWithVat = 0;
+    totalVat = 0;
+    totalorder = 0;
     for (var item in cart) {
       print('total item ${item.totalPriceWithVat}');
+      print('total vat ${item.vat}');
       totalorderWithVat += item.totalPriceWithVat;
+      totalVat += item.vat;
     }
+
     requiredToPaid = totalorderWithVat;
+    totalorder = totalorderWithVat - totalVat;
     emit(TotalOrderStateSuccess());
   }
 

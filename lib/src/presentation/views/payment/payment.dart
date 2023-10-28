@@ -11,9 +11,22 @@ import 'package:intl/intl.dart';
 import 'widget/payment_method.dart';
 
 // ignore: must_be_immutable
-class Payment extends StatelessWidget {
+class Payment extends StatefulWidget {
   Payment({super.key});
+
+  @override
+  State<Payment> createState() => _PaymentState();
+}
+
+class _PaymentState extends State<Payment> {
   List? data = [];
+
+  @override
+  void initState() {
+    BlocProvider.of<PosCubit>(context).getPaymethods();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PosCubit, PosState>(
@@ -180,10 +193,8 @@ class Payment extends StatelessWidget {
                   customerName: 'adham',
                   vatRegistrationNumber: '546564546545',
                   payed: '100255',
-                  totalOrder: '100',
-                  totalOrderWithVat: '115',
                   items: [],
-                  selectedUnits: [],
+                  selectedPaymethods: [],
                   addOrdertime: DateFormat('dd-MM-yyyy HH:mm').format(now),
                 );
                 Navigator.of(context).pop();
@@ -204,10 +215,8 @@ class Payment extends StatelessWidget {
                   customerName: 'adham',
                   vatRegistrationNumber: '546564546545',
                   payed: '100255',
-                  totalOrder: '100',
-                  totalOrderWithVat: '115',
-                  items: [],
-                  selectedUnits: [],
+                  items: posCubit.cart,
+                  selectedPaymethods: [],
                   addOrdertime: DateFormat('dd-MM-yyyy HH:mm').format(now),
                 );
                 Navigator.of(context).pushNamed(Routes.print);

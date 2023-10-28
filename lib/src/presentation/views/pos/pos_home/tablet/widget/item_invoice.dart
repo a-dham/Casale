@@ -99,10 +99,10 @@ class ItemsInvoice extends StatelessWidget {
                   onPressed: () async {
                     posCubit.totalorderWithVat == 0
                         ? null
-                        : posCubit.getPaymethods().then(Navigator.pushNamed(
-                              context,
-                              Routes.payment,
-                            ));
+                        : Navigator.pushNamed(
+                            context,
+                            Routes.payment,
+                          );
                   },
                   minimumSize: Size(
                     200,

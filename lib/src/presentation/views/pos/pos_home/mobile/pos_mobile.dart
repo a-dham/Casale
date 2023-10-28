@@ -7,8 +7,7 @@ import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../data/datasources/end_points.dart';
-import '../../../../widgets/circular_progress.dart';
+import '../widget/filterd_items.dart';
 import '../widget/invoice.dart';
 import '../widget/items.dart';
 import '../widget/sections.dart';
@@ -59,29 +58,31 @@ class PosMobile extends StatelessWidget {
                         maxHeight: 50,
                         maxWidth: 50,
                       ),
-                      child: Image.network(
-                        '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                        fit: BoxFit.scaleDown,
-                        width: double.infinity,
-                        height: 85,
-                        errorBuilder: (context, object, stacktrace) {
-                          return Image.asset(
-                              fit: BoxFit.scaleDown,
-                              width: double.infinity,
-                              height: 85,
-                              'assets/images/error-loading-items.gif');
-                        },
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          } else {
-                            return const CustomeCircularProgress();
-                          }
-                        },
-                        frameBuilder:
-                            (context, child, frame, wasSynchronouslyLoaded) =>
-                                child,
-                      ),
+                      child:
+                          Image.asset('assets/images/error-loading-items.gif'),
+                      //  Image.network(
+                      //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                      //   fit: BoxFit.scaleDown,
+                      //   width: double.infinity,
+                      //   height: 85,
+                      // errorBuilder: (context, object, stacktrace) {
+                      //   return Image.asset(
+                      //       fit: BoxFit.scaleDown,
+                      //       width: double.infinity,
+                      //       height: 85,
+                      //       'assets/images/error-loading-items.gif');
+                      // },
+                      // loadingBuilder: (context, child, loadingProgress) {
+                      //   if (loadingProgress == null) {
+                      //     return child;
+                      //   } else {
+                      //     return const CustomeCircularProgress();
+                      //   }
+                      // },
+                      // frameBuilder:
+                      //     (context, child, frame, wasSynchronouslyLoaded) =>
+                      //         child
+                      // ),
                     ),
                     const SizedBox(width: 5),
                     Column(
@@ -213,7 +214,9 @@ class PosMobile extends StatelessWidget {
                   height: 10,
                 ),
                 const ItemsHeader(),
-                const Items(),
+                posCubit.isSearched == false
+                    ? const Items()
+                    : const FiltteredItems(),
                 const SizedBox(
                   height: 10,
                 ),
