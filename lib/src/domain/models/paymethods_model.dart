@@ -9,14 +9,13 @@ class PaymethodModel {
         ? List<Data>.from(json["data"].map((x) => Data.fromJson(x)))
         : null;
   }
-
-  where(bool Function(dynamic method) param0) {}
 }
 
 class Data {
   String? paymethodId;
   String? englishTitle;
   String? arabicTitle;
+  double? value = 0.00;
   bool? inUse;
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -24,5 +23,6 @@ class Data {
     englishTitle = json['en_title'];
     arabicTitle = json['ar_title'];
     inUse = json['inuse'];
+    value = 0.00;
   }
 }

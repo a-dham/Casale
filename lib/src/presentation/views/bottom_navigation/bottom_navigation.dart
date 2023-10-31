@@ -11,40 +11,42 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(builder: (context, state) {
       SettingsCubit settingsCubit = SettingsCubit.get(context);
-      return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-            showSelectedLabels: true,
-            showUnselectedLabels: false,
-            unselectedItemColor: AppColors.greyColor,
-            selectedItemColor: AppColors.orangeColor,
-            selectedLabelStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Cairo',
-            ),
-            currentIndex: settingsCubit.selectedIndex,
-            onTap: (index) {
-              settingsCubit.navigation(index);
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: const Icon(
-                    Icons.home_outlined,
-                  ),
-                  label: S.current.home),
-              BottomNavigationBarItem(
-                  icon: const Icon(
-                    Icons.grid_on_rounded,
-                  ),
-                  label: S.current.orders),
-              BottomNavigationBarItem(
-                  icon: const Icon(
-                    Icons.settings,
-                  ),
-                  label: S.current.settings),
-            ]),
-        body:
-            settingsCubit.bottomNavigationscreens[settingsCubit.selectedIndex],
+      return SafeArea(
+        child: Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+              showSelectedLabels: true,
+              showUnselectedLabels: false,
+              unselectedItemColor: AppColors.greyColor,
+              selectedItemColor: AppColors.orangeColor,
+              selectedLabelStyle: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Cairo',
+              ),
+              currentIndex: settingsCubit.selectedIndex,
+              onTap: (index) {
+                settingsCubit.navigation(index);
+              },
+              items: [
+                BottomNavigationBarItem(
+                    icon: const Icon(
+                      Icons.home_outlined,
+                    ),
+                    label: S.current.home),
+                BottomNavigationBarItem(
+                    icon: const Icon(
+                      Icons.grid_on_rounded,
+                    ),
+                    label: S.current.orders),
+                BottomNavigationBarItem(
+                    icon: const Icon(
+                      Icons.settings,
+                    ),
+                    label: S.current.settings),
+              ]),
+          body: settingsCubit
+              .bottomNavigationscreens[settingsCubit.selectedIndex],
+        ),
       );
     });
   }

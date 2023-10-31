@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../cubits/pos_cubit/pos_cubit.dart';
-import '../../../data/datasources/end_points.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -61,7 +60,7 @@ class Settings extends StatelessWidget {
                                       fit: BoxFit.scaleDown,
                                       width: double.infinity,
                                       height: 85,
-                                      'assets/images/error-loading-items.gif'),
+                                      'assets/images/ows_logo.png'),
                                   // Image.network(
                                   //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
                                   //   fit: BoxFit.scaleDown,

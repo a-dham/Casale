@@ -41,6 +41,8 @@ class Customer {
   String? phoneNo;
   String? email;
   String? addSubmit;
+  String? vatNumber;
+  String? address;
   Customer.fromJson(Map<String, dynamic> json) {
     customerId = json['id'];
     orgId = json['org_id'];

@@ -28,11 +28,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addCustomerToTicket":
             MessageLookupByLibrary.simpleMessage("Add Customer To Ticket"),
+        "address": MessageLookupByLibrary.simpleMessage("Address"),
         "afterTax": MessageLookupByLibrary.simpleMessage("After Tax"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "areSure": MessageLookupByLibrary.simpleMessage("Are You Sure ?"),
         "authMessageFail":
             MessageLookupByLibrary.simpleMessage("UserName Or Password Wrong"),
+        "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "canceld": MessageLookupByLibrary.simpleMessage("canceld"),
         "confirmPassword":
@@ -40,8 +42,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "cutomerAdded": MessageLookupByLibrary.simpleMessage("Cutomer Added"),
+        "dateTime": MessageLookupByLibrary.simpleMessage("Date / Time"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don`t have account"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "entervalue": MessageLookupByLibrary.simpleMessage("Enter Value"),
         "forget_password":
@@ -49,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "haveAccount": MessageLookupByLibrary.simpleMessage("Have account ? "),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "invoice": MessageLookupByLibrary.simpleMessage("Invoice"),
+        "invoiceNumber": MessageLookupByLibrary.simpleMessage("Invoice Number"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("Invoices Settings"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
@@ -103,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalPriceWithVat":
             MessageLookupByLibrary.simpleMessage("Total price With Vat"),
+        "totalPriceWithVat1":
+            MessageLookupByLibrary.simpleMessage("The due is Inclusive of Vat"),
         "unitPrice": MessageLookupByLibrary.simpleMessage("Unit Price"),
         "username": MessageLookupByLibrary.simpleMessage("UserName"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")

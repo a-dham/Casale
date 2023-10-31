@@ -1,12 +1,10 @@
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
-import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/tablet/widget/invoice_body.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/filterd_items.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/items.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/search_sections.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/sections.dart';
-import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +63,7 @@ class _PosTabletState extends State<PosTablet> {
                                 fit: BoxFit.scaleDown,
                                 width: double.infinity,
                                 height: 85,
-                                'assets/images/error-loading-items.gif'),
+                                'assets/images/ows_logo.png'),
                             // Image.network(
                             //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
                             //   fit: BoxFit.scaleDown,

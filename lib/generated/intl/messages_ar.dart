@@ -28,11 +28,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("إضافة"),
         "addCustomerToTicket":
             MessageLookupByLibrary.simpleMessage("إضافة عميل للفاتورة"),
+        "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "afterTax": MessageLookupByLibrary.simpleMessage("بعد الضريبة"),
         "all": MessageLookupByLibrary.simpleMessage("الجميع"),
         "areSure": MessageLookupByLibrary.simpleMessage("تأكيد تسجيل الخروج؟"),
         "authMessageFail": MessageLookupByLibrary.simpleMessage(
             "إسم المستخدم أو الرقم السري خطأ ..!"),
+        "branch": MessageLookupByLibrary.simpleMessage("فرع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "canceld": MessageLookupByLibrary.simpleMessage("الملغاة"),
         "confirmPassword":
@@ -40,8 +42,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "cusotmer": MessageLookupByLibrary.simpleMessage("العميل"),
         "customer": MessageLookupByLibrary.simpleMessage("عميل"),
         "cutomerAdded": MessageLookupByLibrary.simpleMessage("تم إضافة العميل"),
+        "dateTime": MessageLookupByLibrary.simpleMessage("التاريخ / الوقت "),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
+        "edit": MessageLookupByLibrary.simpleMessage("تعـديل"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "entervalue": MessageLookupByLibrary.simpleMessage("أدخل القيمة"),
         "forget_password":
@@ -49,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "haveAccount": MessageLookupByLibrary.simpleMessage("لديك حساب؟"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "invoice": MessageLookupByLibrary.simpleMessage("الفاتورة"),
+        "invoiceNumber": MessageLookupByLibrary.simpleMessage("رقم الفاتورة"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("إعدادت الفواتير"),
         "item": MessageLookupByLibrary.simpleMessage("صنف"),
@@ -101,6 +106,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "themes": MessageLookupByLibrary.simpleMessage("السيمات"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalPriceWithVat": MessageLookupByLibrary.simpleMessage("السعر ش.ض"),
+        "totalPriceWithVat1": MessageLookupByLibrary.simpleMessage(
+            "الإجمالي شامل ضريبة القيمة المضافة"),
         "unitPrice": MessageLookupByLibrary.simpleMessage("سعر الوحدة"),
         "username": MessageLookupByLibrary.simpleMessage("إسم المستخدم"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم")

@@ -13,7 +13,6 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 import '../../../../config/routes/app_router.dart';
-import '../../../../data/datasources/end_points.dart';
 
 class Print extends StatelessWidget {
   const Print({Key? key}) : super(key: key);
@@ -89,12 +88,12 @@ class Print extends StatelessWidget {
         author: 'Orgs Web');
     final font = await PdfGoogleFonts.iBMPlexSansArabicSemiBold();
     final orgLogo = await networkImage(
-      cache: true,
-      '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+      // '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}'
+      order['logo'],
     );
 
     pdf.addPage(pw.Page(
-      margin: const pw.EdgeInsets.all(15),
+      margin: const pw.EdgeInsets.all(10),
       pageFormat: format,
       build: (context) {
         return pw.Column(
@@ -108,28 +107,34 @@ class Print extends StatelessWidget {
               child: pw.Image(orgLogo),
             ),
             textWidget(S.current.simpleTaxInvoice, 12, font),
-            textWidget('رقم الفاتورة : #${order['orderNumber']}', 8, font),
             textWidget(order['orgTitle'] ?? 'No Data', 10, font),
-            textWidget(' الفرع : ${order['branchTitel']}', 8, font),
-            textWidget(' العنوان : ${order['branchAddress']}', 8, font),
+            textWidget(
+                '${S.current.branch} : ${order['branchTitel']}  ${S.current.address} : ${order['branchAddress']}',
+                8,
+                font),
+            textWidget(' ${S.current.invoiceNumber} : #${order['orderNumber']}',
+                8, font),
             pw.BarcodeWidget(
-              data: order['orderNumber'] ?? '0',
+              data: order['orderNumber'],
               barcode: pw.Barcode.code128(),
               width: 100,
-              height: 30,
+              height: 20,
             ),
             pw.SizedBox(height: 2),
-            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
-              pw.Spacer(),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               textWidget(
-                  ' التاريخ / الوقت : ${order['addOrdertime']}', 8, font),
+                  ' ${S.current.dateTime}: ${order['addOrdertime']}', 8, font),
             ]),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget(S., 8, font),
               pw.Spacer(),
               textWidget(
                   '${S.current.taxNumber}   : ${order['orgvatRegistrationNumber']}',
                   8,
                   font),
+            ]),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget('${S.current.phone}   : ${order['phone']}', 8, font),
             ]),
             pw.SizedBox(height: 5),
             pw.Table(
@@ -145,19 +150,16 @@ class Print extends StatelessWidget {
               pw.Spacer(),
               textWidget(S.current.total, 8, font),
             ]),
-            pw.SizedBox(height: 5),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               textWidget(order['totalVat'], 8, font),
               pw.Spacer(),
               textWidget(S.current.tax, 8, font),
             ]),
-            pw.SizedBox(height: 2),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               textWidget(order['totalOrderWithVat'], 8, font),
               pw.Spacer(),
-              textWidget(S.current.totalPriceWithVat, 8, font),
+              textWidget(S.current.totalPriceWithVat1, 8, font),
             ]),
-            pw.SizedBox(height: 2.5),
             pw.Container(
               constraints: const pw.BoxConstraints(maxWidth: double.infinity),
               child: pw.Text(
@@ -201,8 +203,8 @@ class Print extends StatelessWidget {
       ),
     );
 
-// toStringAsFixed(3)
-// toFixed(item.totalPriceWithVat)
+    // toStringAsFixed(3)
+    // toFixed(item.totalPriceWithVat)
     // Data rows
     for (var item in items) {
       rows.add(

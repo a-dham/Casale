@@ -57,8 +57,11 @@ class Sections extends StatelessWidget {
                             // );
                           },
                           child: Container(
-                            height: 100,
-                            width: 90,
+                            constraints: const BoxConstraints(
+                              maxHeight: 100,
+                              maxWidth: 100,
+                              minWidth: 80,
+                            ),
                             decoration: BoxDecoration(
                                 color: AppColors.whiteColor,
                                 shape: BoxShape.rectangle,

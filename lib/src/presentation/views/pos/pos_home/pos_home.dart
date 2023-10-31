@@ -27,7 +27,8 @@ class _POSHomeState extends State<POSHome> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    String data = Responive().isMobile(width);
+    double height = MediaQuery.of(context).size.height;
+    String data = Responive().isMobile(width, height);
     if (data == 'tablet') {
       return const PosTablet();
     } else {

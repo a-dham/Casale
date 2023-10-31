@@ -30,6 +30,7 @@ class PaymentMethods extends StatelessWidget {
             return data![index].inUse == true
                 ? GestureDetector(
                     onTap: () {
+                      // print(data![index].paymethodId);
                       showAlerDialog(context, data![index], textForm, posCubit);
                     },
                     child: Container(
@@ -69,6 +70,17 @@ class PaymentMethods extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          const Spacer(),
+                          Text(
+                            data![index].value.toString(),
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.greyColor),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          )
                         ],
                       ),
                     ),
@@ -80,7 +92,7 @@ class PaymentMethods extends StatelessWidget {
 
   showAlerDialog(
     BuildContext context,
-    Data paymethod,
+    Data paymethodId,
     TextEditingController textEditingController,
     PosCubit posCubit,
   ) {
@@ -94,11 +106,11 @@ class PaymentMethods extends StatelessWidget {
             obscureText: false,
             keyboardType: TextInputType.number,
             onSubmitted: (value) {
-              var totalOrder = posCubit.totalorderWithVat;
-              String? paymethodID = paymethod.paymethodId;
+              // var totalOrder = posCubit.totalorderWithVat;
+              // String? paymethodID = paymethod.paymethodId;
 
               posCubit.remainingPayment(
-                  totalOrder, double.parse(value), paymethodID);
+                  paymethod: paymethodId, payed: double.parse(value));
               Navigator.of(context).pop();
             },
             textEditingController: textEditingController,

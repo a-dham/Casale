@@ -650,6 +650,16 @@ class S {
     );
   }
 
+  /// `The due is Inclusive of Vat`
+  String get totalPriceWithVat1 {
+    return Intl.message(
+      'The due is Inclusive of Vat',
+      name: 'totalPriceWithVat1',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Unit Price`
   String get unitPrice {
     return Intl.message(
@@ -765,6 +775,56 @@ class S {
     return Intl.message(
       'New Order',
       name: 'newOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Branch`
+  String get branch {
+    return Intl.message(
+      'Branch',
+      name: 'branch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Number`
+  String get invoiceNumber {
+    return Intl.message(
+      'Invoice Number',
+      name: 'invoiceNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message(
+      'Address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date / Time`
+  String get dateTime {
+    return Intl.message(
+      'Date / Time',
+      name: 'dateTime',
       desc: '',
       args: [],
     );

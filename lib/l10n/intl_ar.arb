@@ -60,6 +60,7 @@
     "simpleTaxInvoice":"فاتورة ضريبية مبسطة",
     "taxNumber":"الرقم الضريبي",
     "totalPriceWithVat":"السعر ش.ض",
+    "totalPriceWithVat1":"الإجمالي شامل ضريبة القيمة المضافة",
     "unitPrice":"سعر الوحدة",
     "quantity":"الكمية",
     "products":"المنتجات",
@@ -71,6 +72,12 @@
     "cutomerAdded":"تم إضافة العميل"  ,
     "items":"Items",
     "orderNumber":"رقم الطلب",
-    "newOrder":"فاتورة جديدة"
+    "newOrder":"فاتورة جديدة",
+    "edit":"تعـديل",
+    "branch":"فرع",
+    "invoiceNumber":"رقم الفاتورة",
+    "address":"العنوان",
+    "dateTime":"التاريخ / الوقت "
+
 
 }

@@ -8,15 +8,16 @@ import 'package:casale/src/data/repository/account_data_repository.dart';
 import 'package:casale/src/data/repository/item_section_repository.dart';
 import 'package:casale/src/data/repository/items_repository.dart';
 import 'package:casale/src/data/repository/org_data_repository.dart';
+import 'package:casale/src/data/repository/paymethods_repository.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
 import 'package:casale/src/domain/models/item_sections_model.dart';
 import 'package:casale/src/domain/models/login_model.dart';
 import 'package:casale/src/domain/models/org_model.dart';
 import 'package:casale/src/domain/models/paymethods_model.dart';
 import 'package:casale/src/domain/models/validate_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:casale/src/utils/constant/tofixed.dart';
+import 'package:intl/intl.dart';
 part 'pos_state.dart';
 
 class PosCubit extends Cubit<PosState> {
@@ -30,6 +31,7 @@ class PosCubit extends Cubit<PosState> {
   List? sections = [];
   List cart = [];
   List units = [];
+  List paymethods = [];
   double totalorderWithVat = 0;
   double totalorder = 0;
   double totalVat = 0;
@@ -40,44 +42,35 @@ class PosCubit extends Cubit<PosState> {
   Map<String, dynamic> orderData = {};
   // logo - orderId - orgTitle - address - dateTime - VatRegstrationNumber - Items - total - totalOrderWithVat - selectedPeyMethods ||
   // CustomerId - CustomerName - vatRegistrationNumber - customerAddress
-  newOrder(
-      {required String? customerId,
-      required String? customerName,
-      required String? vatRegistrationNumber,
-      required String? customerAddress,
-      required String? payed,
-      required List? items,
-      required List? selectedPaymethods,
-      required String? addOrdertime,
-      required}) {
+  newOrder() {
     // First  Send pos Data to add order.
 
     // check if order is successed added
 
     // Add Order Data to Map to print
-    print('from pos cubit befor order add $totalorderWithVat');
     orderData = {
-      'logo': 'logo_test',
+      'logo': '${EndPoints.assetsUrl}${orgData?.data?.logo}',
       'orgTitle': orgData?.data?.arabicTitle,
       'orgvatRegistrationNumber': orgData?.data?.vatNumber,
+      'phone': orgData?.data?.phone,
       'barnchId': '10200',
       'branchTitel': 'الفرع الأول',
       'branchAddress': 'سكاكا - الجوف',
       'accountId': loginModel?.data?.userId,
       'accountTitle': loginModel?.data?.accountTitle,
       'orderNumber': '123131 test',
-      'customerId': customerId,
-      'customerName': customerName,
-      'vatRegistrationNumber': vatRegistrationNumber,
-      'customerAddress': customerAddress,
-      'totalOrder': toFixed(totalorderWithVat),
+      'customerId': customersModel?.customer?.customerId,
+      'customerName': customersModel?.customer?.customerName,
+      'vatRegistrationNumber': customersModel?.customer?.vatNumber,
+      'customerAddress': customersModel?.customer?.address,
+      'totalOrder': toFixed(totalorder),
       'totalVat': toFixed(totalVat),
       'totalOrderWithVat': toFixed(totalorderWithVat),
-      'payed': payed,
-      'selectedPaymethods': selectedPaymethods,
+      'selectedPaymethods': paymethods,
       'items': items,
       'notes': 'Notessssssssssssssss',
-      'addOrdertime': addOrdertime,
+      'addOrdertime':
+          DateFormat('dd-MM-yyyy HH:mm', 'en').format(DateTime.now()),
       'status': 'added'
     };
     // Clear cart - customer,
@@ -326,39 +319,33 @@ class PosCubit extends Cubit<PosState> {
   PaymethodModel? paymethodModel;
   getPaymethods() async {
     emit(PaymethodsstateInitial());
-    await DioHelper.postData(
-      url: EndPoints.baseUrl,
-      data: {},
-      queryParameters: {
-        'flr': 'casale/manage/settings/inputoptions/paymethods/views',
-        'sysac': sysAc,
-        'rtype': 'json',
-        'dtype': 'json',
-      },
-    ).then((value) {
-      paymethodModel = PaymethodModel.fromJson(value?.data);
-      emit(GetPaymethodsstateSuccess(
-        paymethodModel: paymethodModel,
-      ));
-    }).catchError((error) {
-      print('error is== $error');
-    });
+    paymethodModel = await PaymethodsRepository().getPayMethods();
+    emit(GetPaymethodsstateSuccess());
   }
 
   // calculate Remaining of payment
-  remainingPayment(totalOrder, payed, paymethodID) {
-    print(paymethodID);
-    print('start');
-    requiredToPaid = totalOrder;
-    requiredToPaid = totalOrder - payed;
-    if (requiredToPaid < 0) {
-      remaining = -1 * requiredToPaid;
-      requiredToPaid = 0.00;
+  remainingPayment({payed, paymethod}) {
+    if (paymethods.contains(paymethod)) {
+      requiredToPaid = requiredToPaid + paymethod.value;
+      paymethod.value = payed;
+      requiredToPaid = requiredToPaid - paymethod.value;
+      if (requiredToPaid < 0) {
+        remaining = -1 * requiredToPaid;
+        requiredToPaid = 0.00;
+      } else {
+        remaining = 0.00;
+      }
     } else {
-      remaining = 0;
+      paymethod.value = payed;
+      paymethods.add(paymethod);
+      requiredToPaid = requiredToPaid - paymethod.value;
+      if (requiredToPaid < 0) {
+        remaining = -1 * requiredToPaid;
+        requiredToPaid = 0.00;
+      } else {
+        remaining = 0.00;
+      }
     }
-
-    print(remaining.toString());
     emit(RemainingstateSuccess());
   }
 }

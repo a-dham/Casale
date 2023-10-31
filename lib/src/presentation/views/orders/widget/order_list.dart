@@ -42,6 +42,10 @@ class OrderCard extends StatelessWidget {
                           : '0.00',
                       FontWeight.normal),
                   IconButton(
+                    alignment: Alignment.topCenter,
+                    padding: const EdgeInsets.only(
+                      top: 3,
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
@@ -78,7 +82,7 @@ class OrderCard extends StatelessWidget {
       child: Text(
         value,
         overflow: TextOverflow.ellipsis,
-        maxLines: 2,
+        maxLines: 1,
         style: TextStyle(
           fontWeight: fontWeight,
         ),

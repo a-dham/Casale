@@ -32,7 +32,7 @@ void main() async {
   print(onboarding);
   print(sysac);
   print(locale);
-  initPage = Routes.splash;
+  // initPage = Routes.splash;
 
   // OrderRepository().getOrders();
   // final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
