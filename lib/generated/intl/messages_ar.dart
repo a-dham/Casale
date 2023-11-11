@@ -28,32 +28,40 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("إضافة"),
         "addCustomerToTicket":
             MessageLookupByLibrary.simpleMessage("إضافة عميل للفاتورة"),
+        "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "afterTax": MessageLookupByLibrary.simpleMessage("بعد الضريبة"),
         "all": MessageLookupByLibrary.simpleMessage("الجميع"),
         "areSure": MessageLookupByLibrary.simpleMessage("تأكيد تسجيل الخروج؟"),
         "authMessageFail": MessageLookupByLibrary.simpleMessage(
             "إسم المستخدم أو الرقم السري خطأ ..!"),
+        "branch": MessageLookupByLibrary.simpleMessage("فرع"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "canceld": MessageLookupByLibrary.simpleMessage("الملغاة"),
+        "cashCusotomer": MessageLookupByLibrary.simpleMessage("عميل نقدي"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد الباسورد"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("العميل"),
         "customer": MessageLookupByLibrary.simpleMessage("عميل"),
         "cutomerAdded": MessageLookupByLibrary.simpleMessage("تم إضافة العميل"),
+        "dateTime": MessageLookupByLibrary.simpleMessage("التاريخ / الوقت "),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
+        "edit": MessageLookupByLibrary.simpleMessage("تعـديل"),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "entervalue": MessageLookupByLibrary.simpleMessage("أدخل القيمة"),
+        "familyName": MessageLookupByLibrary.simpleMessage("إسم العائلة"),
         "forget_password":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة السر؟"),
         "haveAccount": MessageLookupByLibrary.simpleMessage("لديك حساب؟"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "invoice": MessageLookupByLibrary.simpleMessage("الفاتورة"),
+        "invoiceEndMessage": MessageLookupByLibrary.simpleMessage("شكراً لك"),
+        "invoiceNumber": MessageLookupByLibrary.simpleMessage("رقم الفاتورة"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("إعدادت الفواتير"),
         "item": MessageLookupByLibrary.simpleMessage("صنف"),
         "itemDeleted": MessageLookupByLibrary.simpleMessage("تم حذف الصنف"),
-        "items": MessageLookupByLibrary.simpleMessage("Items"),
+        "items": MessageLookupByLibrary.simpleMessage("الأصناف"),
         "language": MessageLookupByLibrary.simpleMessage("اللغات"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -61,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("فاتورة جديدة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "no": MessageLookupByLibrary.simpleMessage("لا"),
+        "noOrders": MessageLookupByLibrary.simpleMessage("لا يوجد فواتير "),
         "notNull": MessageLookupByLibrary.simpleMessage("لا يمكن أن يكون فارغ"),
         "note": MessageLookupByLibrary.simpleMessage("ملاحظة"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
@@ -101,6 +110,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "themes": MessageLookupByLibrary.simpleMessage("السيمات"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalPriceWithVat": MessageLookupByLibrary.simpleMessage("السعر ش.ض"),
+        "totalPriceWithVat1": MessageLookupByLibrary.simpleMessage(
+            "الإجمالي شامل ضريبة القيمة المضافة"),
         "unitPrice": MessageLookupByLibrary.simpleMessage("سعر الوحدة"),
         "username": MessageLookupByLibrary.simpleMessage("إسم المستخدم"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم")

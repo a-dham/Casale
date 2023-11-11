@@ -28,27 +28,35 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addCustomerToTicket":
             MessageLookupByLibrary.simpleMessage("Add Customer To Ticket"),
+        "address": MessageLookupByLibrary.simpleMessage("Address"),
         "afterTax": MessageLookupByLibrary.simpleMessage("After Tax"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "areSure": MessageLookupByLibrary.simpleMessage("Are You Sure ?"),
         "authMessageFail":
             MessageLookupByLibrary.simpleMessage("UserName Or Password Wrong"),
+        "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "canceld": MessageLookupByLibrary.simpleMessage("canceld"),
+        "cashCusotomer": MessageLookupByLibrary.simpleMessage("Cash Cusotomer"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "cutomerAdded": MessageLookupByLibrary.simpleMessage("Cutomer Added"),
+        "dateTime": MessageLookupByLibrary.simpleMessage("Date / Time"),
         "dontHaveAccount":
             MessageLookupByLibrary.simpleMessage("Don`t have account"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "entervalue": MessageLookupByLibrary.simpleMessage("Enter Value"),
+        "familyName": MessageLookupByLibrary.simpleMessage("Family Name"),
         "forget_password":
             MessageLookupByLibrary.simpleMessage("Forget Password"),
         "haveAccount": MessageLookupByLibrary.simpleMessage("Have account ? "),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "invoice": MessageLookupByLibrary.simpleMessage("Invoice"),
+        "invoiceEndMessage": MessageLookupByLibrary.simpleMessage(" THanks"),
+        "invoiceNumber": MessageLookupByLibrary.simpleMessage("Invoice Number"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("Invoices Settings"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
@@ -61,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noOrders":
+            MessageLookupByLibrary.simpleMessage("there is no orders yet"),
         "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),
         "note": MessageLookupByLibrary.simpleMessage("Note"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),
@@ -103,6 +113,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalPriceWithVat":
             MessageLookupByLibrary.simpleMessage("Total price With Vat"),
+        "totalPriceWithVat1":
+            MessageLookupByLibrary.simpleMessage("The due is Inclusive of Vat"),
         "unitPrice": MessageLookupByLibrary.simpleMessage("Unit Price"),
         "username": MessageLookupByLibrary.simpleMessage("UserName"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes")

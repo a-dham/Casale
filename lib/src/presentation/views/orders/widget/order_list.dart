@@ -37,11 +37,16 @@ class OrderCard extends StatelessWidget {
                   textWidget(order.customerTitle.toString(), FontWeight.normal),
                   textWidget(order.orderdate.toString(), FontWeight.normal),
                   textWidget(
-                      order.totalsWithtax != null
-                          ? order.totalsWithtax.toString()
-                          : '0.00',
-                      FontWeight.normal),
+                    order.totalsWithtax != null
+                        ? order.totalsWithtax.toString()
+                        : '0.00',
+                    FontWeight.normal,
+                  ),
                   IconButton(
+                    alignment: Alignment.topCenter,
+                    padding: const EdgeInsets.only(
+                      top: 3,
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(
                         context,
@@ -72,13 +77,11 @@ class OrderCard extends StatelessWidget {
     FontWeight fontWeight,
   ) {
     return Container(
-      constraints: const BoxConstraints(
-        maxWidth: 100,
-      ),
+      constraints: const BoxConstraints(),
       child: Text(
         value,
         overflow: TextOverflow.ellipsis,
-        maxLines: 2,
+        maxLines: 1,
         style: TextStyle(
           fontWeight: fontWeight,
         ),

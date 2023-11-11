@@ -6,13 +6,11 @@ import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import 'widget/payment_method.dart';
 
-// ignore: must_be_immutable
 class Payment extends StatefulWidget {
-  Payment({super.key});
+  const Payment({super.key});
 
   @override
   State<Payment> createState() => _PaymentState();
@@ -24,6 +22,9 @@ class _PaymentState extends State<Payment> {
   @override
   void initState() {
     BlocProvider.of<PosCubit>(context).getPaymethods();
+    BlocProvider.of<PosCubit>(context).remaining = 0.00;
+    BlocProvider.of<PosCubit>(context).invoiceTotal();
+    BlocProvider.of<PosCubit>(context).paymethods.clear();
     super.initState();
   }
 
@@ -163,8 +164,6 @@ class _PaymentState extends State<Payment> {
   }
 
   Future<void> _showMyDialog(context, PosCubit posCubit) async {
-    final DateTime now = DateTime.now();
-
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -182,21 +181,23 @@ class _PaymentState extends State<Payment> {
                 S.current.newOrder,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Colors.green,
                 ),
               ),
               onPressed: () {
                 // save order -> clear cart ->  navigate to home .
-
-                posCubit.newOrder(
-                  customerId: '12',
-                  customerAddress: 'skaka',
-                  customerName: 'adham',
-                  vatRegistrationNumber: '546564546545',
-                  payed: '100255',
-                  items: [],
-                  selectedPaymethods: [],
-                  addOrdertime: DateFormat('dd-MM-yyyy HH:mm').format(now),
-                );
+                posCubit.newOrder();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                S.current.edit,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
@@ -209,16 +210,7 @@ class _PaymentState extends State<Payment> {
               ),
               onPressed: () {
                 // Save order -> get order data -> send data to print pay
-                posCubit.newOrder(
-                  customerId: '12',
-                  customerAddress: 'skaka',
-                  customerName: 'adham',
-                  vatRegistrationNumber: '546564546545',
-                  payed: '100255',
-                  items: posCubit.cart,
-                  selectedPaymethods: [],
-                  addOrdertime: DateFormat('dd-MM-yyyy HH:mm').format(now),
-                );
+                posCubit.newOrder();
                 Navigator.of(context).pushNamed(Routes.print);
               },
             ),

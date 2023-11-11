@@ -15,6 +15,7 @@ class AccountDataServices {
             'flr': 'acc/login',
             'sysac': sysAc,
             'rtype': 'json',
+            'dtype': 'json',
           });
       return response?.data;
     } catch (error) {

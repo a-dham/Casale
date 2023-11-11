@@ -3,16 +3,20 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/presentation/views/customer/customer_card.dart';
+import 'package:casale/src/presentation/views/customer/filter_customer.dart';
 import 'package:casale/src/presentation/widgets/custome_text_button.dart';
 import 'package:casale/src/presentation/widgets/custome_text_form_field.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Customer extends StatelessWidget {
   Customer({super.key});
 
   final TextEditingController searchTextController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController familyNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   @override
@@ -61,6 +65,7 @@ class Customer extends StatelessWidget {
                               posCubit: posCubit,
                               emailController: emailController,
                               nameController: nameController,
+                              familyNameController: familyNameController,
                               phoneController: phoneController,
                             );
                           },
@@ -72,7 +77,7 @@ class Customer extends StatelessWidget {
                       height: 10,
                     ),
                     CustomeTextFormField(
-                      onSubmitted: null,
+                      inputFormamatters: const [],
                       labelText: S.current.search,
                       suffixIcon: const Icon(Icons.search),
                       obscureText: false,
@@ -81,8 +86,13 @@ class Customer extends StatelessWidget {
                       validator: (value) {
                         return null;
                       },
+                      onSubmitted: (input) {
+                        posCubit.filterCustomer(input);
+                      },
                       onTap: () {},
-                      onchanged: (string) {},
+                      onchanged: (input) {
+                        posCubit.filterCustomer(input);
+                      },
                     ),
                     const SizedBox(
                       height: 10,
@@ -97,40 +107,9 @@ class Customer extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Expanded(
-                      child: ListView.separated(
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () async {
-                                String customerId =
-                                    posCubit.customers[index].customerId;
-                                await posCubit.getCustomer(customerId);
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                color: Colors.blue[50],
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Text(posCubit.customers[index].firstName ??
-                                        ''),
-                                    const Spacer(),
-                                    Text(posCubit.customers[index].phoneNo ??
-                                        ''),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return Divider(
-                              thickness: 1,
-                              color: Colors.black.withOpacity(0.44),
-                            );
-                          },
-                          itemCount: posCubit.customers.length),
-                    ),
+                    posCubit.isSearchCustomer == false
+                        ? const CustomerCard()
+                        : const FilterCustomers()
                   ],
                 ),
               ));
@@ -142,6 +121,7 @@ class Customer extends StatelessWidget {
     required BuildContext context,
     required PosCubit posCubit,
     required TextEditingController nameController,
+    required TextEditingController familyNameController,
     required TextEditingController phoneController,
     required TextEditingController emailController,
   }) {
@@ -167,6 +147,7 @@ class Customer extends StatelessWidget {
                       height: 20,
                     ),
                     CustomeTextFormField(
+                      inputFormamatters: const [],
                       onSubmitted: null,
                       labelText: S.current.name,
                       suffixIcon: const Icon(Icons.person),
@@ -186,11 +167,32 @@ class Customer extends StatelessWidget {
                       height: 20,
                     ),
                     CustomeTextFormField(
+                      inputFormamatters: const [],
+                      onSubmitted: null,
+                      labelText: S.current.familyName,
+                      suffixIcon: const Icon(Icons.person),
+                      obscureText: false,
+                      keyboardType: TextInputType.name,
+                      textEditingController: familyNameController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return S.current.notNull;
+                        }
+                        return null;
+                      },
+                      onchanged: (string) {},
+                      onTap: () {},
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomeTextFormField(
                       onSubmitted: null,
                       labelText: S.current.phone,
                       suffixIcon: const Icon(Icons.phone),
                       obscureText: false,
                       keyboardType: TextInputType.number,
+                      inputFormamatters: [LengthLimitingTextInputFormatter(10)],
                       textEditingController: phoneController,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -205,6 +207,7 @@ class Customer extends StatelessWidget {
                       height: 20,
                     ),
                     CustomeTextFormField(
+                      inputFormamatters: const [],
                       onSubmitted: null,
                       labelText: S.current.email,
                       suffixIcon: const Icon(Icons.email),
@@ -239,50 +242,71 @@ class Customer extends StatelessWidget {
                           posCubit
                               .addCustomer(
                                   firstName: nameController.text.toString(),
+                                  familyName: familyNameController.toString(),
                                   email: emailController.text.toString(),
                                   phoneNumber: phoneController.text.toString())
                               .then(
                             (value) async {
-                              if (value == null) {
-                                List<dynamic>? messages = posCubit
-                                    .validateModel?.data?.validator?.messages;
-                                String errorMessage = '';
-                                for (var element in messages!) {
-                                  errorMessage =
-                                      ' $errorMessage ${element.toString()}';
-                                }
-                                // emailController.text = errorMessage;
-                                // CustomToast().showToast();
-                                // showToast() {
-                                //   print('toast');
-                                //   Fluttertoast.showToast(
-                                //       msg: errorMessage,
-                                //       // toastLength: Toast.LENGTH_SHORT,
-                                //       gravity: ToastGravity.BOTTOM,
-                                //       timeInSecForIosWeb: 5,
-                                //       backgroundColor: Colors.green,
-                                //       textColor: Colors.white,
-                                //       fontSize: 16.0);
-                                // }
-                              } else {
-                                Navigator.popAndPushNamed(
-                                    context, Routes.bottomNavigation);
+                              Navigator.popAndPushNamed(
+                                  context, Routes.bottomNavigation);
 
-                                emailController.clear();
-                                phoneController.clear();
-                                nameController.clear();
-                                posCubit.customers.clear();
+                              emailController.clear();
+                              phoneController.clear();
+                              nameController.clear();
+                              familyNameController.clear();
 
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
                                   actionOverflowThreshold: 1,
                                   duration: const Duration(milliseconds: 900),
                                   backgroundColor: Colors.green,
                                   content: Center(
                                     child: Text(S.current.cutomerAdded),
                                   ),
-                                ));
-                              }
+                                ),
+                              );
+                              posCubit.customers?.clear();
+
+                              // if (value == null) {
+                              //   List<dynamic>? messages = posCubit
+                              //       .validateModel?.data?.validator?.messages;
+                              //   String errorMessage = '';
+                              //   for (var element in messages!) {
+                              //     errorMessage =
+                              //         ' $errorMessage ${element.toString()}';
+                              //   }
+                              //   // emailController.text = errorMessage;
+                              //   // CustomToast().showToast();
+                              //   showToast() {
+                              //     print('toast');
+                              //     Fluttertoast.showToast(
+                              //         msg: errorMessage,
+                              //         // toastLength: Toast.LENGTH_SHORT,
+                              //         gravity: ToastGravity.BOTTOM,
+                              //         timeInSecForIosWeb: 5,
+                              //         backgroundColor: Colors.green,
+                              //         textColor: Colors.white,
+                              //         fontSize: 16.0);
+                              //   }
+                              // } else {
+                              //   Navigator.popAndPushNamed(
+                              //       context, Routes.bottomNavigation);
+
+                              //   emailController.clear();
+                              //   phoneController.clear();
+                              //   nameController.clear();
+                              //   posCubit.customers.clear();
+
+                              //   ScaffoldMessenger.of(context)
+                              //       .showSnackBar(SnackBar(
+                              //     actionOverflowThreshold: 1,
+                              //     duration: const Duration(milliseconds: 900),
+                              //     backgroundColor: Colors.green,
+                              //     content: Center(
+                              //       child: Text(S.current.cutomerAdded),
+                              //     ),
+                              //   ));
+                              // }
                             },
                           );
                         }

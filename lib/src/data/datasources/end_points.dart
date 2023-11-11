@@ -1,6 +1,6 @@
 class EndPoints {
-  static const String baseUrl = 'https://dev.orgswebteam.com/?';
-  static const String assetsUrl = 'https://dev.orgswebteam.com/';
+  static const String baseUrl = 'https://sys.orgsweb.com/?';
+  static const String assetsUrl = 'https://sys.orgsweb.com/';
 }
 
 

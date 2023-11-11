@@ -1,6 +1,5 @@
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/presentation/views/orders/widget/order_card.dart';
-import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,11 +64,9 @@ class _OrdersState extends State<Orders> {
             ),
             body: TabBarView(
               children: [
-                orderCubit.orders!.isEmpty
-                    ? const Center(child: CustomeCircularProgress())
-                    : OrderList(
-                        orders: orderCubit.orders,
-                      ),
+                OrderList(
+                  orders: orderCubit.orders,
+                ),
                 const OrderList(
                   orders: [],
                 ),

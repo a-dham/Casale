@@ -122,8 +122,13 @@ class _OnBoardingState extends State<OnBoarding> {
                   visible: isVisible(),
                   child: CustomeTextButton(
                     onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, Routes.login, (route) => false);
+                      CacheHelper.saveData(key: 'onboarding', value: true)
+                          .then((value) {
+                        if (value!) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, Routes.login, (route) => false);
+                        }
+                      });
                     },
                     minimumSize: const Size(120, 40),
                     borderwidth: 0,

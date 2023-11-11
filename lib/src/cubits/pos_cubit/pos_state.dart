@@ -46,14 +46,14 @@ final class ItemSearchStateFail extends PosState {}
 
 final class ItemSearchStateSuccess extends PosState {}
 
+final class CustomerSearchStateloading extends PosState {}
+
+final class CustomerSearchStateSuccess extends PosState {}
+
 final class UnitSelectStateSuccess extends PosState {}
 
 final class PaymethodsstateInitial extends PosState {}
 
-final class GetPaymethodsstateSuccess extends PosState {
-  final PaymethodModel? paymethodModel;
-
-  GetPaymethodsstateSuccess({@required this.paymethodModel});
-}
+final class GetPaymethodsstateSuccess extends PosState {}
 
 final class RemainingstateSuccess extends PosState {}

@@ -59,6 +59,7 @@
     "simpleTaxInvoice":"Simple Tax Inoice",
     "taxNumber":"Tax Numer",
     "totalPriceWithVat":"Total price With Vat",
+    "totalPriceWithVat1":"The due is Inclusive of Vat",
     "unitPrice":"Unit Price",
     "quantity":"Quantity",
     "products":"Products",
@@ -70,7 +71,17 @@
     "items":"Items",
     "cutomerAdded":"Cutomer Added",
     "orderNumber":"Order Number",
-    "newOrder":"New Order"
+    "newOrder":"New Order",
+    "edit":"Edit",
+    "branch":"Branch",
+    "invoiceNumber":"Invoice Number",
+    "address":"Address",
+    "invoiceEndMessage":" THanks",
+    "cashCusotomer":"Cash Cusotomer",
+    "noOrders":"there is no orders yet",
+    "familyName":"Family Name",
+    "dateTime":"Date / Time"
+
     
 
 

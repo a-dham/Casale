@@ -1,9 +1,7 @@
 import 'package:casale/src/domain/models/products_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../data/datasources/end_points.dart';
 import '../../../../../utils/constant/app_colors.dart';
-import '../../../../widgets/circular_progress.dart';
 
 class Item extends StatelessWidget {
   const Item({super.key, required this.item});
@@ -32,7 +30,6 @@ class Item extends StatelessWidget {
               width: double.infinity,
               height: 85,
               'assets/images/item.png'),
-
           // Image.network(
           //   '${EndPoints.assetsUrl}${item.image}',
           //   fit: BoxFit.scaleDown,

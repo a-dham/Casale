@@ -79,7 +79,7 @@ class AppRouter {
         );
       case Routes.payment:
         return MaterialPageRoute(
-          builder: (_) => Payment(),
+          builder: (_) => const Payment(),
         );
       case Routes.print:
         return MaterialPageRoute(
