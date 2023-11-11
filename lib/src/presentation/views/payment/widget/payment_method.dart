@@ -119,6 +119,7 @@ class PaymentMethods extends StatelessWidget {
             },
             onTap: () {},
             onchanged: (string) {},
+            inputFormamatters: const [],
           ));
         });
   }

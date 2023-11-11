@@ -1,5 +1,6 @@
 import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomeTextFormField extends StatelessWidget {
   const CustomeTextFormField({
@@ -13,6 +14,7 @@ class CustomeTextFormField extends StatelessWidget {
     @required this.onSubmitted,
     @required this.onchanged,
     @required this.onTap,
+    @required this.inputFormamatters,
   });
   final String labelText;
   final Widget? suffixIcon;
@@ -23,6 +25,7 @@ class CustomeTextFormField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final void Function(String)? onchanged;
   final VoidCallback? onTap;
+  final List<TextInputFormatter>? inputFormamatters;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -39,6 +42,7 @@ class CustomeTextFormField extends StatelessWidget {
         keyboardType: keyboardType,
         cursorColor: AppColors.orangeColor,
         obscureText: obscureText,
+        inputFormatters: inputFormamatters,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             vertical: 0,

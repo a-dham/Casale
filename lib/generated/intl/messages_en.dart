@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "canceld": MessageLookupByLibrary.simpleMessage("canceld"),
+        "cashCusotomer": MessageLookupByLibrary.simpleMessage("Cash Cusotomer"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
@@ -48,11 +49,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "entervalue": MessageLookupByLibrary.simpleMessage("Enter Value"),
+        "familyName": MessageLookupByLibrary.simpleMessage("Family Name"),
         "forget_password":
             MessageLookupByLibrary.simpleMessage("Forget Password"),
         "haveAccount": MessageLookupByLibrary.simpleMessage("Have account ? "),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "invoice": MessageLookupByLibrary.simpleMessage("Invoice"),
+        "invoiceEndMessage": MessageLookupByLibrary.simpleMessage(" THanks"),
         "invoiceNumber": MessageLookupByLibrary.simpleMessage("Invoice Number"),
         "invoiceSettings":
             MessageLookupByLibrary.simpleMessage("Invoices Settings"),
@@ -66,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noOrders":
+            MessageLookupByLibrary.simpleMessage("there is no orders yet"),
         "notNull": MessageLookupByLibrary.simpleMessage(" It Can`t Be Empty"),
         "note": MessageLookupByLibrary.simpleMessage("Note"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),

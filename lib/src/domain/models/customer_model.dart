@@ -37,20 +37,25 @@ class Customer {
   String? orgId;
   String? customerName;
   String? firstName;
+  String? familyName;
   String? lastName;
   String? phoneNo;
   String? email;
   String? addSubmit;
   String? vatNumber;
   String? address;
+  String? customerKey;
   Customer.fromJson(Map<String, dynamic> json) {
-    customerId = json['id'];
-    orgId = json['org_id'];
-    customerName = json['customer_name'];
+    customerId = json['id'].toString();
+    orgId = json['org_id'].toString();
+    customerName = json['full_name'];
     firstName = json['first_name'];
+    familyName = json['family_name'];
     lastName = json['last_name'];
     phoneNo = json['phone_no'];
     email = json['email'];
+    customerKey =
+        '${json['phone_no']} ${json['family_name']} ${json['first_name']} ${json['full_name']} ${json['email']}';
   }
 
   // Map<String, dynamic> toJson() {

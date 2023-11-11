@@ -177,6 +177,7 @@ class ItemWidget extends StatelessWidget {
                   },
                   onchanged: null,
                   onTap: null,
+                  inputFormamatters: const [],
                 ),
               ),
               // Container(

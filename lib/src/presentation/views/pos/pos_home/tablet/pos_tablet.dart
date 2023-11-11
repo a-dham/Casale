@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../data/datasources/end_points.dart';
+import '../../../../widgets/circular_progress.dart';
+
 class PosTablet extends StatefulWidget {
   const PosTablet({super.key});
 
@@ -54,40 +57,39 @@ class _PosTabletState extends State<PosTablet> {
                     children: [
                       Row(
                         children: [
-                          Container(
-                            constraints: const BoxConstraints(
-                              maxHeight: 80,
-                              maxWidth: 70,
-                            ),
-                            child: Image.asset(
-                                fit: BoxFit.scaleDown,
-                                width: double.infinity,
-                                height: 85,
-                                'assets/images/ows_logo.png'),
-                            // Image.network(
-                            //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                            //   fit: BoxFit.scaleDown,
-                            //   width: double.infinity,
-                            //   height: 85,
-                            //   errorBuilder: (context, object, stacktrace) {
-                            //     return Image.asset(
-                            //         fit: BoxFit.scaleDown,
-                            //         width: double.infinity,
-                            //         height: 85,
-                            //         'assets/images/error-loading-items.gif');
-                            //   },
-                            //   loadingBuilder:
-                            //       (context, child, loadingProgress) {
-                            //     if (loadingProgress == null) {
-                            //       return child;
-                            //     } else {
-                            //       return const CustomeCircularProgress();
-                            //     }
-                            //   },
-                            //   frameBuilder: (context, child, frame,
-                            //           wasSynchronouslyLoaded) =>
-                            //       child,
-                            // ),
+                          // Container(
+                          //   constraints: const BoxConstraints(
+                          //     maxHeight: 80,
+                          //     maxWidth: 70,
+                          //   ),
+                          //   child: Image.asset(
+                          //       fit: BoxFit.scaleDown,
+                          //       width: double.infinity,
+                          //       height: 85,
+                          //       'assets/images/ows_logo.png'),
+                          // ),
+                          Image.network(
+                            '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                            fit: BoxFit.scaleDown,
+                            width: double.infinity,
+                            height: 85,
+                            errorBuilder: (context, object, stacktrace) {
+                              return Image.asset(
+                                  fit: BoxFit.scaleDown,
+                                  width: double.infinity,
+                                  height: 85,
+                                  'assets/images/error-loading-items.gif');
+                            },
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              } else {
+                                return const CustomeCircularProgress();
+                              }
+                            },
+                            frameBuilder: (context, child, frame,
+                                    wasSynchronouslyLoaded) =>
+                                child,
                           ),
                           const SizedBox(
                             width: 10,

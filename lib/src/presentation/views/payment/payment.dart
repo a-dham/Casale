@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widget/payment_method.dart';
 
 class Payment extends StatefulWidget {
-  Payment({super.key});
+  const Payment({super.key});
 
   @override
   State<Payment> createState() => _PaymentState();
@@ -186,7 +186,6 @@ class _PaymentState extends State<Payment> {
               ),
               onPressed: () {
                 // save order -> clear cart ->  navigate to home .
-
                 posCubit.newOrder();
                 Navigator.of(context).pop();
               },

@@ -124,6 +124,7 @@ class _LoginState extends State<Login> {
                                     });
                                   },
                                   onchanged: (string) {},
+                                  inputFormamatters: const [],
                                 ),
                                 SizedBox(
                                   height: screenHeight * 0.02,
@@ -160,6 +161,7 @@ class _LoginState extends State<Login> {
                                     });
                                   },
                                   onchanged: (string) {},
+                                  inputFormamatters: const [],
                                 ),
                                 SizedBox(
                                   height: screenHeight * 0.01,

@@ -71,6 +71,7 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                     return null;
                   },
                   onSubmitted: (value) {},
+                  inputFormamatters: const [],
                 ),
               ),
             ],

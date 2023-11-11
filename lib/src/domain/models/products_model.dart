@@ -6,13 +6,16 @@ class ItemModel {
   ItemModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['msg'];
-
     if (json['data'] != null) {
-      json['data'].forEach((key, value) {
-        Data data = Data.fromJson(value);
-        dataList.add(data);
-      });
-    }
+      dataList =
+          (json['data'] as List).map((item) => Data.fromJson(item)).toList();
+    } else {}
+    // if (json['data'] != null) {
+    //   json['data'].forEach((key, value) {
+    //     Data data = Data.fromJson(value);
+    //     dataList.add(data);
+    //   });
+    // }
   }
 }
 
@@ -39,14 +42,14 @@ class Data {
   int selectedUnit = 0;
 
   Data.fromJson(Map<String, dynamic> json) {
-    itemId = json['id'];
-    status = json['status'];
+    itemId = json['id'].toString();
+    // status = json['status'];
     englishTitle = json['en_title'];
     arabicTitle = json['ar_title'];
     image = json['thumb_dir'];
-    itemCode = json['item_code'];
-    sectionId = json['ss_io_id'];
-    sectionTitle = json['section_title'];
+    // itemCode = json['item_code'];
+    // sectionId = json['ss_io_id'];
+    // sectionTitle = json['section_title'];
     itemKey = '${json['en_title']} ${json['ar_title']} ${json['item_code']}';
     quantity = 1;
     totalPriceWithVat = 0;

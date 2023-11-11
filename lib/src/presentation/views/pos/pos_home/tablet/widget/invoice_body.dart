@@ -79,7 +79,7 @@ class InvoiceBody extends StatelessWidget {
                         const Spacer(),
                         TextButton.icon(
                           onPressed: () async {
-                            if (posCubit.customers.isEmpty) {
+                            if (posCubit.customers!.isEmpty) {
                               await posCubit.getCustomers().then((value) {
                                 Customer().showAlert(context, posCubit);
                               });

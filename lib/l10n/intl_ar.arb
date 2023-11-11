@@ -70,13 +70,17 @@
     "areSure":"تأكيد تسجيل الخروج؟",
     "itemDeleted":"تم حذف الصنف",
     "cutomerAdded":"تم إضافة العميل"  ,
-    "items":"Items",
+    "items":"الأصناف",
     "orderNumber":"رقم الطلب",
     "newOrder":"فاتورة جديدة",
     "edit":"تعـديل",
     "branch":"فرع",
     "invoiceNumber":"رقم الفاتورة",
     "address":"العنوان",
+    "invoiceEndMessage":"شكراً لك",
+    "cashCusotomer":"عميل نقدي",
+    "noOrders":"لا يوجد فواتير ",
+    "familyName":"إسم العائلة",
     "dateTime":"التاريخ / الوقت "
 
 

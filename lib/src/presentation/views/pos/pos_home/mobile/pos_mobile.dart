@@ -4,6 +4,7 @@ import 'package:casale/src/presentation/views/customer/customer.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/search_sections.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../data/datasources/end_points.dart';
@@ -66,26 +67,58 @@ class PosMobile extends StatelessWidget {
                       //   width: 40,
                       // ),
 
-                      Container(
-                        constraints: const BoxConstraints(
-                          maxHeight: 50,
-                          maxWidth: 50,
-                        ),
-                        child: Image.asset(
-                          'assets/images/ows_logo.png',
-                        ),
-
-                        //     Image(
-                        //   image: CachedNetworkImageProvider(
-                        //     '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                        //   ),
-                        // ),
-
-                        //     Image.network(
-                        //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                        //   fit: BoxFit.scaleDown,
-                        // ),
+                      ExtendedImage.network(
+                        '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                        height: 60,
+                        fit: BoxFit.fill,
+                        timeLimit: const Duration(seconds: 4),
+                        //cancelToken: cancellationToken,
                       ),
+
+                      // Image.network(
+                      //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                      //   fit: BoxFit.scaleDown,
+                      //   width: double.infinity,
+                      //   height: 85,
+                      //   errorBuilder: (context, object, stacktrace) {
+                      //     return Image.asset(
+                      //         fit: BoxFit.scaleDown,
+                      //         width: double.infinity,
+                      //         height: 85,
+                      //         'assets/images/error-loading-items.gif');
+                      //   },
+                      //   loadingBuilder: (context, child, loadingProgress) {
+                      //     if (loadingProgress == null) {
+                      //       return child;
+                      //     } else {
+                      //       return const CustomeCircularProgress();
+                      //     }
+                      //   },
+                      //   // frameBuilder:
+                      //   //     (context, child, frame, wasSynchronouslyLoaded) =>
+                      //   //         child,
+                      // ),
+
+                      // Container(
+                      //   constraints: const BoxConstraints(
+                      //     maxHeight: 50,
+                      //     maxWidth: 50,
+                      //   ),
+                      //   child: Image.asset(
+                      //     'assets/images/ows_logo.png',
+                      //   ),
+
+                      //     Image(
+                      //   image: CachedNetworkImageProvider(
+                      //     '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                      //   ),
+                      // ),
+
+                      //     Image.network(
+                      //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                      //   fit: BoxFit.scaleDown,
+                      // ),
+                      // ),
                       const SizedBox(width: 5),
                       Column(
                         children: [
@@ -99,12 +132,17 @@ class PosMobile extends StatelessWidget {
                           const SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            posCubit.loginModel?.data?.accountTitle ??
-                                'No title',
-                            style: const TextStyle(
-                              color: AppColors.greyColor,
-                              fontSize: 15,
+                          Container(
+                            constraints: const BoxConstraints(
+                              maxWidth: 90,
+                            ),
+                            child: Text(
+                              posCubit.loginModel?.data?.accountTitle ??
+                                  'No title',
+                              style: const TextStyle(
+                                color: AppColors.greyColor,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ],
@@ -176,7 +214,7 @@ class PosMobile extends StatelessWidget {
                           children: [
                             TextButton.icon(
                               onPressed: () async {
-                                if (posCubit.customers.isEmpty) {
+                                if (posCubit.customers!.isEmpty) {
                                   await posCubit.getCustomers().then((value) {
                                     Customer().showAlert(context, posCubit);
                                   });

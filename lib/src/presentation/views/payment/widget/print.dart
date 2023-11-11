@@ -1,9 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
-
 import 'dart:typed_data';
-
 import 'package:casale/generated/l10n.dart';
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
+import 'package:casale/src/presentation/views/payment/widget/tlv_qr.dart';
 import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:casale/src/utils/constant/tofixed.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-
 import '../../../../config/routes/app_router.dart';
 
 class Print extends StatelessWidget {
@@ -22,12 +20,6 @@ class Print extends StatelessWidget {
     return BlocConsumer<PosCubit, PosState>(
       listener: (context, state) {},
       builder: (context, state) {
-//اسم المؤسسة التجاري.
-// رقم التسجيل الضريبي للتاجر.
-// وقت وتاريخ إنشاء الفاتورة.
-// إجمالي قيمة الفاتورة.
-// إجمالي قيمة الضريبة.
-
         PosCubit posCubit = PosCubit.get(context);
 
         return Scaffold(
@@ -36,8 +28,10 @@ class Print extends StatelessWidget {
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
+                  posCubit.clearCart();
                   Navigator.pushNamedAndRemoveUntil(
                       context, Routes.bottomNavigation, (route) => false);
+                  posCubit.remaining = 0.00;
                 },
                 icon: const Icon(Icons.arrow_back)),
             title: Text(
@@ -50,7 +44,15 @@ class Print extends StatelessWidget {
             // backgroundColor: AppColors.orangeColor,
           ),
           body: PdfPreview(
-            build: (format) => _generatePdf(format, posCubit),
+            shouldRepaint: true,
+            onPrinted: (context) {
+              posCubit.clearCart();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Routes.bottomNavigation, (route) => false);
+              posCubit.remaining = 0.00;
+            },
+            build: (format) => _generatePdf(format, posCubit, context),
+            actions: const [],
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
             previewPageMargin: const EdgeInsets.all(30),
             // pdfPreviewPageDecoration:    ,
@@ -76,7 +78,7 @@ class Print extends StatelessWidget {
   }
 
   Future<Uint8List> _generatePdf(
-      PdfPageFormat format, PosCubit posCubit) async {
+      PdfPageFormat format, PosCubit posCubit, BuildContext context) async {
     // print('here print from print page ${posCubit.orderData}');
     // Data? orgData = posCubit.orgData?.data;
     final order = posCubit.orderData;
@@ -126,7 +128,6 @@ class Print extends StatelessWidget {
                   ' ${S.current.dateTime}: ${order['addOrdertime']}', 8, font),
             ]),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-              textWidget(S., 8, font),
               pw.Spacer(),
               textWidget(
                   '${S.current.taxNumber}   : ${order['orgvatRegistrationNumber']}',
@@ -134,8 +135,47 @@ class Print extends StatelessWidget {
                   font),
             ]),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-              textWidget('${S.current.phone}   : ${order['phone']}', 8, font),
+              textWidget(
+                '${S.current.phone}   : ${order['phone']}',
+                8,
+                font,
+              ),
             ]),
+            pw.Container(
+              constraints: const pw.BoxConstraints(maxWidth: double.infinity),
+              child: pw.Text(
+                '---------------------------------------------------------------------------------------------------------------------',
+                maxLines: 1,
+              ),
+            ),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget(
+                '${S.current.customer}: ${order['customerName'] ?? S.current.cashCusotomer}',
+                8,
+                font,
+              ),
+            ]),
+            order['customervatRegistrationNumber'] == 'null'
+                ? pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.end,
+                    children: [
+                        pw.Spacer(),
+                        textWidget(
+                            '${S.current.taxNumber}   : ${order['customervatRegistrationNumber']}',
+                            8,
+                            font),
+                      ])
+                : pw.SizedBox(),
+            order['customerPhone'] == 'null'
+                ? pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.end,
+                    children: [
+                        textWidget(
+                            '${S.current.phone} : ${order['customerPhone']}',
+                            8,
+                            font),
+                      ])
+                : pw.SizedBox(),
             pw.SizedBox(height: 5),
             pw.Table(
                 border: pw.TableBorder.symmetric(
@@ -143,7 +183,7 @@ class Print extends StatelessWidget {
                     style: pw.BorderStyle.dashed,
                   ),
                 ),
-                children: generateRows(font, order['items'])),
+                children: generateRows(font, order['cart'])),
             pw.SizedBox(height: 5),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               textWidget(order['totalOrder'], 8, font),
@@ -163,21 +203,43 @@ class Print extends StatelessWidget {
             pw.Container(
               constraints: const pw.BoxConstraints(maxWidth: double.infinity),
               child: pw.Text(
-                '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+                '---------------------------------------------------------------------------------------------------------------------',
                 maxLines: 1,
               ),
             ),
+            pw.Table(
+                border: pw.TableBorder.symmetric(
+                  outside: const pw.BorderSide(
+                    style: pw.BorderStyle.none,
+                  ),
+                ),
+                children: paymethodTable(font, order['selectedPaymethods'])),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
+              textWidget(toFixed(order['customerRemaining']), 8, font),
+              pw.Spacer(),
+              textWidget(S.current.remainingClient, 8, font),
+            ]),
+            // pw.Container(
+            //   constraints: const pw.BoxConstraints(maxWidth: double.infinity),
+            //   child: pw.Text(
+            //     '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
+            //     maxLines: 1,
+            //   ),
+            // ),
             pw.SizedBox(height: 2.5),
             pw.BarcodeWidget(
-              //search for how to hash qr-data
-              // i want to hashing   ###qrData### and send it
-              // ASXZhdi32YjYsdmKINmG2LjYp9mFINmF2YbYtNii2Kog2YjZitioAg8xMjM0NTY3ODkxMjM0NTYDCjIwMjMtMDktMzAEBTk3Ljc1BQUxMi43NQ
-              data:
-                  'ASXZhdi32YjYsdmKINmG2LjYp9mFINmF2YbYtNii2Kog2YjZitioAg8xMjM0NTY3ODkxMjM0NTYDCjIwMjMtMDktMzAEBTk3Ljc1BQUxMi43NQ',
+              data: QRTLV().tlv(
+                  sellerName: order['orgTitle'],
+                  vatRegistration: order['orgvatRegistrationNumber'],
+                  dateTime: order['addOrdertime'],
+                  totalOrderWithVat: order['totalOrderWithVat'],
+                  vat: order['totalVat']),
               barcode: pw.Barcode.qrCode(),
               width: 70,
               height: 70,
             ),
+            pw.SizedBox(height: 2.5),
+            textWidget(' ${S.current.invoiceEndMessage}', 8, font),
           ],
         );
       },
@@ -186,9 +248,9 @@ class Print extends StatelessWidget {
     return pdf.save();
   }
 
+  //generated items tabel
   List<pw.TableRow> generateRows(font, items) {
     List<pw.TableRow> rows = [];
-
     // Header row
     rows.add(
       pw.TableRow(
@@ -202,10 +264,6 @@ class Print extends StatelessWidget {
         ],
       ),
     );
-
-    // toStringAsFixed(3)
-    // toFixed(item.totalPriceWithVat)
-    // Data rows
     for (var item in items) {
       rows.add(
         pw.TableRow(
@@ -224,7 +282,6 @@ class Print extends StatelessWidget {
         ),
       );
     }
-
     return rows;
   }
 
@@ -244,5 +301,23 @@ class Print extends StatelessWidget {
             )),
       ),
     );
+  }
+
+  //generated items tabel
+  List<pw.TableRow> paymethodTable(font, paymethods) {
+    List<pw.TableRow> rows = [];
+
+    for (var paymethod in paymethods) {
+      rows.add(
+        pw.TableRow(
+          children: [
+            textWidget(toFixed(paymethod.value), 8, font),
+            pw.Spacer(),
+            textWidget(paymethod.arabicTitle, 8, font),
+          ],
+        ),
+      );
+    }
+    return rows;
   }
 }

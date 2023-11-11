@@ -23,10 +23,11 @@ class AuthCubit extends Cubit<AuthState> {
     }, queryParameters: {
       'flr': 'acc/login',
       'sysac': 'none',
-      'dtype': 'json',
       'rtype': 'json',
+      'dtype': 'json',
     }).then((value) async {
-      loginModel = LoginModel.fromJson(value!.data);
+      print('from auth account  ${value!.data}');
+      loginModel = LoginModel.fromJson(value.data);
       if (loginModel.status == 'success') {
         await CacheHelper.saveData(key: 'sysac', value: loginModel.data!.sysac);
         isloading = false;

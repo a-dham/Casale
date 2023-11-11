@@ -61,6 +61,7 @@ class Signup extends StatelessWidget {
                     onSubmitted: (string) {},
                     onTap: () {},
                     onchanged: (string) {},
+                    inputFormamatters: const [],
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -77,6 +78,7 @@ class Signup extends StatelessWidget {
                     onSubmitted: (string) {},
                     onTap: () {},
                     onchanged: (string) {},
+                    inputFormamatters: const [],
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -93,6 +95,7 @@ class Signup extends StatelessWidget {
                     onSubmitted: (string) {},
                     onTap: () {},
                     onchanged: (string) {},
+                    inputFormamatters: const [],
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,
@@ -109,6 +112,7 @@ class Signup extends StatelessWidget {
                     onSubmitted: (string) {},
                     onTap: () {},
                     onchanged: (string) {},
+                    inputFormamatters: const [],
                   ),
                   SizedBox(
                     height: screenHeight * 0.02,

@@ -19,10 +19,22 @@ class Data {
   bool? inUse;
 
   Data.fromJson(Map<String, dynamic> json) {
-    paymethodId = json['id'];
+    paymethodId = json['id'].toString();
     englishTitle = json['en_title'];
     arabicTitle = json['ar_title'];
     inUse = json['inuse'];
     value = 0.00;
   }
 }
+
+      // "org_id": 1000002,
+      // "parent_id": null,
+      // "io_name": "paymethods",
+      // "en_title": "Cash",
+      // "ar_title": "نقدى",
+      // "def_io": null,
+      // "id": 657,
+      // "_ai": 425,
+      // "title": "نقدى",
+      // "inuse": true
+

@@ -30,7 +30,6 @@ class Item extends StatelessWidget {
               width: double.infinity,
               height: 85,
               'assets/images/item.png'),
-
           // Image.network(
           //   '${EndPoints.assetsUrl}${item.image}',
           //   fit: BoxFit.scaleDown,

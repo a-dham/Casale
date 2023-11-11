@@ -820,6 +820,46 @@ class S {
     );
   }
 
+  /// ` THanks`
+  String get invoiceEndMessage {
+    return Intl.message(
+      ' THanks',
+      name: 'invoiceEndMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash Cusotomer`
+  String get cashCusotomer {
+    return Intl.message(
+      'Cash Cusotomer',
+      name: 'cashCusotomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there is no orders yet`
+  String get noOrders {
+    return Intl.message(
+      'there is no orders yet',
+      name: 'noOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Family Name`
+  String get familyName {
+    return Intl.message(
+      'Family Name',
+      name: 'familyName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Date / Time`
   String get dateTime {
     return Intl.message(

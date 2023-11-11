@@ -2,7 +2,6 @@
 
 import 'package:casale/src/cubits/pos_cubit/local_items.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
-import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/data/repository/account_data_repository.dart';
 import 'package:casale/src/data/repository/item_section_repository.dart';
@@ -18,13 +17,23 @@ import 'package:casale/src/domain/models/validate_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:casale/src/utils/constant/tofixed.dart';
 import 'package:intl/intl.dart';
+
+import '../../data/datasources/local/cashe_helper.dart';
 part 'pos_state.dart';
 
 class PosCubit extends Cubit<PosState> {
   PosCubit() : super(PosInitial());
   static PosCubit get(context) => BlocProvider.of(context);
+  // Switch(
+  //             value: darkMode,
+  //             onChanged: (val) {
+  //               box.put('darkMode', !darkMode);
+  //             },
+  // ),
 
   String sysAc = CacheHelper.getData(key: 'sysac');
+  // String sysAc =
+  //     'em5jY3hhZWNhNm16NzQyeno3NDVjejc0cWM0NHJuMzR6ejQxd3Y1M3p6NjJ0bTMxcm4xMWVtMTFxYzUyenozNHp6MjN3djgxc2I1M3JuOTU';
   final ItemSectionsRepository sectionsRepository = ItemSectionsRepository();
   List? items = [];
   ItemSectionsModel? itemSections;
@@ -61,13 +70,15 @@ class PosCubit extends Cubit<PosState> {
       'orderNumber': '123131 test',
       'customerId': customersModel?.customer?.customerId,
       'customerName': customersModel?.customer?.customerName,
-      'vatRegistrationNumber': customersModel?.customer?.vatNumber,
+      'customerVatRegistrationNumber': customersModel?.customer?.vatNumber,
       'customerAddress': customersModel?.customer?.address,
+      'customerPhone': customersModel?.customer?.phoneNo,
+      'customerRemaining': remaining,
       'totalOrder': toFixed(totalorder),
       'totalVat': toFixed(totalVat),
       'totalOrderWithVat': toFixed(totalorderWithVat),
       'selectedPaymethods': paymethods,
-      'items': items,
+      'cart': cart,
       'notes': 'Notessssssssssssssss',
       'addOrdertime':
           DateFormat('dd-MM-yyyy HH:mm', 'en').format(DateTime.now()),
@@ -171,9 +182,14 @@ class PosCubit extends Cubit<PosState> {
     totalorder = 0;
     for (var item in cart) {
       print('total item ${item.totalPriceWithVat}');
-      print('total vat ${item.vat}');
       totalorderWithVat += item.totalPriceWithVat;
-      totalVat += item.vat;
+
+      print('total item vat ${item.vat}');
+      print(
+        '-----------------------------------------------------------------------------',
+      );
+
+      totalVat += (item.vat * item.quantity);
     }
 
     requiredToPaid = totalorderWithVat;
@@ -183,7 +199,7 @@ class PosCubit extends Cubit<PosState> {
 
   // get customers
   CustomersModel? customersModel;
-  List customers = [];
+  List? customers = [];
 
   getCustomers() async {
     await DioHelper.getData(url: EndPoints.baseUrl, queryParameters: {
@@ -194,7 +210,7 @@ class PosCubit extends Cubit<PosState> {
       customersModel = CustomersModel.fromJson(value!.data);
       if (customersModel!.status == 'success') {
         for (var element in customersModel!.customers) {
-          customers.add(element);
+          customers?.add(element);
         }
       } else {
         //        showToastMessage("No Customer Found");
@@ -228,6 +244,7 @@ class PosCubit extends Cubit<PosState> {
   ValidateModel? validateModel;
   addCustomer({
     required String firstName,
+    required String familyName,
     required String email,
     required String phoneNumber,
   }) async {
@@ -235,6 +252,7 @@ class PosCubit extends Cubit<PosState> {
     await DioHelper.postData(url: EndPoints.baseUrl, data: {
       "add_customer_submit": "1",
       "first_name": firstName,
+      "family_name": familyName,
       "email": email,
       "phone_no": phoneNumber
     }, queryParameters: {
@@ -243,6 +261,7 @@ class PosCubit extends Cubit<PosState> {
       "rtype": "json",
       "sysac": sysAc
     }).then((value) {
+      print(value?.data);
       validateModel = ValidateModel.fromjson(value?.data);
       if (validateModel?.status == "success") {
         print(validateModel?.cusotmerId);
@@ -259,7 +278,24 @@ class PosCubit extends Cubit<PosState> {
     });
   }
 
-  // get org data
+  List? filterCusotmers = [];
+  bool isSearchCustomer = false;
+//  filter customers
+  filterCustomer(input) {
+    isSearchCustomer = true;
+    print(isSearchCustomer);
+    emit(CustomerSearchStateloading());
+    if (isSearchCustomer == true && customers!.isNotEmpty) {
+      print('hi');
+      filterCusotmers = customers!
+          .where((customer) => customer.customerKey.contains(input))
+          .toList();
+    }
+    print(filterCusotmers);
+    emit(CustomerSearchStateSuccess());
+  }
+
+// get org data
   OrgModel? orgData;
   getOrgData() async {
     emit(GetOrgDataStateLoading());
@@ -283,11 +319,8 @@ class PosCubit extends Cubit<PosState> {
     if (isSearched == true && items != null && items!.isNotEmpty) {
       print(items);
       print('con start');
-      filterdItems = items!
-          .where(
-            (item) => item.itemKey.contains(input),
-          )
-          .toList();
+      filterdItems =
+          items!.where((item) => item.itemKey.contains(input)).toList();
     }
     print(filterdItems);
     emit(ItemSearchStateSuccess());
@@ -326,9 +359,15 @@ class PosCubit extends Cubit<PosState> {
   // calculate Remaining of payment
   remainingPayment({payed, paymethod}) {
     if (paymethods.contains(paymethod)) {
+      print('payed $payed');
+      print('req to paid before add old value    $requiredToPaid');
       requiredToPaid = requiredToPaid + paymethod.value;
+      print('req to paid after add old value    $requiredToPaid');
       paymethod.value = payed;
       requiredToPaid = requiredToPaid - paymethod.value;
+      print('req to paid after --- old value    $requiredToPaid');
+
+      print(payed);
       if (requiredToPaid < 0) {
         remaining = -1 * requiredToPaid;
         requiredToPaid = 0.00;

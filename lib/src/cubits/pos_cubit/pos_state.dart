@@ -46,6 +46,10 @@ final class ItemSearchStateFail extends PosState {}
 
 final class ItemSearchStateSuccess extends PosState {}
 
+final class CustomerSearchStateloading extends PosState {}
+
+final class CustomerSearchStateSuccess extends PosState {}
+
 final class UnitSelectStateSuccess extends PosState {}
 
 final class PaymethodsstateInitial extends PosState {}

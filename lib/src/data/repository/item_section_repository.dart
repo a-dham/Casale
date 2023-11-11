@@ -5,7 +5,11 @@ class ItemSectionsRepository {
   Future getItemSections() async {
     try {
       final itemsSections = await ItemSectionsServices().getItemsSections();
-      return ItemSectionsModel.fromJson(itemsSections);
+      if (itemsSections is String) {
+        return [];
+      } else {
+        return ItemSectionsModel.fromJson(itemsSections);
+      }
     } catch (error) {
       // ignore: avoid_print
       print(error.toString());

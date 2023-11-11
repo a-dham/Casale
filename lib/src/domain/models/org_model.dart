@@ -20,7 +20,7 @@ class Data {
   String? email;
 
   Data.fromJson(Map<String, dynamic> json) {
-    orgId = json['id'];
+    orgId = json['id'].toString();
     orgTitle = json['org_title'];
     englishTitle = json['en_n'];
     arabicTitle = json['ar_n'];
