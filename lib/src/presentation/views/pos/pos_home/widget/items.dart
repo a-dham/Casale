@@ -3,7 +3,6 @@
 import 'package:casale/src/cubits/pos_cubit/pos_cubit.dart';
 import 'package:casale/src/domain/models/products_model.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_widget.dart';
-import 'package:casale/src/presentation/widgets/circular_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,33 +15,31 @@ class Items extends StatelessWidget {
     PosCubit posCubit = PosCubit.get(context);
     return BlocBuilder<PosCubit, PosState>(
       builder: (context, state) {
-        return posCubit.items!.isEmpty
-            ? const Center(child: CustomeCircularProgress())
-            : Expanded(
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: width >= 730 ? 4 : 2,
-                      mainAxisSpacing: 10,
-                      mainAxisExtent: 150,
-                    ),
-                    itemCount: posCubit.items!.length,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) {
-                      // final item = posCubit.isSearched != true
-                      //     ? posCubit.filterdItems![index]
-                      //     : posCubit.itemModel?.dataList[index];
+        return Expanded(
+          child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: width >= 730 ? 4 : 2,
+                mainAxisSpacing: 10,
+                mainAxisExtent: 150,
+              ),
+              itemCount: posCubit.items?.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                // final item = posCubit.isSearched != true
+                //     ? posCubit.filterdItems![index]
+                //     : posCubit.itemModel?.dataList[index];
 
-                      final Data item = posCubit.items?[index];
-                      return GestureDetector(
-                        onTap: () {
-                          posCubit.addItemTocart(item);
-                        },
-                        child: Item(
-                          item: item,
-                        ),
-                      );
-                    }),
-              );
+                final Data? item = posCubit.items?[index];
+                return GestureDetector(
+                  onTap: () {
+                    posCubit.addItemTocart(item);
+                  },
+                  child: Item(
+                    item: item,
+                  ),
+                );
+              }),
+        );
       },
     );
   }

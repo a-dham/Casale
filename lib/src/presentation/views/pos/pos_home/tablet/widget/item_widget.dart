@@ -24,7 +24,9 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double price = double.parse(item.units[item.selectedUnit].unitPrice!);
-    item.vat = price * (item.tax! / 100);
+    // final double price = double.parse(item.price!);
+    // item.vat = price * (posCubit.orgData.data.tax / 100);
+    item.vat = price * 0.15;
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,11 +68,6 @@ class ItemWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       print('adham');
-                  //     },
-                  //     child: Text('print')),
                   DropdownButton(
                     elevation: 0,
                     value: item.units[item.selectedUnit].unitId,
@@ -83,7 +80,7 @@ class ItemWidget extends StatelessWidget {
                     }).toList(),
                     onChanged: (value) {
                       print('value IS  $value');
-                      posCubit.changeUnit(item, int.parse(value));
+                      posCubit.changeUnit(item, value);
                       print('---------------------------');
                       // print('INDEX IS  ${posCubit.indexValue}');
                     },

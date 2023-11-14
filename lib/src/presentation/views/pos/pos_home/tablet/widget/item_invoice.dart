@@ -97,17 +97,17 @@ class ItemsInvoice extends StatelessWidget {
                       : AppColors.orangeColor,
                   elevation: 1,
                   onPressed: () async {
-                    // posCubit.totalorderWithVat == 0
-                    //     ? null
-                    //     : Navigator.pushNamed(
-                    //         context,
-                    //         Routes.payment,
-                    //       );
+                    posCubit.totalorderWithVat == 0
+                        ? null
+                        : Navigator.pushNamed(
+                            context,
+                            Routes.payment,
+                          );
 
-                    Navigator.pushNamed(
-                      context,
-                      Routes.payment,
-                    );
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   Routes.payment,
+                    // );
                   },
                   minimumSize: Size(
                     200,

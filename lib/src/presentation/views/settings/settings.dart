@@ -48,46 +48,46 @@ class Settings extends StatelessWidget {
                         height: 250,
                         child: Column(
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Spacer(),
-                                SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: Image.asset(
-                                      fit: BoxFit.scaleDown,
-                                      width: double.infinity,
-                                      height: 85,
-                                      'assets/images/ows_logo.png'),
-                                  // Image.network(
-                                  //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                                  //   fit: BoxFit.scaleDown,
-                                  //   width: double.infinity,
-                                  //   height: 85,
-                                  //   errorBuilder:
-                                  //       (context, object, stacktrace) {
-                                  //     return Image.asset(
-                                  //         fit: BoxFit.scaleDown,
-                                  //         width: double.infinity,
-                                  //         height: 85,
-                                  //         'assets/images/error-loading-items.gif');
-                                  //   },
-                                  //   loadingBuilder:
-                                  //       (context, child, loadingProgress) {
-                                  //     if (loadingProgress == null) {
-                                  //       return child;
-                                  //     } else {
-                                  //       return const CustomeCircularProgress();
-                                  //     }
-                                  //   },
-                                  //   frameBuilder: (context, child, frame,
-                                  //           wasSynchronouslyLoaded) =>
-                                  //       child,
-                                  // ),
-                                ),
-                                const Spacer(),
+                                Spacer(),
+                                // SizedBox(
+                                //   height: 100,
+                                //   width: 100,
+                                //   child: Image.asset(
+                                //       fit: BoxFit.scaleDown,
+                                //       width: double.infinity,
+                                //       height: 85,
+                                //       'assets/images/ows_logo.png'),
+                                // Image.network(
+                                //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                                //   fit: BoxFit.scaleDown,
+                                //   width: double.infinity,
+                                //   height: 85,
+                                //   errorBuilder:
+                                //       (context, object, stacktrace) {
+                                //     return Image.asset(
+                                //         fit: BoxFit.scaleDown,
+                                //         width: double.infinity,
+                                //         height: 85,
+                                //         'assets/images/error-loading-items.gif');
+                                //   },
+                                //   loadingBuilder:
+                                //       (context, child, loadingProgress) {
+                                //     if (loadingProgress == null) {
+                                //       return child;
+                                //     } else {
+                                //       return const CustomeCircularProgress();
+                                //     }
+                                //   },
+                                //   frameBuilder: (context, child, frame,
+                                //           wasSynchronouslyLoaded) =>
+                                //       child,
+                                // ),
+                                // ),
+                                Spacer(),
                               ],
                             ),
                             const SizedBox(
@@ -204,8 +204,8 @@ class Settings extends StatelessWidget {
                                         ),
                                   onTapAccept: () {
                                     settingsCubit.signOut(context);
-                                    posCubit.cart.clear();
-                                    posCubit.invoiceTotal();
+                                    posCubit.clearCart();
+
                                     // settingsCubit.isloading == true
                                     //     ? CustomeCircularProgress()
                                     //     : null;

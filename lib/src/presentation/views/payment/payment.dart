@@ -208,10 +208,16 @@ class _PaymentState extends State<Payment> {
                   color: AppColors.orangeColor,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 // Save order -> get order data -> send data to print pay
-                posCubit.newOrder();
-                Navigator.of(context).pushNamed(Routes.print);
+                await posCubit.newOrder();
+
+                // ignore: use_build_context_synchronously
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.print,
+                  (route) => false,
+                );
               },
             ),
           ],

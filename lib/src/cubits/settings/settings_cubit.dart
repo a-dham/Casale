@@ -58,7 +58,8 @@ class SettingsCubit extends Cubit<SettingsState> {
       Future.delayed(const Duration(
         seconds: 1,
       ));
-      Navigator.pushReplacementNamed(context, Routes.login);
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.login, (route) => false);
 
       await CacheHelper.removeData(key: 'sysac');
       isloading = false;
@@ -66,7 +67,6 @@ class SettingsCubit extends Cubit<SettingsState> {
       emit(SignOutStateSuccess());
     } catch (error) {
       isloading = false;
-      // emit(SignOutStateError(error.toString())); // إرسال حالة الخطأ مع الرسالة إلى واجهة المستخدم
     }
   }
 }

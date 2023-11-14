@@ -46,7 +46,7 @@ class _SearchSeactionsState extends State<SearchSeactions> {
                               posCubit.isSearched = false;
                               textEditingController.clear();
                               // Is there any way to get item when close search ??
-                              posCubit.getItems();
+                              // posCubit.getItems();
                             });
                           },
                           alignment: Alignment.center,

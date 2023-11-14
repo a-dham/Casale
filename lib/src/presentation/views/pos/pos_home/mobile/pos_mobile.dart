@@ -4,10 +4,8 @@ import 'package:casale/src/presentation/views/customer/customer.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/item_head.dart';
 import 'package:casale/src/presentation/views/pos/pos_home/widget/search_sections.dart';
 import 'package:casale/src/utils/constant/app_colors.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../data/datasources/end_points.dart';
 import '../widget/filterd_items.dart';
 import '../widget/invoice.dart';
 import '../widget/items.dart';
@@ -25,7 +23,6 @@ class PosMobile extends StatelessWidget {
     //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
     // );
     // ignore: avoid_print
-    print('${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}');
     return BlocConsumer<PosCubit, PosState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -67,13 +64,16 @@ class PosMobile extends StatelessWidget {
                       //   width: 40,
                       // ),
 
-                      ExtendedImage.network(
-                        '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
-                        height: 60,
-                        fit: BoxFit.fill,
-                        timeLimit: const Duration(seconds: 4),
-                        //cancelToken: cancellationToken,
-                      ),
+                      // Container(
+                      //   constraints: BoxConstraints(
+                      //     maxHeight: 60,
+                      //   ),
+                      //   child: ExtendedImage.network(
+                      //     '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
+                      //     height: 40,
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
 
                       // Image.network(
                       //   '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}',
@@ -134,7 +134,7 @@ class PosMobile extends StatelessWidget {
                           ),
                           Container(
                             constraints: const BoxConstraints(
-                              maxWidth: 90,
+                              maxWidth: 150,
                             ),
                             child: Text(
                               posCubit.loginModel?.data?.accountTitle ??

@@ -11,18 +11,12 @@ import 'package:casale/src/utils/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Customer extends StatelessWidget {
-  Customer({super.key});
-
+class Customer {
   final TextEditingController searchTextController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController familyNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
 
 // alert dialog for view customers  .
   void showAlert(BuildContext context, PosCubit posCubit) {
@@ -46,6 +40,7 @@ class Customer extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             Navigator.pop(context);
+                            posCubit.isFilterCustomer();
                           },
                           icon: const Icon(
                             Icons.close,
@@ -79,16 +74,22 @@ class Customer extends StatelessWidget {
                     CustomeTextFormField(
                       inputFormamatters: const [],
                       labelText: S.current.search,
-                      suffixIcon: const Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          posCubit.isFilterCustomer();
+                          searchTextController.clear();
+                        },
+                        icon: posCubit.isSearchCustomer == true
+                            ? const Icon(Icons.close)
+                            : const Icon(Icons.search),
+                      ),
                       obscureText: false,
                       keyboardType: TextInputType.text,
                       textEditingController: searchTextController,
                       validator: (value) {
                         return null;
                       },
-                      onSubmitted: (input) {
-                        posCubit.filterCustomer(input);
-                      },
+                      onSubmitted: (input) {},
                       onTap: () {},
                       onchanged: (input) {
                         posCubit.filterCustomer(input);
@@ -109,7 +110,7 @@ class Customer extends StatelessWidget {
                     ),
                     posCubit.isSearchCustomer == false
                         ? const CustomerCard()
-                        : const FilterCustomers()
+                        : const FilterCustomers(),
                   ],
                 ),
               ));
