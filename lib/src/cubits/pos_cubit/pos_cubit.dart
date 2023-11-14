@@ -1,14 +1,16 @@
 // ignore_for_file: avoid_print
 
-import 'package:casale/src/cubits/pos_cubit/local_items.dart';
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/data/repository/account_data_repository.dart';
+import 'package:casale/src/data/repository/branch_repository.dart';
 import 'package:casale/src/data/repository/item_section_repository.dart';
 import 'package:casale/src/data/repository/items_repository.dart';
 import 'package:casale/src/data/repository/org_data_repository.dart';
 import 'package:casale/src/data/repository/paymethods_repository.dart';
+import 'package:casale/src/domain/models/branch_model.dart';
 import 'package:casale/src/domain/models/customer_model.dart';
+import 'package:casale/src/domain/models/invoice_model.dart';
 import 'package:casale/src/domain/models/item_sections_model.dart';
 import 'package:casale/src/domain/models/login_model.dart';
 import 'package:casale/src/domain/models/org_model.dart';
@@ -46,47 +48,83 @@ class PosCubit extends Cubit<PosState> {
   double totalVat = 0;
   double requiredToPaid = 0;
   double remaining = 0;
+  BranchModel? branchModel;
+  InvoiceModel? invoiceModel;
+
+  getLinkedBranchData() async {
+    try {
+      branchModel = await BranchRepository().getLinkedBranchData();
+    } catch (error) {
+      print('error from pos cubit $error');
+    }
+  }
 
   // collect Order Data
   Map<String, dynamic> orderData = {};
-  // logo - orderId - orgTitle - address - dateTime - VatRegstrationNumber - Items - total - totalOrderWithVat - selectedPeyMethods ||
-  // CustomerId - CustomerName - vatRegistrationNumber - customerAddress
-  newOrder() {
+  newOrder() async {
+    emit(InvoiceDataStateLoading());
     // First  Send pos Data to add order.
-
-    // check if order is successed added
+    await DioHelper.postData(
+      url: EndPoints.baseUrl,
+      data: {
+        "add_pos_order_submit": 1,
+        "_status": "added",
+        "order_status": "added",
+        "from_id": branchModel?.data?.branchId,
+        "to_id": customersModel?.customer?.customerId,
+        "paymethods": paymethods.map((e) => e.toJson()).toList().toString(),
+        "order_items": cart.map((item) => item.toJson()).toList(),
+        "total_items_price": toFixed(totalorder),
+        "total_items_discount": 0,
+        "total_items_taxval": toFixed(totalVat),
+        "total_items_withtaxval": toFixed(totalorderWithVat),
+        "remaining": remaining
+      },
+      queryParameters: {
+        "flr": "casale/manage/sales/invoices/add",
+        "rtype": "json",
+        "dtype": "json",
+        "sysac": sysAc,
+      },
+    ).then((value) {
+      invoiceModel = InvoiceModel.fromJson(value?.data);
+      emit(InvoiceDataStateSuccess());
+      // check if order is successed added
+    });
+    print('----------------------------------');
 
     // Add Order Data to Map to print
-    orderData = {
-      'logo': '${EndPoints.assetsUrl}${orgData?.data?.logo}',
-      'orgTitle': orgData?.data?.arabicTitle,
-      'orgvatRegistrationNumber': orgData?.data?.vatNumber,
-      'phone': orgData?.data?.phone,
-      'barnchId': '10200',
-      'branchTitel': 'الفرع الأول',
-      'branchAddress': 'سكاكا - الجوف',
-      'accountId': loginModel?.data?.userId,
-      'accountTitle': loginModel?.data?.accountTitle,
-      'orderNumber': '123131 test',
-      'customerId': customersModel?.customer?.customerId,
-      'customerName': customersModel?.customer?.customerName,
-      'customerVatRegistrationNumber': customersModel?.customer?.vatNumber,
-      'customerAddress': customersModel?.customer?.address,
-      'customerPhone': customersModel?.customer?.phoneNo,
-      'customerRemaining': remaining,
-      'totalOrder': toFixed(totalorder),
-      'totalVat': toFixed(totalVat),
-      'totalOrderWithVat': toFixed(totalorderWithVat),
-      'selectedPaymethods': paymethods,
-      'cart': cart,
-      'notes': 'Notessssssssssssssss',
-      'addOrdertime':
-          DateFormat('dd-MM-yyyy HH:mm', 'en').format(DateTime.now()),
-      'status': 'added'
-    };
-    // Clear cart - customer,
-    // cart.clear();
-    // customersModel?.customer = null;
+
+    if (invoiceModel?.status == 'success') {
+      orderData = {
+        'logo': '${EndPoints.assetsUrl}${orgData?.data?.logo}',
+        'orgTitle': orgData?.data?.arabicTitle,
+        'orgvatRegistrationNumber': orgData?.data?.vatNumber,
+        'phone': orgData?.data?.phone,
+        'barnchId': branchModel?.data?.branchId ?? '',
+        'branchTitel': branchModel?.data?.branchName ?? '',
+        'branchAddress': invoiceModel?.callBack?.order?.branchAddress ?? '',
+        'accountId': loginModel?.data?.userId,
+        'accountTitle': loginModel?.data?.accountTitle,
+        'orderNumber': invoiceModel?.callBack?.order?.inoivceNumber ?? '',
+        'customerId': customersModel?.customer?.customerId,
+        'customerName': customersModel?.customer?.customerName,
+        'customerVatRegistrationNumber': customersModel?.customer?.vatNumber,
+        'customerAddress': customersModel?.customer?.address,
+        'customerPhone': customersModel?.customer?.phoneNo,
+        'customerRemaining': remaining,
+        'totalOrder': toFixed(totalorder),
+        'totalVat': toFixed(totalVat),
+        'totalOrderWithVat': toFixed(totalorderWithVat),
+        'selectedPaymethods': paymethods,
+        'cart': cart,
+        'addOrdertime': invoiceModel?.callBack?.order?.orderDateTime ??
+            DateFormat('dd-MM-yyyy HH:mm', 'en').format(DateTime.now()),
+        // 'notes': 'Notessssssssssssssss',
+      };
+    } else {
+      print('add order is faile');
+    }
   }
 
 //  get Items sections
@@ -131,13 +169,13 @@ class PosCubit extends Cubit<PosState> {
     emit(PosStateItemToCart());
   }
 
-  addOrderData(item) {
-    order['order_items'].add(item);
-    print(order['order_items']);
-    for (var element in order['order_items']) {
-      print(element.arabicTitle);
-    }
-  }
+  // addOrderData(item) {
+  //   order['order_items'].add(item);
+  //   print(order['order_items']);
+  //   for (var element in order['order_items']) {
+  //     print(element.arabicTitle);
+  //   }
+  // }
 
   void decresQuantityFromCart(item) {
     int existingIndex =
@@ -155,12 +193,17 @@ class PosCubit extends Cubit<PosState> {
   void removeItemFromCart(item) {
     cart.removeWhere((element) => element == item);
     item.quantity = 1;
+    item.selectedUnit = 0;
     invoiceTotal();
     emit(PosStateRemoveItem());
   }
 
   void clearCart() {
+    for (var item in cart) {
+      item.quantity = 1;
+    }
     cart.clear();
+    invoiceTotal();
     emit(PosStateClearCart());
   }
 
@@ -174,6 +217,16 @@ class PosCubit extends Cubit<PosState> {
     invoiceTotal();
     emit(PriceItemStateSuccess());
   }
+
+  // itemTotalWithVat(index, item) {
+  //   index.totalPriceWithVat =
+  //       (double.parse(item.units[item.selectedUnit].unitPrice) *
+  //               item.quantity) *
+  //           (1 + (item.tax / 100));
+  //   index.totalPrice = double.parse(item.price);
+  //   invoiceTotal();
+  //   emit(PriceItemStateSuccess());
+  // }
 
   // calculate total order
   void invoiceTotal() {
@@ -282,17 +335,21 @@ class PosCubit extends Cubit<PosState> {
   bool isSearchCustomer = false;
 //  filter customers
   filterCustomer(input) {
+    print('first is search $isSearchCustomer');
     isSearchCustomer = true;
-    print(isSearchCustomer);
     emit(CustomerSearchStateloading());
-    if (isSearchCustomer == true && customers!.isNotEmpty) {
-      print('hi');
-      filterCusotmers = customers!
-          .where((customer) => customer.customerKey.contains(input))
-          .toList();
-    }
-    print(filterCusotmers);
+    print('second  is search after loading $isSearchCustomer');
+
+    filterCusotmers = customers!
+        .where((customer) => customer.customerKey.contains(input))
+        .toList();
+    print('filter customer ---------------- $filterCusotmers');
     emit(CustomerSearchStateSuccess());
+  }
+
+  isFilterCustomer() {
+    isSearchCustomer = !isSearchCustomer;
+    emit(CustoerIsSearchStateSuccess());
   }
 
 // get org data
@@ -342,8 +399,9 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // select unit and calculate total or item
-  changeUnit(item, int value) {
-    item.selectedUnit = value - 1;
+  changeUnit(item, value) {
+    print('from pos cubit ${value - item.units[0].unitId}');
+    item.selectedUnit = value - item.units[0].unitId;
     itemTotalWithVat(item, item);
     emit(UnitSelectStateSuccess());
   }

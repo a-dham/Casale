@@ -42,10 +42,6 @@ class _LoginState extends State<Login> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthStateSuccess) {
-          // posCubit.getItems();
-          // posCubit.getOrgData();
-          // posCubit.getAccountData();
-          // posCubit.getItemSections();
           print('state success');
           Navigator.pushNamedAndRemoveUntil(
               context, Routes.bottomNavigation, (route) => false);

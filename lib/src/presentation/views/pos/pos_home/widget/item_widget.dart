@@ -5,7 +5,7 @@ import '../../../../../utils/constant/app_colors.dart';
 
 class Item extends StatelessWidget {
   const Item({super.key, required this.item});
-  final Data item;
+  final Data? item;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,11 +25,11 @@ class Item extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          Image.asset(
-              fit: BoxFit.scaleDown,
-              width: double.infinity,
-              height: 85,
-              'assets/images/item.png'),
+          // Image.asset(
+          //     fit: BoxFit.scaleDown,
+          //     width: double.infinity,
+          //     height: 85,
+          //     'assets/images/error-loading-items.gif'),
           // Image.network(
           //   '${EndPoints.assetsUrl}${item.image}',
           //   fit: BoxFit.scaleDown,
@@ -58,8 +58,19 @@ class Item extends StatelessWidget {
                 color: Color(0xff12141E),
                 fontSize: 14,
                 overflow: TextOverflow.ellipsis),
-            item.arabicTitle ?? '',
+            item?.arabicTitle ?? '',
           ),
+          // Text(
+          //     style: const TextStyle(
+          //       color: Colors.black,
+          //       fontWeight: FontWeight.bold,
+          //       fontSize: 10,
+          //     ),
+          //     // ignore: prefer_is_empty
+          //     item.units.length == 0
+          //         ? 'No Price !!'
+          //         : item.units[0].unitPrice ?? ''),
+
           Text(
               style: const TextStyle(
                 color: Colors.black,
@@ -67,9 +78,9 @@ class Item extends StatelessWidget {
                 fontSize: 10,
               ),
               // ignore: prefer_is_empty
-              item.units.length == 0
+              item!.units.length == 0
                   ? 'No Price !!'
-                  : item.units[0].unitPrice ?? ''),
+                  : item!.units[0].unitPrice ?? ''),
           const Spacer(),
         ],
       ),

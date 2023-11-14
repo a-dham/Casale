@@ -48,7 +48,10 @@ class Print extends StatelessWidget {
             onPrinted: (context) {
               posCubit.clearCart();
               Navigator.pushNamedAndRemoveUntil(
-                  context, Routes.bottomNavigation, (route) => false);
+                context,
+                Routes.bottomNavigation,
+                (route) => false,
+              );
               posCubit.remaining = 0.00;
             },
             build: (format) => _generatePdf(format, posCubit, context),
@@ -89,10 +92,7 @@ class Print extends StatelessWidget {
         compress: true,
         author: 'Orgs Web');
     final font = await PdfGoogleFonts.iBMPlexSansArabicSemiBold();
-    final orgLogo = await networkImage(
-      // '${EndPoints.assetsUrl}${posCubit.orgData?.data?.logo}'
-      order['logo'],
-    );
+    final orgLogo = await networkImage(order['logo']);
 
     pdf.addPage(pw.Page(
       margin: const pw.EdgeInsets.all(10),
@@ -127,13 +127,18 @@ class Print extends StatelessWidget {
               textWidget(
                   ' ${S.current.dateTime}: ${order['addOrdertime']}', 8, font),
             ]),
-            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-              pw.Spacer(),
-              textWidget(
-                  '${S.current.taxNumber}   : ${order['orgvatRegistrationNumber']}',
-                  8,
-                  font),
-            ]),
+
+            order['orgvatRegistrationNumber'] == null
+                ? pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.end,
+                    children: [
+                        pw.Spacer(),
+                        textWidget(
+                            '${S.current.taxNumber}   : ${order['orgvatRegistrationNumber']}',
+                            8,
+                            font),
+                      ])
+                : pw.SizedBox(),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               textWidget(
                 '${S.current.phone}   : ${order['phone']}',
@@ -271,11 +276,12 @@ class Print extends StatelessWidget {
           children: [
             textWidget(toFixed(item.totalPriceWithVat), 6, font),
             textWidget(toFixed(item.vat), 6, font),
-            textWidget(
-                toFixed(double.parse(item.units[item.selectedUnit].unitPrice))
-                    .toString(),
-                6,
-                font),
+            // textWidget(
+            //     toFixed(double.parse(item.units[item.selectedUnit].unitPrice))
+            //         .toString(),
+            //     6,
+            //     font),
+            textWidget(toFixed(double.parse(item.price)).toString(), 6, font),
             textWidget(item.quantity.toString(), 6, font),
             textWidget(item.arabicTitle, 6, font),
           ],

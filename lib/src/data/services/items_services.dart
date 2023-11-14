@@ -7,9 +7,8 @@ import 'package:dio/dio.dart';
 import '../datasources/local/cashe_helper.dart';
 
 class ItemsServices {
-  String sysAc = CacheHelper.getData(key: 'sysac');
-
   Future<Map<String, dynamic>> getItems() async {
+    String sysAc = await CacheHelper.getData(key: 'sysac');
     try {
       Response? response =
           await DioHelper.getData(url: EndPoints.baseUrl, queryParameters: {

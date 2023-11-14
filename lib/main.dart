@@ -3,8 +3,6 @@
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
-import 'package:casale/src/data/services/items_services.dart';
-import 'package:casale/src/data/services/paymethods_services.dart';
 import 'package:casale/src/presentation/views/settings/widgets/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'src/casale.dart';
@@ -19,8 +17,7 @@ void main() async {
   // var box = await Hive.openBox('settings');
   // // box.put('darkMode', true);
   // print('Is Dark Mode: ${box.get('darkmode', defaultValue: false)}');
-  ItemsServices().getItems();
-  PaymethodsServices().getPaymethods();
+
   String? initPage;
   var sysac = CacheHelper.getData(key: 'sysac');
   // CacheHelper.removeData(key: 'sysac');'
