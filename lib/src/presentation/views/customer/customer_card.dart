@@ -22,9 +22,8 @@ class CustomerCard extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () async {
-                    String customerId = posCubit.customers?[index].customerId;
-                    await posCubit.getCustomer(customerId);
-                    posCubit.isSearchCustomer = false;
+                    var customer = posCubit.customers?[index];
+                    await posCubit.getCustomer(customer);
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).pop();
                   },

@@ -184,10 +184,17 @@ class _PaymentState extends State<Payment> {
                   color: Colors.green,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 // save order -> clear cart ->  navigate to home .
-                posCubit.newOrder();
-                Navigator.of(context).pop();
+                await posCubit.newOrder();
+                posCubit.clearCart();
+                posCubit.remaining = 0.00;
+                // ignore: use_build_context_synchronously
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.bottomNavigation,
+                  (route) => false,
+                );
               },
             ),
             TextButton(
