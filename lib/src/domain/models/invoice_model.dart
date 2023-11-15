@@ -25,6 +25,7 @@ class Order {
   String? branchAddress;
   String? customerVatNumber;
   String? cutomerAddress;
+  String? cutomerName;
   String? accTitle;
 
   Order.fromjson(Map<String, dynamic> json) {
@@ -34,6 +35,7 @@ class Order {
     branchAddress = json['from_address'];
     customerVatNumber = json['to_vat_no'];
     cutomerAddress = json['to_address'];
+    cutomerName = json['to_title'];
     accTitle = json['acc_title'];
   }
 }

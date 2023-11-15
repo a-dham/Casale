@@ -50,6 +50,9 @@ class PosCubit extends Cubit<PosState> {
   double remaining = 0;
   BranchModel? branchModel;
   InvoiceModel? invoiceModel;
+  Customer? customer;
+  String? customerName;
+  String? customerId;
 
   getLinkedBranchData() async {
     try {
@@ -63,6 +66,9 @@ class PosCubit extends Cubit<PosState> {
   Map<String, dynamic> orderData = {};
   newOrder() async {
     emit(InvoiceDataStateLoading());
+    print(customer);
+    print(customerName);
+    print(customerId);
     // First  Send pos Data to add order.
     await DioHelper.postData(
       url: EndPoints.baseUrl,
@@ -71,8 +77,11 @@ class PosCubit extends Cubit<PosState> {
         "_status": "added",
         "order_status": "added",
         "from_id": branchModel?.data?.branchId,
-        "to_id": customersModel?.customer?.customerId,
-        "paymethods": paymethods.map((e) => e.toJson()).toList().toString(),
+        "to_id": customerId,
+        "paymethods": paymethods
+            .map((paymethod) => paymethod.toJson())
+            .toList()
+            .toString(),
         "order_items": cart.map((item) => item.toJson()).toList(),
         "total_items_price": toFixed(totalorder),
         "total_items_discount": 0,
@@ -94,7 +103,6 @@ class PosCubit extends Cubit<PosState> {
     print('----------------------------------');
 
     // Add Order Data to Map to print
-
     if (invoiceModel?.status == 'success') {
       orderData = {
         'logo': '${EndPoints.assetsUrl}${orgData?.data?.logo}',
@@ -107,11 +115,11 @@ class PosCubit extends Cubit<PosState> {
         'accountId': loginModel?.data?.userId,
         'accountTitle': loginModel?.data?.accountTitle,
         'orderNumber': invoiceModel?.callBack?.order?.inoivceNumber ?? '',
-        'customerId': customersModel?.customer?.customerId,
-        'customerName': customersModel?.customer?.customerName,
-        'customerVatRegistrationNumber': customersModel?.customer?.vatNumber,
-        'customerAddress': customersModel?.customer?.address,
-        'customerPhone': customersModel?.customer?.phoneNo,
+        'customerId': customerId,
+        'customerName': invoiceModel?.callBack?.order?.cutomerName,
+        'customerVatRegistrationNumber': customer?.vatNumber,
+        'customerAddress': customer?.address,
+        'customerPhone': customer?.phoneNo,
         'customerRemaining': remaining,
         'totalOrder': toFixed(totalorder),
         'totalVat': toFixed(totalVat),
@@ -125,6 +133,7 @@ class PosCubit extends Cubit<PosState> {
     } else {
       print('add order is faile');
     }
+    print(orderData);
   }
 
 //  get Items sections
@@ -168,14 +177,6 @@ class PosCubit extends Cubit<PosState> {
     }
     emit(PosStateItemToCart());
   }
-
-  // addOrderData(item) {
-  //   order['order_items'].add(item);
-  //   print(order['order_items']);
-  //   for (var element in order['order_items']) {
-  //     print(element.arabicTitle);
-  //   }
-  // }
 
   void decresQuantityFromCart(item) {
     int existingIndex =
@@ -274,23 +275,14 @@ class PosCubit extends Cubit<PosState> {
     });
   }
 
-  String? customerName;
-  getCustomer(String customerId) {
-    DioHelper.postData(
-      url: EndPoints.baseUrl,
-      data: {},
-      queryParameters: {
-        "flr": "casale/manage/customers/view",
-        "rtype": "json",
-        "dtype": "json",
-        "customer_id": customerId,
-        "sysac": sysAc
-      },
-    ).then((value) {
-      customersModel = CustomersModel.fromJson2(value?.data);
-      customerName = customersModel?.customer?.firstName;
-      emit(GetCustomerState());
-    });
+  getCustomer(customer) {
+    // customer = CustomersModel.fromJson2(customer);
+    // customerName = customersModel?.customer?.firstName;
+    customer = customer;
+    customerName = customer.firstName;
+    customerId = customer.customerId;
+    print(customer);
+    emit(GetCustomerState());
   }
 
 // add customer

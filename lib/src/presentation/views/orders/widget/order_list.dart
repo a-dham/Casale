@@ -42,22 +42,22 @@ class OrderCard extends StatelessWidget {
                         : '0.00',
                     FontWeight.normal,
                   ),
-                  IconButton(
-                    alignment: Alignment.topCenter,
-                    padding: const EdgeInsets.only(
-                      top: 3,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        Routes.print,
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.print,
-                      color: AppColors.orangeColor,
-                    ),
-                  ),
+                  // IconButton(
+                  //   alignment: Alignment.topCenter,
+                  //   padding: const EdgeInsets.only(
+                  //     top: 3,
+                  //   ),
+                  //   onPressed: () {
+                  //     Navigator.pushNamed(
+                  //       context,
+                  //       Routes.print,
+                  //     );
+                  //   },
+                  //   icon: const Icon(
+                  //     Icons.print,
+                  //     color: AppColors.orangeColor,
+                  //   ),
+                  // ),
                 ])
               ],
             )),

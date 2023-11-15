@@ -27,114 +27,117 @@ class ItemWidget extends StatelessWidget {
     // final double price = double.parse(item.price!);
     // item.vat = price * (posCubit.orgData.data.tax / 100);
     item.vat = price * 0.15;
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      posCubit.removeItemFromCart(item);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        actionOverflowThreshold: 1,
-                        duration: const Duration(milliseconds: 500),
-                        backgroundColor: Colors.red,
-                        content: Center(
-                          child: Text(S.current.itemDeleted),
+    return SizedBox(
+      width: 20,
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        posCubit.removeItemFromCart(item);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          actionOverflowThreshold: 1,
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor: Colors.red,
+                          content: Center(
+                            child: Text(S.current.itemDeleted),
+                          ),
+                        ));
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                        color: AppColors.orangeColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      item.arabicTitle.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    DropdownButton(
+                      elevation: 0,
+                      value: item.units[item.selectedUnit].unitId,
+                      focusColor: AppColors.orangeColor,
+                      items: item.units.map<DropdownMenuItem<dynamic>>((value) {
+                        return DropdownMenuItem<dynamic>(
+                          value: value.unitId,
+                          child: Text(value.title.toString()),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        print('value IS  $value');
+                        posCubit.changeUnit(item, value);
+                        print('---------------------------');
+                        // print('INDEX IS  ${posCubit.indexValue}');
+                      },
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showQuantityDialog(context, posCubit, item);
+                      },
+                      child: Text(
+                        'X $quantity',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ));
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                      color: AppColors.orangeColor,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    item.arabicTitle.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  DropdownButton(
-                    elevation: 0,
-                    value: item.units[item.selectedUnit].unitId,
-                    focusColor: AppColors.orangeColor,
-                    items: item.units.map<DropdownMenuItem<dynamic>>((value) {
-                      return DropdownMenuItem<dynamic>(
-                        value: value.unitId,
-                        child: Text(value.title.toString()),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      print('value IS  $value');
-                      posCubit.changeUnit(item, value);
-                      print('---------------------------');
-                      // print('INDEX IS  ${posCubit.indexValue}');
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showQuantityDialog(context, posCubit, item);
-                    },
-                    child: Text(
-                      'X $quantity',
+                    Text(
+                      price.toString(),
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    price.toString(),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(
+                      width: 5,
                     ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    item.vat!.toStringAsFixed(2),
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                    Text(
+                      item.vat!.toStringAsFixed(2),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    '${toFixed(item.totalPriceWithVat!)} ${S.current.saudiaCurrency}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(
+                      width: 5,
                     ),
-                  ),
-                ],
-              ),
-            ],
-          )
-        ]);
+                    Text(
+                      '${toFixed(item.totalPriceWithVat!)} ${S.current.saudiaCurrency}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ]),
+    );
   }
 
   showQuantityDialog(context, PosCubit posCubit, item) {
