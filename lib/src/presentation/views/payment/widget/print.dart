@@ -128,20 +128,20 @@ class Print extends StatelessWidget {
                   ' ${S.current.dateTime}: ${order['addOrdertime']}', 8, font),
             ]),
 
-            order['orgvatRegistrationNumber'] == null
-                ? pw.Row(
+            order['orgVatRegistrationNumber'] == null
+                ? pw.SizedBox()
+                : pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.end,
                     children: [
                         pw.Spacer(),
                         textWidget(
-                            '${S.current.taxNumber}   : ${order['orgvatRegistrationNumber']}',
+                            '${S.current.taxNumber}   : ${order['orgVatRegistrationNumber']}',
                             8,
                             font),
-                      ])
-                : pw.SizedBox(),
+                      ]),
             pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
               textWidget(
-                '${S.current.phone}   : ${order['phone']}',
+                '${S.current.phone} : ${order['phone']}',
                 8,
                 font,
               ),
@@ -160,27 +160,27 @@ class Print extends StatelessWidget {
                 font,
               ),
             ]),
-            order['customervatRegistrationNumber'] == 'null'
-                ? pw.Row(
+            order['customerVatRegistrationNumber'] == null
+                ? pw.SizedBox()
+                : pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.end,
                     children: [
                         pw.Spacer(),
                         textWidget(
-                            '${S.current.taxNumber}   : ${order['customervatRegistrationNumber']}',
+                            '${S.current.taxNumber}   : ${order['customerVatRegistrationNumber']}',
                             8,
                             font),
-                      ])
-                : pw.SizedBox(),
-            order['customerPhone'] == 'null'
-                ? pw.Row(
+                      ]),
+            order['customerPhone'] == null
+                ? pw.SizedBox()
+                : pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.end,
                     children: [
                         textWidget(
                             '${S.current.phone} : ${order['customerPhone']}',
                             8,
                             font),
-                      ])
-                : pw.SizedBox(),
+                      ]),
             pw.SizedBox(height: 5),
             pw.Table(
                 border: pw.TableBorder.symmetric(
@@ -235,7 +235,7 @@ class Print extends StatelessWidget {
             pw.BarcodeWidget(
               data: QRTLV().tlv(
                   sellerName: order['orgTitle'],
-                  vatRegistration: order['orgvatRegistrationNumber'],
+                  vatRegistration: order['orgVatRegistrationNumber'],
                   dateTime: order['addOrdertime'],
                   totalOrderWithVat: order['totalOrderWithVat'],
                   vat: order['totalVat']),

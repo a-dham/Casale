@@ -38,6 +38,7 @@ void main() async {
   print(onboarding);
   print(sysac);
   print(locale);
+
   // initPage = Routes.bottomNavigation;
 
   // OrderRepository().getOrders();

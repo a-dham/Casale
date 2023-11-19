@@ -26,7 +26,7 @@ class ItemWidget extends StatelessWidget {
     final double price = double.parse(item.units[item.selectedUnit].unitPrice!);
     // final double price = double.parse(item.price!);
     // item.vat = price * (posCubit.orgData.data.tax / 100);
-    item.vat = price * 0.15;
+
     return SizedBox(
       width: 20,
       child: Row(

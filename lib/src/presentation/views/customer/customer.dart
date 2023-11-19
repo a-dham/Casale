@@ -40,7 +40,7 @@ class Customer {
                         IconButton(
                           onPressed: () {
                             Navigator.pop(context);
-                            posCubit.isFilterCustomer();
+                            // posCubit.isFilterCustomer();
                           },
                           icon: const Icon(
                             Icons.close,
@@ -76,7 +76,7 @@ class Customer {
                       labelText: S.current.search,
                       suffixIcon: IconButton(
                         onPressed: () {
-                          posCubit.isFilterCustomer();
+                          // posCubit.isFilterCustomer();
                           searchTextController.clear();
                         },
                         icon: posCubit.isSearchCustomer == true

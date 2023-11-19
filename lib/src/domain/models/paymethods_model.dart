@@ -25,10 +25,15 @@ class Data {
     inUse = json['inuse'];
     value = 0.00;
   }
-  Map<String, dynamic> toJson() => {
-        "paymethodId": paymethodId,
-        "value": value,
-      };
+
+  // Map<String, dynamic> toJson() => {
+  //       "paymethodId": paymethodId,
+  //       "value": value,
+  //     };
+
+  // Map<String, dynamic> toJson(paymethodId, value) => {
+  //       paymethodId: value,
+  //     };
 }
 
       // "org_id": 1000002,

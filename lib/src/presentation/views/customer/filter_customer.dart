@@ -23,13 +23,11 @@ class FilterCustomers extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () async {
-                    String customerId =
-                        posCubit.filterCusotmers![index].customerId;
-                    await posCubit.getCustomer(customerId);
+                    var customer = posCubit.customers?[index];
+                    await posCubit.getCustomer(customer);
                     posCubit.isSearchCustomer = false;
-
                     // ignore: use_build_context_synchronously
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
                   },
                   child: Container(
                     decoration: const BoxDecoration(

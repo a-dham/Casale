@@ -54,6 +54,7 @@ class Customer {
     lastName = json['last_name'];
     phoneNo = json['phone_no'];
     email = json['email'];
+
     customerKey =
         '${json['phone_no']} ${json['family_name']} ${json['first_name']} ${json['full_name']} ${json['email']}';
   }

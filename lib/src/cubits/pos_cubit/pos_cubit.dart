@@ -53,7 +53,7 @@ class PosCubit extends Cubit<PosState> {
   Customer? customer;
   String? customerName;
   String? customerId;
-
+  Map? paymethodsMap;
   getLinkedBranchData() async {
     try {
       branchModel = await BranchRepository().getLinkedBranchData();
@@ -65,10 +65,13 @@ class PosCubit extends Cubit<PosState> {
   // collect Order Data
   Map<String, dynamic> orderData = {};
   newOrder() async {
+    paymethodsMap = {
+      for (var paymethod in paymethods)
+        // ignore: unnecessary_string_interpolations
+        "${paymethod.paymethodId.toString()}": paymethod.value
+    };
+    print(paymethodsMap.toString());
     emit(InvoiceDataStateLoading());
-    print(customer);
-    print(customerName);
-    print(customerId);
     // First  Send pos Data to add order.
     await DioHelper.postData(
       url: EndPoints.baseUrl,
@@ -78,17 +81,14 @@ class PosCubit extends Cubit<PosState> {
         "order_status": "added",
         "from_id": branchModel?.data?.branchId,
         "to_id": customerId,
-        "paymethods": paymethods
-            .map((paymethod) => paymethod.toJson())
-            .toList()
-            .toString(),
+        "paymethods": paymethodsMap,
         "order_items": cart.map((item) => item.toJson()).toList(),
         "total_items_price": toFixed(totalorder),
-        "total_items_discount": 0,
         "total_items_taxval": toFixed(totalVat),
         "total_items_withtaxval": toFixed(totalorderWithVat),
         "remaining": remaining
       },
+      // "total_items_discount": 0,
       queryParameters: {
         "flr": "casale/manage/sales/invoices/add",
         "rtype": "json",
@@ -107,7 +107,7 @@ class PosCubit extends Cubit<PosState> {
       orderData = {
         'logo': '${EndPoints.assetsUrl}${orgData?.data?.logo}',
         'orgTitle': orgData?.data?.arabicTitle,
-        'orgvatRegistrationNumber': orgData?.data?.vatNumber,
+        'orgVatRegistrationNumber': orgData?.data?.vatNumber,
         'phone': orgData?.data?.phone,
         'barnchId': branchModel?.data?.branchId ?? '',
         'branchTitel': branchModel?.data?.branchName ?? '',
@@ -117,8 +117,9 @@ class PosCubit extends Cubit<PosState> {
         'orderNumber': invoiceModel?.callBack?.order?.inoivceNumber ?? '',
         'customerId': customerId,
         'customerName': invoiceModel?.callBack?.order?.cutomerName,
-        'customerVatRegistrationNumber': customer?.vatNumber,
-        'customerAddress': customer?.address,
+        'customerVatRegistrationNumber':
+            invoiceModel?.callBack?.order?.customerVatNumber,
+        'customerAddress': invoiceModel?.callBack?.order?.cutomerAddress,
         'customerPhone': customer?.phoneNo,
         'customerRemaining': remaining,
         'totalOrder': toFixed(totalorder),
@@ -210,11 +211,17 @@ class PosCubit extends Cubit<PosState> {
 
   //calculate item Total With vat
   itemTotalWithVat(index, item) {
-    index.totalPriceWithVat =
-        (double.parse(item.units[item.selectedUnit].unitPrice) *
-                item.quantity) *
-            (1 + (item.tax / 100));
     index.totalPrice = double.parse(item.units[item.selectedUnit].unitPrice);
+    print('total item price  ------------------${index.totalPrice}');
+    index.vat =
+        (index.totalPrice * (1 + (index.itemTaxes / 100))) - index.totalPrice;
+    print('total item vat  ------------------${index.vat}');
+    index.totalPriceWithVat = (index.totalPrice + index.vat) * item.quantity;
+    print('total item with vat  ------------------${index.totalPriceWithVat}');
+
+    // (double.parse(item.units[item.selectedUnit].unitPrice) *
+    //         item.quantity) *
+    //     (1 + (item.tax / 100));
     invoiceTotal();
     emit(PriceItemStateSuccess());
   }
@@ -237,7 +244,6 @@ class PosCubit extends Cubit<PosState> {
     for (var item in cart) {
       print('total item ${item.totalPriceWithVat}');
       totalorderWithVat += item.totalPriceWithVat;
-
       print('total item vat ${item.vat}');
       print(
         '-----------------------------------------------------------------------------',
@@ -339,10 +345,10 @@ class PosCubit extends Cubit<PosState> {
     emit(CustomerSearchStateSuccess());
   }
 
-  isFilterCustomer() {
-    isSearchCustomer = !isSearchCustomer;
-    emit(CustoerIsSearchStateSuccess());
-  }
+  // isFilterCustomer() {
+  //   isSearchCustomer = !isSearchCustomer;
+  //   emit(CustoerIsSearchStateSuccess());
+  // }
 
 // get org data
   OrgModel? orgData;
@@ -407,34 +413,42 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // calculate Remaining of payment
-  remainingPayment({payed, paymethod}) {
-    if (paymethods.contains(paymethod)) {
-      print('payed $payed');
-      print('req to paid before add old value    $requiredToPaid');
-      requiredToPaid = requiredToPaid + paymethod.value;
-      print('req to paid after add old value    $requiredToPaid');
-      paymethod.value = payed;
-      requiredToPaid = requiredToPaid - paymethod.value;
-      print('req to paid after --- old value    $requiredToPaid');
+  // remainingPayment({payed, paymethod}) {
+  //   if (paymethods.contains(paymethod)) {
+  //     requiredToPaid = requiredToPaid + paymethod.value;
+  //     paymethod.value = payed;
+  //     requiredToPaid = requiredToPaid - paymethod.value;
+  //     if (requiredToPaid < 0) {
+  //       remaining = -1 * requiredToPaid;
+  //       requiredToPaid = 0.00;
+  //     } else {
+  //       remaining = 0.00;
+  //     }
+  //   } else {
+  //     paymethod.value = payed;
+  //     paymethods.add(paymethod);
+  //     requiredToPaid = requiredToPaid - paymethod.value;
+  //     if (requiredToPaid < 0) {
+  //       remaining = -1 * requiredToPaid;
+  //       requiredToPaid = 0.00;
+  //     } else {
+  //       remaining = 0.00;
+  //     }
+  //   }
+  //   emit(RemainingstateSuccess());
+  // }
 
-      print(payed);
-      if (requiredToPaid < 0) {
-        remaining = -1 * requiredToPaid;
-        requiredToPaid = 0.00;
-      } else {
-        remaining = 0.00;
-      }
+  remainingPayment({payed, paymethod}) {
+    paymethod.value = payed;
+    paymethods.add(paymethod);
+    requiredToPaid = requiredToPaid - paymethod.value;
+    if (requiredToPaid < 0) {
+      remaining = -1 * requiredToPaid;
+      requiredToPaid = 0.00;
     } else {
-      paymethod.value = payed;
-      paymethods.add(paymethod);
-      requiredToPaid = requiredToPaid - paymethod.value;
-      if (requiredToPaid < 0) {
-        remaining = -1 * requiredToPaid;
-        requiredToPaid = 0.00;
-      } else {
-        remaining = 0.00;
-      }
+      remaining = 0.00;
     }
+    print(paymethods.toString);
     emit(RemainingstateSuccess());
   }
 }

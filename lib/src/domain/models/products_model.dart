@@ -28,13 +28,14 @@ class Data {
   String? itemCode;
   String? price;
   int? quantity;
-  double? tax;
+  int? tax;
   double? vat;
   double? totalPriceWithVat;
   double? totalPrice;
   String? sectionId;
   String? sectionTitle;
   String? itemKey;
+  int? itemTaxes;
   // ss_io_id
   // section_title
   // Map<dynamic, Units> units = {};
@@ -49,6 +50,7 @@ class Data {
     arabicTitle = json['ar_title'];
     image = json['thumb_dir'];
     price = json['price'];
+    itemTaxes = json['total_tax_val'];
 
     // itemCode = json['item_code'];
     // sectionId = json['ss_io_id'];
@@ -57,7 +59,7 @@ class Data {
     quantity = 1;
     totalPriceWithVat = 0;
     totalPrice = 0;
-    tax = 15;
+    tax = 0;
     vat = 0;
     selectedUnit = 0;
 

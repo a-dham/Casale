@@ -51,9 +51,10 @@ class Casale extends StatelessWidget {
                 theme: ThemeData(
                   fontFamily: 'Cairo',
                 ),
-                darkTheme: ThemeData.dark(),
-                themeMode: settingsController.themeMode,
-                // home: Home(),
+                // change themes under developing ...
+                // themeMode: settingsController.themeMode,
+
+                themeMode: ThemeMode.light,
 
                 onGenerateRoute: AppRouter(settingsController).onGenerateRoute,
                 initialRoute: initpage ?? Routes.splash,
