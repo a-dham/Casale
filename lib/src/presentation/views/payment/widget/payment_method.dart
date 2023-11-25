@@ -109,8 +109,11 @@ class PaymentMethods extends StatelessWidget {
               // var totalOrder = posCubit.totalorderWithVat;
               // String? paymethodID = paymethod.paymethodId;
 
+              // posCubit.remainingPayment(
+
+              //     paymethod: paymethodId, payed: double.parse(value));
               posCubit.remainingPayment(
-                  paymethod: paymethodId, payed: double.parse(value));
+                  payed: double.parse(value), paymethod: paymethodId);
               Navigator.of(context).pop();
             },
             textEditingController: textEditingController,

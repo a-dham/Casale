@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cashCusotomer": MessageLookupByLibrary.simpleMessage("عميل نقدي"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد الباسورد"),
+        "confirmation": MessageLookupByLibrary.simpleMessage("تصديق"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("العميل"),
         "customer": MessageLookupByLibrary.simpleMessage("عميل"),
         "cutomerAdded": MessageLookupByLibrary.simpleMessage("تم إضافة العميل"),

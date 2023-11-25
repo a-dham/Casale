@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:casale/src/data/datasources/end_points.dart';
 import 'package:casale/src/data/datasources/remote/dio_helper.dart';
 import 'package:casale/src/data/repository/account_data_repository.dart';
@@ -34,8 +32,7 @@ class PosCubit extends Cubit<PosState> {
   // ),
 
   String sysAc = CacheHelper.getData(key: 'sysac');
-  // String sysAc =
-  //     'em5jY3hhZWNhNm16NzQyeno3NDVjejc0cWM0NHJuMzR6ejQxd3Y1M3p6NjJ0bTMxcm4xMWVtMTFxYzUyenozNHp6MjN3djgxc2I1M3JuOTU';
+
   final ItemSectionsRepository sectionsRepository = ItemSectionsRepository();
   List? items = [];
   ItemSectionsModel? itemSections;
@@ -58,7 +55,8 @@ class PosCubit extends Cubit<PosState> {
     try {
       branchModel = await BranchRepository().getLinkedBranchData();
     } catch (error) {
-      print('error from pos cubit $error');
+      // ignore: avoid_print
+      print(error.toString());
     }
   }
 
@@ -70,7 +68,6 @@ class PosCubit extends Cubit<PosState> {
         // ignore: unnecessary_string_interpolations
         "${paymethod.paymethodId.toString()}": paymethod.value
     };
-    print(paymethodsMap.toString());
     emit(InvoiceDataStateLoading());
     // First  Send pos Data to add order.
     await DioHelper.postData(
@@ -100,7 +97,6 @@ class PosCubit extends Cubit<PosState> {
       emit(InvoiceDataStateSuccess());
       // check if order is successed added
     });
-    print('----------------------------------');
 
     // Add Order Data to Map to print
     if (invoiceModel?.status == 'success') {
@@ -131,10 +127,7 @@ class PosCubit extends Cubit<PosState> {
             DateFormat('dd-MM-yyyy HH:mm', 'en').format(DateTime.now()),
         // 'notes': 'Notessssssssssssssss',
       };
-    } else {
-      print('add order is faile');
-    }
-    print(orderData);
+    } else {}
   }
 
 //  get Items sections
@@ -146,6 +139,7 @@ class PosCubit extends Cubit<PosState> {
         this.sections = sections.data;
       });
     } catch (error) {
+      // ignore: avoid_print
       print(error.toString());
     }
 
@@ -168,11 +162,9 @@ class PosCubit extends Cubit<PosState> {
     int existingIndex =
         cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
     if (existingIndex > -1) {
-      print(existingIndex);
       cart[existingIndex].quantity++;
       itemTotalWithVat(cart[existingIndex], item);
     } else {
-      print(existingIndex);
       cart.add(item);
       itemTotalWithVat(item, item);
     }
@@ -182,7 +174,6 @@ class PosCubit extends Cubit<PosState> {
   void decresQuantityFromCart(item) {
     int existingIndex =
         cart.indexWhere((cartItem) => cartItem.itemId == item.itemId);
-    print(existingIndex);
     if (existingIndex > -1) {
       cart[existingIndex].quantity--;
       itemTotalWithVat(cart[existingIndex], item);
@@ -212,12 +203,9 @@ class PosCubit extends Cubit<PosState> {
   //calculate item Total With vat
   itemTotalWithVat(index, item) {
     index.totalPrice = double.parse(item.units[item.selectedUnit].unitPrice);
-    print('total item price  ------------------${index.totalPrice}');
     index.vat =
         (index.totalPrice * (1 + (index.itemTaxes / 100))) - index.totalPrice;
-    print('total item vat  ------------------${index.vat}');
     index.totalPriceWithVat = (index.totalPrice + index.vat) * item.quantity;
-    print('total item with vat  ------------------${index.totalPriceWithVat}');
 
     // (double.parse(item.units[item.selectedUnit].unitPrice) *
     //         item.quantity) *
@@ -242,12 +230,7 @@ class PosCubit extends Cubit<PosState> {
     totalVat = 0;
     totalorder = 0;
     for (var item in cart) {
-      print('total item ${item.totalPriceWithVat}');
       totalorderWithVat += item.totalPriceWithVat;
-      print('total item vat ${item.vat}');
-      print(
-        '-----------------------------------------------------------------------------',
-      );
 
       totalVat += (item.vat * item.quantity);
     }
@@ -274,11 +257,8 @@ class PosCubit extends Cubit<PosState> {
         }
       } else {
         //        showToastMessage("No Customer Found");
-        print('no customer found');
       }
-    }).catchError((error) {
-      print(error.toString());
-    });
+    }).catchError((error) {});
   }
 
   getCustomer(customer) {
@@ -287,7 +267,6 @@ class PosCubit extends Cubit<PosState> {
     customer = customer;
     customerName = customer.firstName;
     customerId = customer.customerId;
-    print(customer);
     emit(GetCustomerState());
   }
 
@@ -312,19 +291,14 @@ class PosCubit extends Cubit<PosState> {
       "rtype": "json",
       "sysac": sysAc
     }).then((value) {
-      print(value?.data);
       validateModel = ValidateModel.fromjson(value?.data);
       if (validateModel?.status == "success") {
-        print(validateModel?.cusotmerId);
-        print(validateModel?.status);
         emit(AddCustomerStateSuccess());
         return validateModel?.status;
       } else if (validateModel?.status == null) {
         emit(AddCustomerStateFail());
-        print('customer fail ${value?.data}');
       }
     }).catchError((error) {
-      print('catch error====== ${error.toString()}');
       return error;
     });
   }
@@ -333,15 +307,12 @@ class PosCubit extends Cubit<PosState> {
   bool isSearchCustomer = false;
 //  filter customers
   filterCustomer(input) {
-    print('first is search $isSearchCustomer');
     isSearchCustomer = true;
     emit(CustomerSearchStateloading());
-    print('second  is search after loading $isSearchCustomer');
 
     filterCusotmers = customers!
         .where((customer) => customer.customerKey.contains(input))
         .toList();
-    print('filter customer ---------------- $filterCusotmers');
     emit(CustomerSearchStateSuccess());
   }
 
@@ -372,19 +343,15 @@ class PosCubit extends Cubit<PosState> {
     isSearched = true;
     emit(ItemSearchStateloading());
     if (isSearched == true && items != null && items!.isNotEmpty) {
-      print(items);
-      print('con start');
       filterdItems =
           items!.where((item) => item.itemKey.contains(input)).toList();
     }
-    print(filterdItems);
     emit(ItemSearchStateSuccess());
   }
 
   // filter item with section id
   // var itemsSection;
   filterItemsSection(sectionId) {
-    print(sectionId);
     // for (var item in items!) {
     //   if (item.sectionId == sectionId) {
     //     print('there is section id ');
@@ -398,7 +365,6 @@ class PosCubit extends Cubit<PosState> {
 
   // select unit and calculate total or item
   changeUnit(item, value) {
-    print('from pos cubit ${value - item.units[0].unitId}');
     item.selectedUnit = value - item.units[0].unitId;
     itemTotalWithVat(item, item);
     emit(UnitSelectStateSuccess());
@@ -413,42 +379,63 @@ class PosCubit extends Cubit<PosState> {
   }
 
   // calculate Remaining of payment
-  // remainingPayment({payed, paymethod}) {
-  //   if (paymethods.contains(paymethod)) {
-  //     requiredToPaid = requiredToPaid + paymethod.value;
-  //     paymethod.value = payed;
-  //     requiredToPaid = requiredToPaid - paymethod.value;
-  //     if (requiredToPaid < 0) {
-  //       remaining = -1 * requiredToPaid;
-  //       requiredToPaid = 0.00;
-  //     } else {
-  //       remaining = 0.00;
-  //     }
-  //   } else {
-  //     paymethod.value = payed;
-  //     paymethods.add(paymethod);
-  //     requiredToPaid = requiredToPaid - paymethod.value;
-  //     if (requiredToPaid < 0) {
-  //       remaining = -1 * requiredToPaid;
-  //       requiredToPaid = 0.00;
-  //     } else {
-  //       remaining = 0.00;
-  //     }
-  //   }
-  //   emit(RemainingstateSuccess());
-  // }
-
   remainingPayment({payed, paymethod}) {
-    paymethod.value = payed;
-    paymethods.add(paymethod);
-    requiredToPaid = requiredToPaid - paymethod.value;
-    if (requiredToPaid < 0) {
-      remaining = -1 * requiredToPaid;
-      requiredToPaid = 0.00;
+    if (paymethods.contains(paymethod)) {
+      requiredToPaid = requiredToPaid + paymethod.value;
+
+      paymethod.value = payed;
+      requiredToPaid = requiredToPaid - paymethod.value;
+      if (requiredToPaid < 0) {
+        remaining = -1 * requiredToPaid;
+        requiredToPaid = 0.00;
+      } else {
+        remaining = 0.00;
+      }
     } else {
-      remaining = 0.00;
+      paymethod.value = payed;
+      paymethods.add(paymethod);
+      requiredToPaid = requiredToPaid - paymethod.value;
+      if (requiredToPaid < 0) {
+        remaining = -1 * requiredToPaid;
+        requiredToPaid = 0.00;
+      } else {
+        remaining = 0.00;
+      }
     }
-    print(paymethods.toString);
     emit(RemainingstateSuccess());
   }
+
+  // List? dd = paymethodModel?.data;
+  // selectedPaymethods({required payed, required paymethod}) {
+  //   print(paymethod);
+  //   print(payed);
+  //   paymethodModel?.data?[0].value = paymethod.value;
+  //   print(paymethods?[0].title);
+  //   remainingPayment(paymethods: paymethods);
+  // }
+
+  // remainingPayment({paymethods}) {
+  //   // print(paymethod.toString());
+  //   var payed;
+  //   for (var paymethod in paymethods) {
+  //     payed += paymethod.value;
+  //   }
+  //   payed.toString();
+  //   requiredToPaid = totalorderWithVat;
+  //   remaining = requiredToPaid - payed;
+
+  //   remaining < 0 ? remaining = remaining * -1 : null;
+
+  //   // paymethod.value = payed;
+  //   // paymethods?.add(paymethod);
+  //   // requiredToPaid = requiredToPaid - paymethod.value;
+  //   // if (requiredToPaid < 0) {
+  //   //   remaining = -1 * requiredToPaid;
+  //   //   requiredToPaid = 0.00;
+  //   // } else {
+  //   //   remaining = 0.00;
+  //   // }
+  //   print(paymethods);
+  //   emit(RemainingstateSuccess());
+  // }
 }

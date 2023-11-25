@@ -860,6 +860,16 @@ class S {
     );
   }
 
+  /// `Confirmation`
+  String get confirmation {
+    return Intl.message(
+      'Confirmation',
+      name: 'confirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Date / Time`
   String get dateTime {
     return Intl.message(

@@ -133,9 +133,9 @@ class _PaymentState extends State<Payment> {
                 ),
                 const Spacer(),
                 CustomeTextButton(
-                    childWidget: const Text(
-                      'pay',
-                      style: TextStyle(
+                    childWidget: Text(
+                      S.current.confirmation,
+                      style: const TextStyle(
                         color: AppColors.whiteColor,
                         fontSize: 18,
                         letterSpacing: 2,

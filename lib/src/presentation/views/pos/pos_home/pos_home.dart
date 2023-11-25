@@ -22,6 +22,7 @@ class _POSHomeState extends State<POSHome> {
     BlocProvider.of<PosCubit>(context).getItems();
     BlocProvider.of<PosCubit>(context).getItemSections();
     BlocProvider.of<PosCubit>(context).getLinkedBranchData();
+    BlocProvider.of<PosCubit>(context).getCustomers();
     super.initState();
   }
 

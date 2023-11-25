@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+import 'dart:io';
 
 import 'package:casale/src/config/routes/app_router.dart';
 import 'package:casale/src/data/datasources/local/cashe_helper.dart';
@@ -14,19 +14,13 @@ void main() async {
   await Hive.initFlutter();
   await DioHelper.init();
   await CacheHelper.init();
-  // var box = await Hive.openBox('settings');
-  // // box.put('darkMode', true);
-  // print('Is Dark Mode: ${box.get('darkmode', defaultValue: false)}');
 
   String? initPage;
   var sysac = CacheHelper.getData(key: 'sysac');
-  // CacheHelper.removeData(key: 'sysac');'
   bool? onboarding = await CacheHelper.getData(key: 'onboarding');
-  String? locale = await CacheHelper.getData(key: 'localization');
 
   if (onboarding != null) {
     if (sysac != null) {
-      print('sysac $sysac');
       initPage = Routes.bottomNavigation;
     } else {
       initPage = Routes.login;
@@ -34,24 +28,22 @@ void main() async {
   } else {
     initPage = Routes.splash;
   }
-  print(initPage);
-  print(onboarding);
-  print(sysac);
-  print(locale);
-
-  // initPage = Routes.bottomNavigation;
-
-  // OrderRepository().getOrders();
-  // final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  // final windowsInfo = await deviceInfo.windowsInfo;
-  // String deviceId = windowsInfo.deviceId;
-  // print('"---------------------"');
-  // print(deviceId);
 
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(Casale(
     settingsController: settingsController,
     initpage: initPage,
   ));
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }

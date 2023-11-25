@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cashCusotomer": MessageLookupByLibrary.simpleMessage("Cash Cusotomer"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmation": MessageLookupByLibrary.simpleMessage("Confirmation"),
         "cusotmer": MessageLookupByLibrary.simpleMessage("Customer"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "cutomerAdded": MessageLookupByLibrary.simpleMessage("Cutomer Added"),
